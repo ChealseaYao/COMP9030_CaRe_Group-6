@@ -1,3 +1,5 @@
+/* ============= Login & therapist-addNewNote page Start - By Min ========== */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -246,3 +248,138 @@ h2 {
   #history-notes:hover {
     color: blue;
   }
+
+
+  /* ============= Login & therapist-addNewNote page End - By Min ========== */
+
+  /* ============= therapist-patientDetail page Start - By Zhen ========== */
+  .patientDetailContainer {
+    max-width: 800px; /* 容器最大宽度 */
+    margin: 0 auto; /* 水平居中显示 */
+    background-color: #ffffff; /* 容器背景颜色 */
+    padding: 20px; /* 容器内边距 */
+    border-radius: 8px; /* 边框圆角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
+}
+  
+
+.patientList-button {
+    top: 20px;
+    left: 10px;
+    color: #2d2c33;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 10px;
+    cursor: pointer;
+    background-color: transparent;
+    /*transition: 0.3s ease, color 0.3s ease;*/
+}
+.patientList-button:hover {
+    color: blue;
+    cursor: pointer;
+}
+
+
+
+.patient-info, .journal-lists {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.patient-info {
+    list-style-type: none; /* 去除小圆点 */
+}
+
+.patient-info li {
+    margin-bottom: 5px; /* 增加每个列表项之间的底部外边距 */
+}
+
+.user-details {
+    display: flex;
+    align-items: flex-start; /* 保证子元素从容器的顶部开始对齐 */
+    justify-content: space-between; /* 文本和按钮分布在容器的两端 */
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.patient-info {
+    flex-grow: 1; /* 允许文本占据多余的空间 */
+}
+
+.notes-button {
+    margin-left: 20px; /* 为按钮和文本之间提供一些空间 */
+}
+
+.journal-lists label {
+    display: block; /* 标签块级显示 */
+    margin-bottom: 5px; /* 标签下边距 */
+    font-weight: bold; /* 字体加粗 */
+    margin-right: auto;
+}
+
+.journalLists-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.journalLists-table, th, td {
+    border: 1px solid #ddd;
+    padding-left: 12px;
+    padding-right: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: left;
+    
+}
+
+.journalLists-table  th {
+    background-color: #f2f2f2; /* 表头背景色 */
+}
+
+.journalLists-table   td {
+    background-color: #ffffff; /* 单元格背景色 */
+}
+
+.journalLists-table th:nth-child(2), .journalLists-table td:nth-child(2) {
+    padding-right: 300px; /* 增加第二列的右内边距 */
+}
+
+
+.notes-button, .viewMore-button {
+    padding: 10px 20px; /* 按钮内边距 */
+    border: none; /* 无边框 */
+    border-radius: 5px; /* 按钮边角圆滑 */
+    cursor: pointer; /* 鼠标悬停时显示手型图标 */
+    margin-right: 10px; /* 右边距 */
+    font-size: 16px; /* 文本大小 */  
+}
+
+.notes-button {
+    background-color: #d871a6;
+    color: white;
+    cursor: pointer;
+    float: right;
+}
+
+.notes-button:hover {
+    background-color: #9f557b;
+}
+
+
+
+.viewMore-button {
+    background-color: #4091e8;
+    color: white;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
+}
+
+.viewMore-button:hover {
+    background-color: #266bb5;
+}
+
+  /* ============= therapist-patientDetail page End  - By Zhen ========== */
+
+  
