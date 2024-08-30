@@ -1,11 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="author" content="Wenqiang Jin">
+    <meta name="description" content="therapist of COMP9030_CaRe_Groups6">
+    <title>Patient - History Journal List</title>
+    <link rel="stylesheet" href="/style/style.css">
 </head>
-<body>
-    
+
+<body class="therapistBody">
+    <!-- global navigation bar TBD -->
+    <header class="navbar">
+        <a href="patientDashboard.html">Dashboard</a>
+        <!-- <span>></span>
+        <a href="browsePatientList.html">View Patients</a>
+        <span>></span>
+        <span>Josh</span> -->
+    </header>
+    <div class="therapistContainer">
+        <div class="left">
+            <a href="patientDashboard.html">
+                <button class="back-btn">Back</button>
+            </a>
+        </div>
+        <div class="centre">
+            <h1>
+                <!-- John Smith should be user's Full name -->
+                History Journals of John Smith
+            </h1>
+            <div id="historyJournal">
+                <form class="search-bar">
+                    <input type="text" placeholder="Search..." name="search" />
+                    <button type="submit">Search</button>
+                </form>
+                <div class="tableContainer">
+                    <!-- click journal title will open that journal in new page -->
+                    <table class="historyJournal-table patientHJT">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Content</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Journal Title 1</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Journal Title 2</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Journal Title 3</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Journal Title 4</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Journal Title 5</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Journal Title 6</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Journal Title 7</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Journal Title 8</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Journal Title 9</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Journal Title 10</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>Journal Title 11</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Journal Title 12</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>Journal Title 13</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>Journal Title 14</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>15</td>
+                                <td>Journal Title 15</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>16</td>
+                                <td>Journal Title 16</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>17</td>
+                                <td>Journal Title 17</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>18</td>
+                                <td>Journal Title 18</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>19</td>
+                                <td>Journal Title 19</td>
+                                <td>13/08/2024</td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td>Journal Title 20</td>
+                                <td>13/08/2024</td>
+                            </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+
+        </div>
+    </div>
+    <footer class="site-footer">
+        <p>2024 CaRe. All rights reserved.</p>
+    </footer>
 </body>
+
 </html>
