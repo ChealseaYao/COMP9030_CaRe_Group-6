@@ -10,7 +10,15 @@
     <link rel="stylesheet" href="/style/style.css">
 </head>
 
-<body>
+<body class="therapistBody">
+    <!-- global navigation bar TBD -->
+    <header class="navbar">
+        <a href="therapistDashboard.html">Dashboard</a>
+        <!-- <span>></span>
+        <a href="browsePatientList.html">View Patients</a>
+        <span>></span>
+        <span>Josh</span> -->
+    </header>
     <div class="therapistContainer">
         <div class="left">
             <div id="therapistInfo">
@@ -27,7 +35,9 @@
                 </div>
 
             </div>
-            <button class="viewPatients">View Patients</button>
+            <a href="browsePatientList.html">
+                <button class="viewPatients">View Patients</button>
+            </a>
             <div id="therapistStatistics">
                 <h2>Statistics</h2>
             </div>
@@ -40,118 +50,191 @@
             <div id="global_journalList">
                 <h2>Latest journals from your patients</h2>
                 <div class="tableContainer">
-                    <!-- table need to have scroll function up to 30 rows -->
-                     <!-- click journal title will open that journal in new page -->
+                    <!-- click journal title will open that journal in new page -->
                     <table class="global_journalLists-table">
                         <thead>
                             <tr>
                                 <th>State</th>
+                                <th></th>
                                 <th>Patient</th>
-                                <th>Title</th>
+                                <th>Content</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>●</td>
+                                <td class="star"></td>
                                 <td>John Cena</td>
                                 <td>Journal Title 1</td>
                                 <td>13/08/2024</td>
                             </tr>
                             <tr>
                                 <td>●</td>
+                                <td class="star">★</td>
                                 <td>Parker. S</td>
                                 <td>Journal Title 2</td>
                                 <td>11/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star">★</td>
                                 <td>Yuri Konoha</td>
                                 <td>Journal Title 3</td>
                                 <td>09/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Jason White</td>
                                 <td>Journal Title 4</td>
                                 <td>07/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Thor</td>
                                 <td>Journal Title 5</td>
                                 <td>06/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Captain</td>
                                 <td>Journal Title 6</td>
                                 <td>06/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Ronaldo.K</td>
                                 <td>Journal Title 7</td>
                                 <td>05/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star">★</td>
                                 <td>Karlos. M</td>
                                 <td>Journal Title 8</td>
                                 <td>04/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Mike. J</td>
                                 <td>Journal Title 9</td>
                                 <td>02/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Mike. J</td>
                                 <td>Journal Title 10</td>
                                 <td>01/08/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Kuber. T</td>
                                 <td>Journal Title 11</td>
                                 <td>26/07/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Bob. J</td>
                                 <td>Journal Title 12</td>
                                 <td>25/07/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Bob. J</td>
                                 <td>Journal Title 13</td>
                                 <td>25/07/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Bob. J</td>
                                 <td>Journal Title 14</td>
                                 <td>25/07/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Bob. J</td>
                                 <td>Journal Title 15</td>
                                 <td>25/07/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Bob. J</td>
                                 <td>Journal Title 16</td>
                                 <td>25/07/2024</td>
                             </tr>
                             <tr>
-                                <td>●</td>
+                                <td>✔</td>
+                                <td class="star"></td>
                                 <td>Bob. J</td>
                                 <td>Journal Title 17</td>
+                                <td>25/07/2024</td>
+                            </tr>
+                            <tr>
+                                <td>✔</td>
+                                <td class="star"></td>
+                                <td>Bob. J</td>
+                                <td>Journal Title 18</td>
+                                <td>25/07/2024</td>
+                            </tr>
+                            <tr>
+                                <td>✔</td>
+                                <td class="star"></td>
+                                <td>Bob. J</td>
+                                <td>Journal Title 19</td>
+                                <td>25/07/2024</td>
+                            </tr>
+                            <tr>
+                                <td>✔</td>
+                                <td class="star"></td>
+                                <td>Bob. J</td>
+                                <td>Journal Title 20</td>
+                                <td>25/07/2024</td>
+                            </tr>
+                            <tr>
+                                <td>✔</td>
+                                <td class="star"></td>
+                                <td>Bob. J</td>
+                                <td>Journal Title 21</td>
+                                <td>25/07/2024</td>
+                            </tr>
+                            <tr>
+                                <td>✔</td>
+                                <td class="star"></td>
+                                <td>Bob. J</td>
+                                <td>Journal Title 22</td>
+                                <td>25/07/2024</td>
+                            </tr>
+                            <tr>
+                                <td>✔</td>
+                                <td class="star"></td>
+                                <td>Bob. J</td>
+                                <td>Journal Title 23</td>
+                                <td>25/07/2024</td>
+                            </tr>
+                            <tr>
+                                <td>✔</td>
+                                <td class="star"></td>
+                                <td>Bob. J</td>
+                                <td>Journal Title 24</td>
+                                <td>25/07/2024</td>
+                            </tr>
+                            <tr>
+                                <td>✔</td>
+                                <td class="star"></td>
+                                <td>Bob. J</td>
+                                <td>Journal Title 25</td>
                                 <td>25/07/2024</td>
                             </tr>
                         </tbody>
@@ -173,6 +256,9 @@
             </div>
         </div>
     </div>
+    <footer class="site-footer">
+        <p>2024 CaRe. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>

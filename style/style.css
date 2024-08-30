@@ -14,8 +14,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* ↓ Cannot scroll to top when the window size is small */
-    /* height: 100vh; */
+    height: 100vh;
     overflow-y: auto;
 }
 
@@ -92,6 +91,7 @@ body {
     font-size: 14px;
     margin-top: 10px;
 }
+
 #create-account:hover {
     text-decoration: underline;
 }
@@ -114,6 +114,7 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
+
 .reminder {
     margin-top: 10px;
 }
@@ -122,36 +123,53 @@ p a:hover {
     text-decoration: underline;
     color: #555;
 }
+
 #use {
     text-decoration: underline;
     color: #555;
 }
 
 .noteContainer {
-    max-width: 800px; /* 容器最大宽度 */
-    margin: 0 auto; /* 水平居中显示 */
-    background-color: #ffffff; /* 容器背景颜色 */
-    padding: 20px; /* 容器内边距 */
-    border-radius: 8px; /* 边框圆角 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
+    max-width: 800px;
+    /* 容器最大宽度 */
+    margin: 0 auto;
+    /* 水平居中显示 */
+    background-color: #ffffff;
+    /* 容器背景颜色 */
+    padding: 20px;
+    /* 容器内边距 */
+    border-radius: 8px;
+    /* 边框圆角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* 容器阴影 */
 }
+
 h2 {
     text-align: center;
 }
-.note-input-group{
+
+.note-input-group {
     list-style: none;
     margin-right: 40px;
 }
+
 /* 按钮样式 */
 .note-button-group button {
-    padding: 10px 20px; /* 按钮内边距 */
-    border: none; /* 无边框 */
-    border-radius: 5px; /* 按钮边角圆滑 */
-    cursor: pointer; /* 鼠标悬停时显示手型图标 */
-    margin-right: 10px; /* 右边距 */
-    font-size: 16px; /* 文本大小 */
-   
+    padding: 10px 20px;
+    /* 按钮内边距 */
+    border: none;
+    /* 无边框 */
+    border-radius: 5px;
+    /* 按钮边角圆滑 */
+    cursor: pointer;
+    /* 鼠标悬停时显示手型图标 */
+    margin-right: 10px;
+    /* 右边距 */
+    font-size: 16px;
+    /* 文本大小 */
+
 }
+
 .back-button {
     top: 20px;
     left: 10px;
@@ -163,107 +181,143 @@ h2 {
     background-color: transparent;
     /*transition: 0.3s ease, color 0.3s ease;*/
 }
+
 .back-button:hover {
     color: blue;
     cursor: pointer;
 }
 
 .cancel-button {
-    background-color: #f44336; /* 红色背景 */
-    color: #ffffff; /* 白色文本 */
+    background-color: #f44336;
+    /* 红色背景 */
+    color: #ffffff;
+    /* 白色文本 */
     margin-left: 300px;
 }
+
 .cancel-button:hover {
     background-color: #c82333;
 }
 
 .confirm-button {
-    background-color: #4CAF50; /* 绿色背景 */
-    color: #ffffff; /* 白色文本 */
+    background-color: #4CAF50;
+    /* 绿色背景 */
+    color: #ffffff;
+    /* 白色文本 */
 }
+
 .confirm-button:hover {
     background-color: #218838;
 }
 
 /* 输入框和标签样式 */
 .note-input-group label {
-    display: block; /* 标签块级显示 */
-    margin-bottom: 5px; /* 标签下边距 */
-    font-weight: bold; /* 字体加粗 */
+    display: block;
+    /* 标签块级显示 */
+    margin-bottom: 5px;
+    /* 标签下边距 */
+    font-weight: bold;
+    /* 字体加粗 */
     margin-right: auto;
 }
 
 .note-input-group input[type="text"],
 .note-input-group input[type="number"],
 .note-input-group textarea {
-    width: 100%; /* 输入框宽度 */
-    padding: 8px; /* 输入框内边距 */
-    margin-bottom: 15px; /* 下边距 */
-    border: 1px solid #ccc; /* 边框 */
-    border-radius: 4px; /* 边角圆滑 */
+    width: 100%;
+    /* 输入框宽度 */
+    padding: 8px;
+    /* 输入框内边距 */
+    margin-bottom: 15px;
+    /* 下边距 */
+    border: 1px solid #ccc;
+    /* 边框 */
+    border-radius: 4px;
+    /* 边角圆滑 */
 }
 
 /* 表格样式 */
 .note-table {
-    width: 100%; /* 表格宽度 */
-    border-collapse: collapse; /* 边框合并 */
-    margin-top: 10px; /* 上边距 */
+    width: 100%;
+    /* 表格宽度 */
+    border-collapse: collapse;
+    /* 边框合并 */
+    margin-top: 10px;
+    /* 上边距 */
 }
 
-.note-table, th, td {
-    border: 1px solid #ccc; /* 边框颜色 */
+.note-table,
+th,
+td {
+    border: 1px solid #ccc;
+    /* 边框颜色 */
 }
 
-.note-table th, td {
-    text-align: left; /* 文本左对齐 */
-    padding: 8px; /* 单元格内边距 */
+.note-table th,
+td {
+    text-align: left;
+    /* 文本左对齐 */
+    padding: 8px;
+    /* 单元格内边距 */
 }
 
-.note-table  th {
-    background-color: #f2f2f2; /* 表头背景色 */
+.note-table th {
+    background-color: #f2f2f2;
+    /* 表头背景色 */
 }
 
-.note-table  td {
-    background-color: #ffffff; /* 单元格背景色 */
+.note-table td {
+    background-color: #ffffff;
+    /* 单元格背景色 */
 }
+
 .note-entry {
     display: flex;
     align-items: center;
-    gap: 20px; /* 控制元素之间的间距 */
-  }
-  #date-picker {
+    gap: 20px;
+    /* 控制元素之间的间距 */
+}
+
+#date-picker {
     width: 150px;
     height: 30px;
     padding: 5px;
     font-size: 14px;
-  }
+}
 
-  .fa-calendar {
+.fa-calendar {
     font-size: 18px;
     color: #4b4488;
-  }
+}
 
-  #history-notes {
+#history-notes {
     color: black;
     text-decoration: none;
-  }
-  #history-notes:hover {
-    color: blue;
-  }
-
-
-  /* ============= Login & therapist-addNewNote page End - By Min ========== */
-
-  /* ============= therapist-patientDetail page Start - By Zhen ========== */
-  .patientDetailContainer {
-    max-width: 800px; /* 容器最大宽度 */
-    margin: 0 auto; /* 水平居中显示 */
-    background-color: #ffffff; /* 容器背景颜色 */
-    padding: 20px; /* 容器内边距 */
-    border-radius: 8px; /* 边框圆角 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
 }
-  
+
+#history-notes:hover {
+    color: blue;
+}
+
+
+/* ============= Login & therapist-addNewNote page End - By Min ========== */
+
+/* ============= therapist-patientDetail page Start - By Zhen ========== */
+.patientDetailContainer {
+    max-width: 800px;
+    /* 容器最大宽度 */
+    margin: 0 auto;
+    /* 水平居中显示 */
+    background-color: #ffffff;
+    /* 容器背景颜色 */
+    padding: 20px;
+    /* 容器内边距 */
+    border-radius: 8px;
+    /* 边框圆角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* 容器阴影 */
+}
+
 
 .patientList-button {
     top: 20px;
@@ -276,6 +330,7 @@ h2 {
     background-color: transparent;
     /*transition: 0.3s ease, color 0.3s ease;*/
 }
+
 .patientList-button:hover {
     color: blue;
     cursor: pointer;
@@ -283,40 +338,50 @@ h2 {
 
 
 
-.patient-info, .journal-lists {
+.patient-info,
+.journal-lists {
     margin-bottom: 15px;
     text-align: left;
 }
 
 .patient-info {
-    list-style-type: none; /* 去除小圆点 */
+    list-style-type: none;
+    /* 去除小圆点 */
 }
 
 .patient-info li {
-    margin-bottom: 5px; /* 增加每个列表项之间的底部外边距 */
+    margin-bottom: 5px;
+    /* 增加每个列表项之间的底部外边距 */
 }
 
 .user-details {
     display: flex;
-    align-items: flex-start; /* 保证子元素从容器的顶部开始对齐 */
-    justify-content: space-between; /* 文本和按钮分布在容器的两端 */
+    align-items: flex-start;
+    /* 保证子元素从容器的顶部开始对齐 */
+    justify-content: space-between;
+    /* 文本和按钮分布在容器的两端 */
     width: 100%;
     margin-top: 15px;
     margin-bottom: 10px;
 }
 
 .patient-info {
-    flex-grow: 1; /* 允许文本占据多余的空间 */
+    flex-grow: 1;
+    /* 允许文本占据多余的空间 */
 }
 
 .notes-button {
-    margin-left: 20px; /* 为按钮和文本之间提供一些空间 */
+    margin-left: 20px;
+    /* 为按钮和文本之间提供一些空间 */
 }
 
 .journal-lists label {
-    display: block; /* 标签块级显示 */
-    margin-bottom: 5px; /* 标签下边距 */
-    font-weight: bold; /* 字体加粗 */
+    display: block;
+    /* 标签块级显示 */
+    margin-bottom: 5px;
+    /* 标签下边距 */
+    font-weight: bold;
+    /* 字体加粗 */
     margin-right: auto;
 }
 
@@ -325,36 +390,49 @@ h2 {
     border-collapse: collapse;
 }
 
-.journalLists-table, th, td {
+.journalLists-table,
+th,
+td {
     border: 1px solid #ddd;
     padding-left: 12px;
     padding-right: 30px;
     padding-top: 15px;
     padding-bottom: 15px;
     text-align: left;
-    
+
 }
 
-.journalLists-table  th {
-    background-color: #f2f2f2; /* 表头背景色 */
+.journalLists-table th {
+    background-color: #f2f2f2;
+    /* 表头背景色 */
 }
 
-.journalLists-table   td {
-    background-color: #ffffff; /* 单元格背景色 */
+.journalLists-table td {
+    background-color: #ffffff;
+    /* 单元格背景色 */
 }
 
-.journalLists-table th:nth-child(2), .journalLists-table td:nth-child(2) {
-    padding-right: 300px; /* 增加第二列的右内边距 */
+.journalLists-table th:nth-child(2),
+.journalLists-table td:nth-child(2) {
+    padding-right: 300px;
+    /* 增加第二列的右内边距 */
 }
 
 
-.notes-button, .viewMore-button {
-    padding: 10px 20px; /* 按钮内边距 */
-    border: none; /* 无边框 */
-    border-radius: 5px; /* 按钮边角圆滑 */
-    cursor: pointer; /* 鼠标悬停时显示手型图标 */
-    margin-right: 10px; /* 右边距 */
-    font-size: 16px; /* 文本大小 */  
+.notes-button,
+.viewMore-button {
+    padding: 10px 20px;
+    /* 按钮内边距 */
+    border: none;
+    /* 无边框 */
+    border-radius: 5px;
+    /* 按钮边角圆滑 */
+    cursor: pointer;
+    /* 鼠标悬停时显示手型图标 */
+    margin-right: 10px;
+    /* 右边距 */
+    font-size: 16px;
+    /* 文本大小 */
 }
 
 .notes-button {
@@ -382,31 +460,35 @@ h2 {
     background-color: #266bb5;
 }
 
-  /* ============= therapist-patientDetail page End  - By Zhen ========== */
+/* ============= therapist-patientDetail page End  - By Zhen ========== */
 
-  /* ============= therapist-dashboard page Start - By Wenqiang ========== */
+/* ============= therapist-dashboard page Start - By Wenqiang ========== */
 .therapistContainer {
     display: flex;
     width: 100%;
     align-items: flex-start;
-    padding: 50px;
+    padding: 25px;
     flex-wrap: nowrap;
 }
-  .left {
+
+.left {
     width: 28%;
     min-width: 300px;
     padding: 10px;
 }
+
 .centre {
     width: 54%;
     padding: 10px;
     min-width: fit-content;
 }
+
 .right {
     width: 28%;
     min-width: 250px;
     padding: 10px;
 }
+
 #therapistInfo {
     width: 100%;
     height: 150px;
@@ -415,20 +497,30 @@ h2 {
     display: flex;
     align-items: center;
 }
+
 .profileImage {
     justify-content: center;
     padding: 10px;
     width: 140px;
     border-radius: 50%;
 }
+
 #therapistName {
-    font-size:large;
+    font-size: 25px;
     font-weight: bold;
-    margin: 5px;
+    margin-left: 30px;
+    text-align: left;
 }
+
+#TherapistTitle {
+    font-size: 18px;
+    margin-left: 30px;
+    text-align: left;
+}
+
 .viewPatients {
     font-size: larger;
-    border:none;
+    border: none;
     width: 100%;
     height: 50px;
     border-radius: 10px;
@@ -437,6 +529,11 @@ h2 {
     color: white;
     background-color: #007bff
 }
+
+.viewPatients:hover {
+    background-color: #0056b3;
+}
+
 #therapistStatistics {
     width: 100%;
     height: 500px;
@@ -445,28 +542,36 @@ h2 {
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 #global_journalList {
     align-items: center;
     width: 100%;
     padding: 5px;
+    padding-bottom: 18px;
     min-width: fit-content;
-    height: 684px;
+    height: fit-content;
     border-radius: 5px;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .tableContainer {
     background-color: rgb(221, 221, 221);
     padding: 5px;
     margin: 5px;
+    max-height: 622px;
+    overflow-y: auto;
 }
+
 .global_journalLists-table {
     width: 100%;
     border-collapse: collapse;
     padding: 5px;
 }
 
-.global_journalLists-table, th, td {
+.global_journalLists-table,
+th,
+td {
     border: none;
     padding-left: 12px;
     padding-right: 10px;
@@ -475,13 +580,22 @@ h2 {
     text-align: left;
 }
 
-.global_journalLists-table  th {
-    background-color: #f2f2f2; 
+.global_journalLists-table th {
+    background-color: #f2f2f2;
+}
+
+.global_journalLists-table th:nth-child(4) {
+    min-width: 300px;
 }
 
 .global_journalLists-table th:nth-child(3) {
-    min-width: 300px;
+    min-width: 130px;
 }
+.global_journalLists-table td:nth-child(1),
+.global_journalLists-table th:nth-child(1) {
+    text-align: center;
+}
+
 #therapistSummary {
     height: 200px;
     background-color: white;
@@ -491,6 +605,7 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
 }
+
 #therapistCalendar {
     height: 463px;
     background-color: white;
@@ -501,6 +616,126 @@ h2 {
     margin-top: 15px;
 }
 
+/* style of navigation bar on top of every page */
+.navbar {
+    width: 100%;
+    height: 60px;
+    background-color: #969696;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+.site-footer {
+    width: 100%;
+    height: 100px;
+    margin-top: 50px;
+    background-color: #969696;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    color: white;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    padding-left: 30px;
+}
+
+.navbar span {
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    padding-left: 30px;
+}
+
+body.therapistBody {
+    background-size: cover;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    height: auto;
+    flex-direction: column;
+}
 
 
-  /* ============= therapist-dashboard page End - By Wenqiang ========== */
+/* ============= therapist-dashboard page End - By Wenqiang ========== */
+
+/* ============= therapist-historyJournal page Start - By Wenqiang ========== */
+
+#historyJournal {
+    align-items: center;
+    width: 65%;
+    padding: 5px;
+    padding-bottom: 18px;
+    min-width: fit-content;
+    height: fit-content;
+    min-height: 500px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.historyJournal-table{
+    width: 100%;
+    border-collapse: collapse;
+    padding: 5px;
+}
+.historyJournal-table th {
+    background-color: #f2f2f2;
+}
+
+.historyJournal-table th, td {
+    border: none;
+    padding-left: 12px;
+    padding-right: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+}
+.historyJournal-table th:nth-child(3) {
+    min-width: 700px;
+}
+.historyJournal-table th:nth-child(2) {
+    min-width: 80px;
+}
+.historyJournal-table td:nth-child(1),
+.historyJournal-table th:nth-child(1) {
+    text-align: center;
+}
+.star {
+    color: rgb(111, 33, 255);
+    border: #2d2c33 2px;
+    font-size: 30px;
+    text-align: center;
+    padding: 0px;
+}
+
+.back-btn {
+    font-size: large;
+    border: none;
+    width: 60px;
+    height: 35px;
+    border-radius: 5px;
+    color: white;
+    background-color: #007bff
+}
+.back-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+
+/* ============= therapist-historyJournal page End - By Wenqiang ========== */
