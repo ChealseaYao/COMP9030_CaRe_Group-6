@@ -152,7 +152,7 @@ body {
 }
 
 /* Journal Page */
-.journal-body .container {
+.newJournal-body .container {
   max-width: 800px;
   margin: 0 auto;
   background-color: white;
@@ -161,20 +161,20 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.journal-body h1 {
+.newJournal-body h1 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.journal-body .header {
+.newJournal-body .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.journal-body .back-button,
-.journal-body .upload-button {
+.newJournal-body .back-button,
+.newJournal-body .upload-button {
   padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -182,14 +182,14 @@ body {
   cursor: pointer;
 }
 
-.journal-body .upload-info {
+.newJournal-body .upload-info {
   font-size: 0.8em;
   color: #666;
   text-align: right;
 }
 
-.journal-body textarea,
-.journal-body input[type="text"] {
+.newJournal-body textarea,
+.newJournal-body input[type="text"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -198,17 +198,17 @@ body {
   box-sizing: border-box;
 }
 
-.journal-body .time-inputs {
+.newJournal-body .time-inputs {
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
 }
 
-.journal-body .time-input {
+.newJournal-body .time-input {
   width: 48%;
 }
 
-.journal-body select {
+.newJournal-body select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -220,7 +220,7 @@ body {
   box-sizing: border-box;
 }
 
-.journal-body .submit-button {
+.newJournal-body .submit-button {
   display: block;
   width: 100px;
   margin: 20px auto;
