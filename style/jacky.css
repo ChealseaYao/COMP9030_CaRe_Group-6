@@ -4,7 +4,7 @@ body {
   padding: 20px;
 }
 
-/* Patient List Page */
+/* ---------------------------------Patient List Page -----------------------------------*/
 .patientList-body .container {
   display: flex;
   justify-content: space-between;
@@ -113,7 +113,7 @@ body {
   cursor: pointer;
 }
 
-/* Modal Styles */
+/* ---------------------------------------------------Modal Styles ---------------------------------------*/
 .modal {
   display: none;
   position: fixed;
@@ -151,7 +151,7 @@ body {
   background-color: white;
 }
 
-/* Journal Page */
+/* ---------------------------------------------------Journal Page --------------------------------------------*/
 .newJournal-body .container {
   max-width: 800px;
   margin: 0 auto;
@@ -232,7 +232,7 @@ body {
   cursor: pointer;
 }
 
-/* Success Page */
+/*--------------------------------------------------------- Success Page -----------------------------------------*/
 .success-body {
   display: flex;
   justify-content: center;
