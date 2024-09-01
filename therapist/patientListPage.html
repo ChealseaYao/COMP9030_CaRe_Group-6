@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient List</title>
+    <!-- <link rel="stylesheet" href="../style/jacky.css" /> -->
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .badge-section {
+      width: 15%;
+      background-color: #f4f4f4;
+      padding: 10px;
+      margin-right: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .badge-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .badge-item .status {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 10px;
+      border: 1px solid #000;
+    }
+
+    .good {
+      background-color: green;
+    }
+
+    .bad {
+      background-color: yellow;
+    }
+
+    .danger {
+      background-color: red;
+    }
+
+    .patient-list,
+    .groups {
+      width: 40%;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-button,
+    .search-bar,
+    .create-new {
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .patient-item,
+    .group-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .group-item.selected {
+      background-color: lightblue;
+      border-color: #000;
+    }
+
+    .patient-icon {
+      margin-right: 10px;
+    }
+
+    .status {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .good {
+      background-color: green;
+    }
+
+    .danger {
+      background-color: red;
+    }
+
+    .members {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-radius: 8px;
+    }
+
+    .member-item {
+      background-color: #f0f0f0;
+      padding: 5px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+    }
+
+    .delete-icon {
+      cursor: pointer;
+    }
+
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      width: 300px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      display: inline-block;
+      text-align: left;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    #cancelButton,
+    #confirmButton {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="badge-section">
+        <h3>Badge</h3>
+        <div class="badge-item">
+          <span class="status good"></span> Good Status
+        </div>
+        <div class="badge-item">
+          <span class="status bad"></span> Bad Status
+        </div>
+        <div class="badge-item">
+          <span class="status danger"></span> Danger Status
+        </div>
+      </div>
+
+      <div class="patient-list">
+        <button class="back-button">← Back</button>
+        <h2>Patient List</h2>
+        <input type="text" class="search-bar" placeholder="🔍 search" />
+        <div class="patient-item">
+          <div>
+            <span class="patient-icon">☰</span>
+            <strong>Name: John Smith</strong><br />
+            Age: 35
+          </div>
+          <div>
+            <span class="status good"></span>
+            <button>Details</button>
+          </div>
+        </div>
+        <!-- Repeat for each patient -->
+      </div>
+
+      <div class="groups">
+        <h2>Groups</h2>
+        <button class="create-new">Create New</button>
+        <div class="group-item">Tuesday 3pm Session</div>
+        <div class="group-item">Friday Special</div>
+        <div class="group-item">Anxiety Group</div>
+        <div class="group-item">Avengers</div>
+        <div class="members">
+          <h3>Members</h3>
+          <p>Avengers</p>
+          <div class="member-item">
+            Peter Smith <span class="delete-icon">🗑️</span>
+          </div>
+          <div class="member-item">
+            Kerry Smith <span class="delete-icon">🗑️</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="createGroupModal">
+        <div class="modal-content">
+          <h3>Create a New Group</h3>
+          <label for="groupName">Group Name:</label>
+          <input type="text" id="groupName" name="groupName" />
+          <div class="modal-buttons">
+            <button id="cancelButton">Cancel</button>
+            <button id="confirmButton">Confirm</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content">
+          <p>Do you want to remove this member?</p>
+          <div class="modal-buttons">
+            <button id="cancelDeleteButton">Cancel</button>
+            <button id="confirmDeleteButton">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  //--------------------------------------------------------------------------create a new group confirmation------------------------------------------------------
+  // Get the modal
+  var modal = document.getElementById("createGroupModal");
+  // Get the button that opens the modal
+  var btn = document.querySelector(".create-new");
+  // Get the cancel button
+  var cancelButton = document.getElementById("cancelButton");
+  // Get the confirm button
+  var confirmButton = document.getElementById("confirmButton");
+  // When the user clicks the button, open the modal
+  btn.onclick = function () {
+    modal.style.display = "flex";
+  };
+  // When the user clicks on cancel button, close the modal
+  cancelButton.onclick = function () {
+    modal.style.display = "none";
+  };
+  // Optional: When the user clicks on confirm button, do something and close the modal
+  confirmButton.onclick = function () {
+    // Do something with the group name (e.g., add it to the list)
+    modal.style.display = "none";
+  };
+  // Close the modal when clicking outside of the modal content
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+  //--------------------------------------------------------------------------select group color------------------------------------------------------------------
+  // Select all group items
+  var groupItems = document.querySelectorAll(".group-item");
+  // Add click event listener to each group item
+  groupItems.forEach(function (item) {
+    item.addEventListener("click", function () {
+      // Remove 'selected' class from all group items
+      groupItems.forEach(function (group) {
+        group.classList.remove("selected");
+      });
+
+      // Add 'selected' class to the clicked group item
+      item.classList.add("selected");
+    });
+  });
+  //----------------------------------------------------------------------remove member comfirmation---------------------------------------------------------
+  // Get the modal
+  var deleteModal = document.getElementById("confirmDeleteModal");
+  // Get the delete buttons (bin icons)
+  var deleteButtons = document.querySelectorAll(".delete-icon");
+  // Get the cancel and confirm buttons in the modal
+  var cancelDeleteButton = document.getElementById("cancelDeleteButton");
+  var confirmDeleteButton = document.getElementById("confirmDeleteButton");
+  // Variable to keep track of which member to delete
+  var memberToDelete = null;
+  // When the user clicks the bin button, open the modal
+  deleteButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      // Store the member element to delete
+      memberToDelete = button.closest(".member-item");
+      deleteModal.style.display = "flex";
+    });
+  });
+  // When the user clicks on cancel button, close the modal
+  cancelDeleteButton.onclick = function () {
+    deleteModal.style.display = "none";
+  };
+  // When the user clicks on confirm button, delete the member and close the modal
+  confirmDeleteButton.onclick = function () {
+    if (memberToDelete) {
+      memberToDelete.remove(); // Remove the member item
+      memberToDelete = null; // Reset the reference
+    }
+    deleteModal.style.display = "none";
+  };
+  // Close the modal when clicking outside of the modal content
+  window.onclick = function (event) {
+    if (event.target == deleteModal) {
+      deleteModal.style.display = "none";
+    }
+  };
+</script>
