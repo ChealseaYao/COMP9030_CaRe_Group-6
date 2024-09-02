@@ -16,6 +16,7 @@
 .historyleft {
     width: 28%;
     padding: 10px;
+    text-align: left;
 }
 
 .centre {
@@ -49,16 +50,18 @@
     width: 140px;
     border-radius: 50%;
 }
-
+#txtinfo {
+    width: 50%;
+}
 #therapistName {
-    font-size: 100%;
+    font-size: 20px;
     font-weight: bold;
     margin-left: 5%;
     text-align: left;
 }
 
 #TherapistTitle {
-    font-size: 100%;
+    font-size: 18px;
     margin-left: 5%;
     text-align: left;
 }
