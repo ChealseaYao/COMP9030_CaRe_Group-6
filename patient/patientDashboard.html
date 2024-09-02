@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Zhen Liu">
+  <meta name="description" content="patient of COMP9030_CaRe_Groups6">
+  <title>Patient Dashboard</title>
+  <link rel="stylesheet" href="/style/stylePatientDashboard.css">
+</head>
+<body>
+  <div class="patientDashboard"> 
+        <div class="left-panel">
+          <h2>G'Day Kage!</h2>
+            <button class="newJournal-button">New Journal</button>
+            <div>
+                <table class="contentList-table">
+                    <thead>
+                        <tr>
+                            <th>Content</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Journal Content 1</td>
+                            <td>13/08/2024</td>
+                        </tr>
+                        <tr>
+                            <td>Journal Content 2</td>
+                            <td>11/08/2024</td>
+                        </tr>
+                        <tr>
+                            <td>Journal Content 3</td>
+                            <td>09/08/2024</td>
+                        </tr>
+                        <tr>
+                            <td>Journal Content 4</td>
+                            <td>07/08/2024</td>
+                        </tr>
+                        <tr>
+                            <td>Journal Content 5</td>
+                            <td>06/08/2024</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="patientDashboardViewMore-Button">View More</button>
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <div class="activity">
+                <h3>Last Week's Activity</h3>
+                <div class="activity-stats">
+                    <div class="stat">
+                        <p>Journal Entry</p>
+                        <h3>3</h3>
+                    </div>
+                    <div class="stat">
+                        <p>Average Sleep Time</p>
+                        <h3>7 <span>hr</span></h3>
+                    </div>
+                    <div class="stat">
+                        <p>Food and Exercise</p>
+                        <h3>Good</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="goal">
+                <h3>Current Week's Goal</h3>
+                <p>Continue good sleep cycle and diet, try to record more journals.</p>
+            </div>
+            <div class="affirmation">
+                <h3>Daily Affirmation</h3>
+                <form>
+                    <label><input type="radio" name="affirmation" value="option1"> Very Good Daily affirmation example</label><br>
+                    <label><input type="radio" name="affirmation" value="option2"> Better affirmation for patient</label><br>
+                    <label><input type="radio" name="affirmation" value="option3" checked> Best Daily affirmation for the patient</label>
+                </form>
+            </div>
+        </div>
+    </div>
+  
+</body>
+</html>
