@@ -1,8 +1,8 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
  
  
@@ -28,9 +28,9 @@ body {
 }
  
 .login-form h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
 }
  
 .login-input-group {
@@ -80,19 +80,19 @@ body {
 }
  
 #account {
-    text-align: center;
-    font-size: 14px;
+  text-align: center;
+  font-size: 14px;
 }
  
 #create-account {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 14px;
-    margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 #create-account:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
  
 .login-input-group li a#forget-password:hover {
@@ -123,13 +123,13 @@ body {
 }
  
 #ppcy {
-    text-decoration: underline;
-    color: #555;
+  text-decoration: underline;
+  color: #555;
 }
 
 #use {
-    text-decoration: underline;
-    color: #555;
+  text-decoration: underline;
+  color: #555;
 }
  
 /* add new note */

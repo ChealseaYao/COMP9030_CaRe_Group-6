@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Today's Journal</title>
+    <link rel="stylesheet" href="../style/jacky.css" />
+  </head>
+  <body class="newJournal-body">
+    <div class="container">
+      <div class="header">
+        <button class="back-button">← Back</button>
+        <div>
+          <button class="upload-button">Upload File</button>
+          <div class="upload-info">Uploaded: file.jpg</div>
+        </div>
+      </div>
+      <h1>Today's Journal</h1>
+      <form>
+        <label for="day-description">How was your day?</label>
+        <textarea id="day-description" rows="4"></textarea>
+
+        <div class="time-inputs">
+          <div class="time-input">
+            <label for="sleep-time">Sleep (last night)</label>
+            <select id="sleep-time">
+              <option>00 : 00</option>
+              <!-- Add more time options -->
+            </select>
+          </div>
+          <div class="time-input">
+            <label for="wake-time">Wake up (this morning)</label>
+            <select id="wake-time">
+              <option>00 : 00</option>
+              <!-- Add more time options -->
+            </select>
+          </div>
+        </div>
+
+        <label for="food">What did you Eat?</label>
+        <input type="text" id="food" />
+
+        <label for="exercise">Today's Exercise?</label>
+        <input type="text" id="exercise" />
+
+        <button type="button" class="submit-button" onclick="openSubmitModal()">
+          Submit
+        </button>
+      </form>
+      <!-- submit confirmation modal -->
+      <div class="modal" id="submitJournalModal">
+        <div class="modal-content">
+          <p>Do you want to submit the journal?</p>
+          <div class="modal-buttons">
+            <button id="cancelSubmitButton">Cancel</button>
+            <button id="confirmSubmitButton">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Get the modal
+      var submitModal = document.getElementById("submitJournalModal");
+      // Get the cancel and confirm buttons in the modal
+      var cancelSubmitButton = document.getElementById("cancelSubmitButton");
+      var confirmSubmitButton = document.getElementById("confirmSubmitButton");
+      // Function to open the submit confirmation modal
+      function openSubmitModal() {
+        submitModal.style.display = "flex";
+      }
+      // When the user clicks on cancel button, close the modal
+      cancelSubmitButton.onclick = function () {
+        submitModal.style.display = "none";
+      };
+      // When the user clicks on confirm button, redirect to the success page
+      confirmSubmitButton.onclick = function () {
+        window.location.href = "./successfullySubmitPage.html"; // Redirect to the success page
+      };
+      // Close the modal when clicking outside of the modal content
+      window.onclick = function (event) {
+        if (event.target == submitModal) {
+          submitModal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
