@@ -3,117 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Record Patients Note</title>
-    <link rel="stylesheet" href="/style/style.css">
-  <!-- Include Quill stylesheet -->
-   <!-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"> -->
-
-<!-- Include Quill library -->
-    <!-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> -->
-
-<!-- Include Flatpickr stylesheet -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet"> -->
-
-<!-- Include Flatpickr library -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
-
-
-
+    <title>Record Patients Notes</title>
+    <link rel="stylesheet" href="/style/style.css">   
 </head>
 <body>
-    <div class="noteContainer"  >
-        <a href="patientDetail.html">
-          <button class="back-button"><span>&lt;  </span>Patient Detail</button>
-        </a>
-        <form action="post" class="record-form">
-            <h2>Record Patients Notes</h2>
-            <ul class="note-input-group">
-                <li>
-                    <label for="patient-name">Patient Name</label>
-                    <input type="text" id="patient-name" name="patient-name" required value="Kage Wong" disabled>
-                </li>
-                <li>
-                   <label for="hiatoral notes"><a href="" id="history-notes">Historical Notes</a>  <!-- <span class="date-picker-container"> <i class="fa fa-calendar">  </i><input type="text" id="date-range-picker" placeholder="Date Range" style="width: 80px; height: 20px; border-color: #ffff;">  </span></label> -->
-                  <table class="note-table">
-                    <tr>
-                        <th>Date</th>
-                        <th>Notes</th>
-                    </tr>
-                    <tbody>
-                        <tr>
-                            <td>31/Mar</td>
-                            <td>Chief complaint: Feeling of constant anxiety, especially in public and work settings
-                                Treatment and recommendations:
-                                Initiated weekly cognitive behavioral therapy focused on managing social anxiety.
-                                Taught deep breathing and mindfulness meditation techniques to help patient manage sudden episodes of anxiety.
-                                Recommended using a diary to record daily anxiety and triggers.
-                              </td>
-                        </tr>
-                        <tr>
-                            <td>5/Apr</td>
-                            <td>Progress: Patient reports using deep breathing techniques has helped, with slight reduction in anxiety
-                                Treatment and recommendations:
-Continue cognitive behavioral therapy and add behavioral training to combat anxiety.
-Suggest the patient to attend a small social skills training group to increase confidence.
-Adjust the journaling method to focus on recording positive experiences and feelings.
-                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6/June</td>
-                            <td>Progress: Patient has improved confidence in social situations and is more proactive in communicating with others
-                                Treatment and recommendations:
-                                Continue weekly cognitive behavioral therapy focused on maintaining and strengthening social skills.
-                                Increase frequency of mindfulness meditation to help patient stay calm in high-pressure situations.
-                                Schedule a follow-up visit in the next month to assess long-term changes in anxiety symptoms.
-                            </td>
-                        </tr>
-                    </tbody>
-                  </table>
-                  <br>
-                </li>
-                <li>
-                    <label for="notes">Add New Note</label>
-                    <textarea id="notes" name="notes" required></textarea>   
-                </li>
-            </ul>
-            <div class="note-button-group">
-                <button type="reset" class="cancel-button">Reset</button>
-                <button type="submit" class="confirm-button">Submit</button>
-            </div>
-        </form>
+    <div class="note-container">
+        <a href="#" class="back-button">&lt; Patient Detail</a>
+        <div class="note-title">
+            <h2 id="note-notes">Notes</h2>
+        </div>
+        <div class="note-patient-name">
+            <label for="patient-name">Patient Name</label>
+            <input type="text" id="patient-name" value="John Smith" disabled>
+        </div>
+        <div class="date-picker-container">
+            <label for="date-range-input" id="history-note">History Notes</label>
+            <!-- <input type="text" id="date-range-input" placeholder="Select date range" readonly> -->
+            <span id="date-icon">
+                <img src="/image/calendar.png" alt="Calendar Icon">
+            </span>
+            <div id="date-picker" class="date-picker"></div>
+        </div>
+        <table class="note-history-note">
+            <thead>
+                <tr>
+                    <th class="date-column">Date</th> <!-- 应用小宽度的类 -->
+                    <th>Notes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>07/Aug</td>
+                    <td>Patient reported feeling anxious in social settings. Suggested practicing deep breathing exercises.</td>
+                    <td><button class="delete-button">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>06/Aug</td>
+                    <td>Discussed progress with cognitive behavioral therapy. Patient is noticing gradual improvement in mood.</td>
+                    <td><button class="delete-button">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>03/Aug</td>
+                    <td>Initial session: Established treatment goals. Patient expressed concerns about managing work-related stress.</td>
+                    <td><button class="delete-button">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <p id="note-add-new">Add a New Note</p>
+            <textarea name="new-note" id="new-note"></textarea>
+        </div>
+        <div class="note-button">
+            <button type="submit" id="note-save">Save</button>
+        </div>
     </div>
-    <script>
-        // Initialize Quill editor
-        var quill = new Quill('#notes', {
-          theme: 'snow'
-        });
-      
-        // Initialize Flatpickr date picker
-        flatpickr("#date-picker", {
-          dateFormat: "Y-m-d",
-          onChange: function(selectedDates, dateStr, instance) {
-            // When a date is selected, insert it into the Quill editor
-            quill.insertText(quill.getSelection().index, dateStr + " ");
-          }
-        });
 
-        // 初始化日期范围选择器
-       flatpickr("#date-range-picker", {
-         mode: "range",
-         dateFormat: "Y-m-d",
-       onChange: function(selectedDates, dateStr, instance) {
-         quill.insertText(quill.getSelection().index, dateStr + " ");
-          }
-       });
-       // When form is submitted, sync the content of Quill editor to the hidden textarea
-        var form = document.querySelector('form');
-        form.onsubmit = function() {
-          var note = document.querySelector('textarea[name=newNote]');
-          note.value = quill.root.innerHTML;
-        };
-      </script>  
+    <!-- 日期选择器逻辑的引入 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const dateRangeInput = document.getElementById('date-range-input');
+            const dateIcon = document.getElementById('date-icon');
+            const datePickerContainer = document.getElementById('date-picker');
+
+            let selectedDate = null;
+
+            function toggleDatePicker() {
+                datePickerContainer.style.display = datePickerContainer.style.display === 'block' ? 'none' : 'block';
+                renderDatePicker();
+            }
+
+            dateRangeInput.addEventListener('click', toggleDatePicker);
+            dateIcon.addEventListener('click', toggleDatePicker);
+
+            function renderDatePicker() {
+                datePickerContainer.innerHTML = ''; // 清空之前的内容
+
+                const date = new Date();
+                const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const day = document.createElement('div');
+                    day.textContent = i;
+                    day.addEventListener('click', () => {
+                        selectedDate = i + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                        dateRangeInput.value = selectedDate;
+                        datePickerContainer.style.display = 'none';
+                    });
+
+                    datePickerContainer.appendChild(day);
+                }
+            }
+
+            document.addEventListener('click', (event) => {
+                if (!datePickerContainer.contains(event.target) && !dateRangeInput.contains(event.target) && !dateIcon.contains(event.target)) {
+                    datePickerContainer.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
