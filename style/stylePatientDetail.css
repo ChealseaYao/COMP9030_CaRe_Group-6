@@ -13,9 +13,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   overflow-y: auto;
   position: relative;
+  
 }
 
 .patientDetailPageBack-button {
@@ -45,6 +46,7 @@ body {
   padding: 30px; /* 容器内边距 */
   border-radius: 8px; /* 边框圆角 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
+  overflow-y: auto;
   
 }
 
