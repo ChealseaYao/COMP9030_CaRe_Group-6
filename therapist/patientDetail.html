@@ -9,10 +9,9 @@
   <link rel="stylesheet" href="/style/stylePatientDetail.css">
 </head>
 <body>
-  <div class="patientDetailContainer">
-        <button class="patientList-button"><span>&lt;  </span>Patient List</button>
-
-        <h2>Patient Details</h2>
+    <button class="patientDetailPageBack-button">Back</button>
+    <div class="patientDetailContainer">
+        <h1>Patient Details</h1>
         
         <div class="user-details">
             <ul class="patient-info">
@@ -23,8 +22,16 @@
             </ul>
             <button class="notes-button">Notes</button>
         </div>
+        
         <div class="journal-lists">
-            <label for="Journals">Journals</label>
+            <div class="journal-header">
+                <label for="Journals">Journals</label>
+                <img src="/image/calendar.png" alt="Calendar Icon">
+                <p>Date Range</p>
+               
+            </div>
+            
+
             <table class="journalLists-table">
                 <thead>
                     <tr>
@@ -61,7 +68,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="viewMore-button">View More</button>
+            <button class="patientDetailPageViewMore-button">View More</button>
         </div>
 
 </div>

@@ -1,35 +1,49 @@
 
 /* ============= patient-patientDashboard page Start - By Zhen ========== */
-
-
-.patientDashboard {
-  max-width: 800px; /* 容器最大宽度 */
-  margin: 0 auto; /* 水平居中显示 */
-  background-color: #ffffff; /* 容器背景颜色 */
-  padding: 20px; /* 容器内边距 */
-  border-radius: 8px; /* 边框圆角 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
-
+body {
+  /* background: url('/mockups/images/back-img-optimized.webp') no-repeat center center fixed; */
+  background-size: cover;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+}
 
 .patientDashboard {
+  max-width: 3000px; /* 容器最大宽度 */
+  margin: 0 auto; /* 水平居中显示 */
+  background-color: #ffffff; /* 容器背景颜色 */
+  padding: 30px; /* 容器内边距 */
+  border-radius: 8px; /* 边框圆角 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
   display: flex;
   justify-content: space-between;
 }
 
-.left-panel h2 {
+
+.left-panel h1 {
   text-align: left;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
+  color: #f8c41a;
 }
 
 .left-panel {
-  width: 40%;
+  width: 55%;
   text-align: left;
 }
 
 .right-panel {
-  width: 55%;
+  width: 42%;
 }
 
 
@@ -38,9 +52,10 @@
   color: white;
   cursor: pointer;
   float: left;
-  margin-top: 5px;
-  margin-left: 12px;
-  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  align-self: flex-start;
+  
 }
 
 .newJournal-button:hover {
@@ -49,10 +64,22 @@
 
 .contentList-table, th, td {
   border: 1px solid #ddd;
-  padding: 12px;
+  padding: 19px;
+  padding-right: 180px;
   text-align: left;
   width: 100%;
   border-collapse: collapse;
+}
+
+.content-list {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  flex-direction: column; /* 使按钮与表格垂直排列 */
+  display: flex; /* Set display to flex */
+  justify-content: space-between; /* Align children with space in between */
 }
 
 .contentList-table th {
@@ -60,8 +87,8 @@
 }
 
 .contentList-table {
-  margin-bottom: 20px;
   border-collapse: collapse;
+  
 }
 
 .patientDashboardViewMore-Button, .newJournal-button {
@@ -77,37 +104,48 @@
   background-color: #4091e8;
   color: white;
   cursor: pointer;
-  float: right;
-  margin-top: 20px;
+  align-self: flex-end; /* 将按钮对齐到右侧 */
+  margin-top: 10px;
+  
 }
+  
 
-.patientDashboardViewMore-Button:hover {
-  background-color: #266bb5;
-}
+  .patientDashboardViewMore-Button:hover {
+    background-color: #266bb5;
+  }
 
 
 .activity, .goal, .affirmation {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 10px;
+  padding: 20px;
   margin-bottom: 20px;
 }
 
+.activity h3 {
+  margin-bottom: 20px;
+}
 .activity-stats {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  
+  
 }
 
 .stat {
   text-align: center;
-  width: 30%;
+  width: 33%; 
+  
+  
 }
 
-.stat h3 {
+
+.stat h2 {
   font-size: 2em;
   margin: 5px 0;
+  color: #ee70b5;
 }
 
 .stat span {
@@ -115,13 +153,17 @@
   vertical-align: top;
 }
 
+.gaol h3 {
+  margin-bottom: 20px;
+}
 .goal p {
-  margin: 0;
+  margin: 10px;
   padding: 10px;
   background-color: #f9f9f9;
   border-radius: 5px;
   border: 1px solid #ddd;
 }
+
 
 .affirmation label {
   display: block;
@@ -132,6 +174,13 @@
   margin-right: 10px;
 }
 
+.affirmation form {
+  margin: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
 
 
 /* ============= patient-patientDashboard page End - By Zhen ========== */
