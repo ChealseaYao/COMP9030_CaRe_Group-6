@@ -1,22 +1,9 @@
 /* ============= therapist-dashboard page Start - By Wenqiang ========== */
-.therapistContainer {
-    display: flex;
-    width: 100%;
-    align-items: flex-start;
-    padding: 25px;
-    flex-wrap: nowrap;
-    text-align: center;
-}
 
 .left {
     width: 28%;
     min-width: 300px;
     padding: 10px;
-}
-.historyleft {
-    width: 28%;
-    padding: 10px;
-    text-align: left;
 }
 
 .centre {
@@ -28,10 +15,6 @@
 .right {
     width: 28%;
     min-width: 250px;
-    padding: 10px;
-}
-.historyright {
-    width: 28%;
     padding: 10px;
 }
 
@@ -103,23 +86,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.tableContainer {
-    background-color: rgb(221, 221, 221);
-    padding: 5px;
-    margin: 5px;
-    max-height: 622px;
-    overflow-y: auto;
-}
-
 .global_journalLists-table {
     width: 100%;
     border-collapse: collapse;
     padding: 5px;
 }
 
-.global_journalLists-table,
-th,
-td {
+.global_journalLists-table th,
+.global_journalLists-table td {
     border: none;
     padding-left: 12px;
     padding-right: 10px;
@@ -131,18 +105,28 @@ td {
 .global_journalLists-table th {
     background-color: #f2f2f2;
 }
-
-.global_journalLists-table th:nth-child(4) {
-    min-width: 300px;
-}
-
-.global_journalLists-table th:nth-child(3) {
-    min-width: 130px;
-}
 .global_journalLists-table td:nth-child(1),
 .global_journalLists-table th:nth-child(1) {
     text-align: center;
 }
+.global_journalLists-table th:nth-child(3),
+.global_journalLists-table td:nth-child(3) {
+    min-width: 15px;
+    max-width: 100px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+.global_journalLists-table th:nth-child(4),
+.global_journalLists-table td:nth-child(4) {
+    min-width: 25px;
+    max-width: 300px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+
 
 #therapistSummary {
     height: 200px;
@@ -163,58 +147,5 @@ td {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 15px;
 }
-
-/* style of navigation bar on top of every page */
-.navbar {
-    width: 100%;
-    height: 60px;
-    background-color: #969696;
-    padding-left: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: relative;
-}
-.site-footer {
-    width: 100%;
-    height: 100px;
-    margin-top: 50px;
-    background-color: #969696;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    color: white;
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-}
-
-.navbar a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    font-size: 30px;
-    padding-left: 30px;
-}
-
-.navbar span {
-    color: white;
-    font-weight: bold;
-    font-size: 30px;
-    padding-left: 30px;
-}
-
-body.therapistBody {
-    background-size: cover;
-    background-color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-    height: auto;
-    flex-direction: column;
-}
-
 
 /* ============= therapist-dashboard page End - By Wenqiang ========== */
