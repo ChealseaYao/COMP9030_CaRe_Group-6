@@ -1,0 +1,137 @@
+
+/* ============= patient-patientDashboard page Start - By Zhen ========== */
+
+
+.patientDashboard {
+  max-width: 800px; /* 容器最大宽度 */
+  margin: 0 auto; /* 水平居中显示 */
+  background-color: #ffffff; /* 容器背景颜色 */
+  padding: 20px; /* 容器内边距 */
+  border-radius: 8px; /* 边框圆角 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
+}
+
+
+
+.patientDashboard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-panel h2 {
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+.left-panel {
+  width: 40%;
+  text-align: left;
+}
+
+.right-panel {
+  width: 55%;
+}
+
+
+.newJournal-button {
+  background-color: #f8c41a;
+  color: white;
+  cursor: pointer;
+  float: left;
+  margin-top: 5px;
+  margin-left: 12px;
+  margin-bottom: 5px;
+}
+
+.newJournal-button:hover {
+  background-color: #c69e18;
+}
+
+.contentList-table, th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.contentList-table th {
+  background-color: #f2f2f2;
+}
+
+.contentList-table {
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.patientDashboardViewMore-Button, .newJournal-button {
+  padding: 10px 20px; /* 按钮内边距 */
+  border: none; /* 无边框 */
+  border-radius: 5px; /* 按钮边角圆滑 */
+  cursor: pointer; /* 鼠标悬停时显示手型图标 */
+  margin-right: 10px; /* 右边距 */
+  font-size: 16px; /* 文本大小 */  
+}
+
+.patientDashboardViewMore-Button {
+  background-color: #4091e8;
+  color: white;
+  cursor: pointer;
+  float: right;
+  margin-top: 20px;
+}
+
+.patientDashboardViewMore-Button:hover {
+  background-color: #266bb5;
+}
+
+
+.activity, .goal, .affirmation {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.activity-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.stat {
+  text-align: center;
+  width: 30%;
+}
+
+.stat h3 {
+  font-size: 2em;
+  margin: 5px 0;
+}
+
+.stat span {
+  font-size: 0.5em;
+  vertical-align: top;
+}
+
+.goal p {
+  margin: 0;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.affirmation label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.affirmation input[type="radio"] {
+  margin-right: 10px;
+}
+
+
+
+/* ============= patient-patientDashboard page End - By Zhen ========== */

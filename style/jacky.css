@@ -1,0 +1,279 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+/* ---------------------------------Patient List Page -----------------------------------*/
+.patientList-body .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.patientList-body .badge-section {
+  width: 15%;
+  background-color: #f4f4f4;
+  padding: 10px;
+  margin-right: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.patientList-body .badge-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.patientList-body .badge-item .status {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid #000;
+}
+
+.patientList-body .good {
+  background-color: green;
+}
+
+.patientList-body .bad {
+  background-color: yellow;
+}
+
+.patientList-body .danger {
+  background-color: red;
+}
+
+.patientList-body .patient-list,
+.patientList-body .groups {
+  width: 40%;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.patientList-body .back-button,
+.patientList-body .search-bar,
+.patientList-body .create-new {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.patientList-body .patient-item,
+.patientList-body .group-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.patientList-body .group-item.selected {
+  background-color: lightblue;
+  border-color: #000;
+}
+
+.patientList-body .patient-icon {
+  margin-right: 10px;
+}
+
+.patientList-body .status {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.patientList-body .members {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.patientList-body .member-item {
+  background-color: #f0f0f0;
+  padding: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.patientList-body .delete-icon {
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------Modal Styles ---------------------------------------*/
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: white;
+}
+
+/* ---------------------------------------------------Journal Page --------------------------------------------*/
+.newJournal-body .container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.newJournal-body h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.newJournal-body .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.newJournal-body .back-button,
+.newJournal-body .upload-button {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.newJournal-body .upload-info {
+  font-size: 0.8em;
+  color: #666;
+  text-align: right;
+}
+
+.newJournal-body textarea,
+.newJournal-body input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.newJournal-body .time-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.newJournal-body .time-input {
+  width: 48%;
+}
+
+.newJournal-body select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 12 12'%3E%3Cpath d='M10.293 3.293a1 1 0 011.414 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 011.414-1.414L6 7.586l4.293-4.293z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  box-sizing: border-box;
+}
+
+.newJournal-body .submit-button {
+  display: block;
+  width: 100px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/*--------------------------------------------------------- Success Page -----------------------------------------*/
+.success-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+.success-body .container {
+  text-align: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.success-body .success-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #9acd32;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px;
+}
+
+.success-body .checkmark {
+  color: white;
+  font-size: 40px;
+}
+
+.success-body .message {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.success-body .link {
+  color: #0000ee;
+  text-decoration: underline;
+  cursor: pointer;
+}
