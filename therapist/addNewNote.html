@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Record Patients Notes</title>
-    <link rel="stylesheet" href="/style/style.css">   
+    <link rel="stylesheet" href="/style/addNewNote.css">   
+    <script src="/js/datepicker.js"></script>
+    <script src="/js/showNotes.js"></script>
 </head>
 <body>
     <div class="note-container">
-        <a href="#" class="back-button">&lt; Patient Detail</a>
+        <a href="/therapist/patientDetail.html" class="back-button">&lt; Patient Detail</a>
         <div class="note-title">
             <h2 id="note-notes">Notes</h2>
         </div>
@@ -18,11 +20,21 @@
         </div>
         <div class="date-picker-container">
             <label for="date-range-input" id="history-note">History Notes</label>
-            <!-- <input type="text" id="date-range-input" placeholder="Select date range" readonly> -->
             <span id="date-icon">
                 <img src="/image/calendar.png" alt="Calendar Icon">
             </span>
-            <div id="date-picker" class="date-picker"></div>
+            <div class="calendar-popup">
+                <label for="year">Year:</label>
+                <select id="year"></select>
+        
+                <label for="month">Month:</label>
+                <select id="month"></select>
+        
+                <label for="day">Day:</label>
+                <select id="day"></select>
+        
+                <button id="confirm-btn">Confirm</button>
+            </div>
         </div>
         <table class="note-history-note">
             <thead>
@@ -59,48 +71,6 @@
         </div>
     </div>
 
-    <!-- 日期选择器逻辑的引入 -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const dateRangeInput = document.getElementById('date-range-input');
-            const dateIcon = document.getElementById('date-icon');
-            const datePickerContainer = document.getElementById('date-picker');
-
-            let selectedDate = null;
-
-            function toggleDatePicker() {
-                datePickerContainer.style.display = datePickerContainer.style.display === 'block' ? 'none' : 'block';
-                renderDatePicker();
-            }
-
-            dateRangeInput.addEventListener('click', toggleDatePicker);
-            dateIcon.addEventListener('click', toggleDatePicker);
-
-            function renderDatePicker() {
-                datePickerContainer.innerHTML = ''; // 清空之前的内容
-
-                const date = new Date();
-                const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const day = document.createElement('div');
-                    day.textContent = i;
-                    day.addEventListener('click', () => {
-                        selectedDate = i + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-                        dateRangeInput.value = selectedDate;
-                        datePickerContainer.style.display = 'none';
-                    });
-
-                    datePickerContainer.appendChild(day);
-                }
-            }
-
-            document.addEventListener('click', (event) => {
-                if (!datePickerContainer.contains(event.target) && !dateRangeInput.contains(event.target) && !dateIcon.contains(event.target)) {
-                    datePickerContainer.style.display = 'none';
-                }
-            });
-        });
-    </script>
+   
 </body>
 </html>
