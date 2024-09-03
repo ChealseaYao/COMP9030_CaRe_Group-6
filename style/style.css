@@ -226,7 +226,7 @@ body {
 }
  
 .note-history-note th.date-column {
-    width: 15%; /* 设置日期列的宽度 */
+    width: 18%; /* 设置日期列的宽度 */
 }
  
 .note-history-note td:last-child {
