@@ -1,1 +1,37 @@
-
+/*---patientJournal--- Start*/
+.delete-button {
+    padding: 5px 10px;
+    background-color: #f44336;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+.popup button {
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+}
+/*---patientJournal--- End*/
