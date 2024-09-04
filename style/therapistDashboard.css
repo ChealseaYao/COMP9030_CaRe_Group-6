@@ -21,6 +21,7 @@
     width: 28%;
     min-width: 250px;
     padding: 10px;
+    text-align: left;
 }
 
 #therapistInfo {
@@ -61,7 +62,7 @@
     height: 50px;
     border-radius: 10px;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     color: white;
     background-color: #386a9b
 }
@@ -76,8 +77,11 @@
     height: 500px;
     background-color: white;
     border-radius: 4px;
-    align-items: center;
+    text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+#therapistStatistics h3{
+    padding: 15px;
 }
 
 #global_journalList {
@@ -143,9 +147,15 @@
     background-color: white;
     border-radius: 4px;
     min-width: 100px;
-    align-items: center;
+    text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
+}
+#therapistSummary h3 {
+    padding: 15px;
+}
+.right h2 {
+    padding-top: 15px;
 }
 
 #therapistCalendar {
