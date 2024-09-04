@@ -1,31 +1,10 @@
 
 /* ============= patient-patientDashboard page Start - By Zhen ========== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  /* background: url('/mockups/images/back-img-optimized.webp') no-repeat center center fixed; */
-  background-size: cover;
-  background-color: #f0f2f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow-y: auto;
-  position: relative;
-}
 
 .patientDashboard {
-  max-width: 3000px; /* 容器最大宽度 */
+ 
   margin: 0 auto; /* 水平居中显示 */
-  background-color: #ffffff; /* 容器背景颜色 */
   padding: 30px; /* 容器内边距 */
-  border-radius: 8px; /* 边框圆角 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
   display: flex;
   justify-content: space-between;
   overflow-y: auto;
@@ -39,42 +18,41 @@ body {
 }
 
 .left-panel {
-  width: 55%;
+  width: 50%;
   text-align: left;
 }
 
 .right-panel {
-  width: 42%;
+  width: 47%;
 }
 
 
 .newJournal-button {
   background-color: #f8c41a;
   color: white;
-  cursor: pointer;
   float: left;
-  margin-left: 10px;
-  margin-bottom: 20px;
+ 
+  margin-bottom: 15px;
   align-self: flex-start;
   
 }
 
 .newJournal-button:hover {
   background-color: #c69e18;
+  cursor: pointer;
 }
 
 .contentList-table, th, td {
-  border: 1px solid #ddd;
-  padding: 19px;
-  padding-right: 180px;
+  border: none;
+  padding-left: 15px;
+  padding-top: 18px;
+  padding-bottom: 18px;
   text-align: left;
-  width: 100%;
-  border-collapse: collapse;
 }
 
 .content-list {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
@@ -84,12 +62,21 @@ body {
 }
 
 .contentList-table th {
-  background-color: #f2f2f2;
+  background-color: #386a9b; /* 表头背景色 */
+  color: white;
+}
+.contentList-table td {
+  background-color: rgb(236, 236, 236); /* 单元格背景色 */
 }
 
 .contentList-table {
+  width: 100%;
   border-collapse: collapse;
   
+}
+
+.contentList-table th:nth-child(1), .contentList-table td:nth-child(1) {
+  width: 500px; /* 增加第1列的右内边距 */
 }
 
 .patientDashboardViewMore-Button, .newJournal-button {
@@ -102,7 +89,7 @@ body {
 }
 
 .patientDashboardViewMore-Button {
-  background-color: #4091e8;
+  background-color: #386a9b;
   color: white;
   cursor: pointer;
   align-self: flex-end; /* 将按钮对齐到右侧 */
@@ -112,20 +99,23 @@ body {
   
 
   .patientDashboardViewMore-Button:hover {
-    background-color: #266bb5;
+    background-color: #2b537a;
   }
 
 
 .activity, .goal, .affirmation {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: white;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .activity h3 {
   margin-bottom: 20px;
+
 }
 .activity-stats {
   display: flex;
@@ -146,7 +136,7 @@ body {
 .stat h2 {
   font-size: 2em;
   margin: 5px 0;
-  color: #ee70b5;
+  color: #ca80a9;
 }
 
 .stat span {
@@ -154,16 +144,15 @@ body {
   vertical-align: top;
 }
 
-.gaol h3 {
-  margin-bottom: 20px;
-}
+
 .goal p {
   margin: 10px;
   padding: 10px;
   background-color: #f9f9f9;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px dashed #ddd;
 }
+
 
 
 .affirmation label {
@@ -180,7 +169,7 @@ body {
   padding: 10px;
   background-color: #f9f9f9;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px dashed #ddd;
 }
 
 

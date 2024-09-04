@@ -21,14 +21,14 @@
 
 
 .patientDetailContainer {
-  max-width: 1500px; /* 容器最大宽度 */
   margin: 0 auto; /* 水平居中显示 */
-  background-color: #ffffff; /* 容器背景颜色 */
   padding: 30px; /* 容器内边距 */
-  border-radius: 8px; /* 边框圆角 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
   overflow-y: auto;
   
+}
+
+.patientDetailContainer h1 {
+  color: #102e5d;
 }
 
 .user-details {
@@ -36,7 +36,7 @@
   align-items: flex-start; /* 保证子元素从容器的顶部开始对齐 */
   justify-content: space-between; /* 文本和按钮分布在容器的两端 */
   width: 100%;
-  margin-top: 15px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -68,6 +68,7 @@
   display: block; /* 标签块级显示 */
   margin-bottom: 5px; /* 标签下边距 */
   font-weight: bold; /* 字体加粗 */
+  color: #102e5d;
  
 }
 
@@ -75,15 +76,13 @@
   display: flex;
   align-items: center; /* Aligns items vertically in the center */
   justify-content: flex-start; /* Align items to the start of the container */
-  margin-bottom: 5px;
 }
 
 .journal-header img {
   width: 20px;
   height: 20px;
-  margin-left: 30px;
-  margin-right: 5px;
-  
+  margin-left: 10px;
+  margin-bottom: 5px;
   cursor: pointer;
 }
 
@@ -123,19 +122,18 @@
   border: none; /* 无边框 */
   border-radius: 5px; /* 按钮边角圆滑 */
   cursor: pointer; /* 鼠标悬停时显示手型图标 */
-  margin-right: 10px; /* 右边距 */
   font-size: 16px; /* 文本大小 */  
 }
 
 .notes-button {
-  background-color: #d871a6;
+  background-color: #f8c41a;;
   color: white;
-  cursor: pointer;
   float: right;
 }
 
 .notes-button:hover {
-  background-color: #9f557b;
+  background-color: #c69e18;
+  cursor: pointer;
 }
 
 
@@ -146,6 +144,7 @@
   cursor: pointer;
   float: right;
   margin-top: 10px;
+  margin-right: 10px;
 }
 
 .patientDetailPageViewMore-button:hover {

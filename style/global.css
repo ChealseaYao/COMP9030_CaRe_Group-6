@@ -13,6 +13,11 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+h2, h3 {
+    color: #102e5d;
+}
+
 .historyleft {
     width: 28%;
     padding: 10px;
