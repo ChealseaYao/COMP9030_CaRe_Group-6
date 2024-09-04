@@ -3,9 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="author" content="Hsin-Hui Chu">
+    <title>Therapist Journal</title>
+    <link rel="stylesheet" href="/style/therapistJournal.css">
+    
 </head>
 <body>
-    
+    <div class="journalleft">
+        <a href="historyJournalList.html">
+            <button class="back-button">Back</button>
+        </a>
+    </div>
+    <div class="container">
+        <div class="entry-header">John Smith</div>
+        <div class="entry-date">Date: 13/08/2024</div>
+        <div class="entry-content">
+            Today I didn't feel well, because it's a raining day. 
+            It's really easy for me to be affected by the weather. 
+            I'm always thinking about the meaning of life, and I didn't want to work. Sometimes I cry silently... Anyway, I hope there will be a sunny day tomorrow.
+        </div>
+        <div class="details">
+            <span><label>Sleeping Time:</label> 23:30 - 07:30</span>
+            <span><label>Food:</label> Pizza, Sandwich</span>
+            <span><label>Exercise:</label> none</span>
+        </div>
+        <div class="download">
+            <label>Attached File:</label>
+            <!--這裡是download button-->
+            <a href="starIcon.png" download="hamburger.png"><button>Download</button></a>
+        </div>
+
+        <div class="star" onclick="toggleStar()">
+            <img src="star.png" id="starIcon" alt="Star Icon">
+        </div>
+        <script src="/scripts/jounal.js" defer></script>
+    </div>
+    <footer class="copyright">
+        <p>2024 CaRe. All rights reserved.</p>
+    </footer>
 </body>
 </html>
