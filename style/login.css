@@ -7,10 +7,8 @@
 
 
 body {
-    /* background: url('/mockups/images/back-img-optimized.webp') no-repeat center center fixed; */
     background-size: cover;
     background-color: #f0f2f5;
-    /* display: flex; */
     justify-content: center;
     align-items: center;
 }
@@ -97,11 +95,7 @@ body {
     text-decoration: underline;
 }
 
-/* p {
-    font-size: 14px;
-    color: #555;
-    text-align: center;
-} */
+
 .login-reminder  {
     font-size: 14px;
     color: #555;
