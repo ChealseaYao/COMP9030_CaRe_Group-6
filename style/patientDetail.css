@@ -1,25 +1,5 @@
 /* ============= therapist-patientDetail page Start - By Zhen ========== */
 
-.patientDetailPageBack-button {
-  position: absolute;
-  top: 110px;
-  left: 20px; 
-  font-size: large;
-  border: none;
-  width: 60px;
-  height: 35px;
-  border-radius: 5px;
-  color: white;
-  background-color: #007bff;
-  
-  
-}
-.patientDetailPageBack-button:hover {
-  background-color: #0056b3;
-  cursor: pointer;
-}
-
-
 .patientDetailContainer {
   margin: 0 auto; /* 水平居中显示 */
   padding: 30px; /* 容器内边距 */
@@ -58,33 +38,86 @@
   margin-bottom: 5px; /* 增加每个列表项之间的底部外边距 */
 }
 
-
-
 .notes-button {
   margin-left: 20px; /* 为按钮和文本之间提供一些空间 */
 }
 
-.journal-lists label {
-  display: block; /* 标签块级显示 */
-  margin-bottom: 5px; /* 标签下边距 */
-  font-weight: bold; /* 字体加粗 */
+#journals {
+  text-align: left; 
+  font-weight: bold;
   color: #102e5d;
+  }
+  
+.date-picker-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+#date-range-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 250px;
+}
+
+#date-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#date-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.date-picker {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.date-picker div {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.date-picker div:hover {
+  background-color: #f2f2f2;
+}
+
+.calendar-popup {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.calendar-popup select {
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.calendar-popup button {
+  margin-top: 5px;
  
 }
 
-.journal-header {
-  display: flex;
-  align-items: center; /* Aligns items vertically in the center */
-  justify-content: flex-start; /* Align items to the start of the container */
-}
-
-.journal-header img {
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
-  margin-bottom: 5px;
-  cursor: pointer;
-}
 
 
 
@@ -141,7 +174,6 @@
 .patientDetailPageViewMore-button {
   background-color: #386a9b;
   color: white;
-  cursor: pointer;
   float: right;
   margin-top: 10px;
   margin-right: 10px;
@@ -149,6 +181,7 @@
 
 .patientDetailPageViewMore-button:hover {
   background-color: #2b537a;
+  cursor: pointer;
 }
 
 /* ============= therapist-patientDetail page End  - By Zhen ========== */
