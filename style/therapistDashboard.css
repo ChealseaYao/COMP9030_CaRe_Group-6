@@ -10,6 +10,7 @@
     width: 54%;
     padding: 10px;
     min-width: fit-content;
+    text-align: left;
 }
 
 .right {
@@ -84,6 +85,7 @@
     border-radius: 5px;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .global_journalLists-table {
@@ -103,7 +105,8 @@
 }
 
 .global_journalLists-table th {
-    background-color: #f2f2f2;
+    background-color: #2b4d6e;
+    color: white;
 }
 .global_journalLists-table td:nth-child(1),
 .global_journalLists-table th:nth-child(1) {
