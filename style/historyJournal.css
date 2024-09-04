@@ -52,19 +52,6 @@
 }
 
 
-.back-btn {
-    font-size: large;
-    border: none;
-    width: 60px;
-    height: 35px;
-    border-radius: 5px;
-    color: white;
-    background-color: #007bff
-}
-.back-btn:hover {
-    background-color: #0056b3;
-}
-
 .patientHJT th:nth-child(2) {
     width: 700px;
     min-width: 200px;

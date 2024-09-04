@@ -1,79 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Zhen Liu">
-  <meta name="description" content="therapist of COMP9030_CaRe_Groups6">
-  <title>Patient Details</title>
-  <link rel="stylesheet" href="/style/patientDetail.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Zhen Liu">
+    <meta name="description" content="therapist of COMP9030_CaRe_Groups6">
+    <title>Patient Details</title>
+    <link rel="stylesheet" href="/style/global.css">
+    <link rel="stylesheet" href="/style/patientDetail.css">
 </head>
+
 <body>
-    <button class="patientDetailPageBack-button">Back</button>
-    <div class="patientDetailContainer">
-        <h1>Patient Details</h1>
-        
-        <div class="user-details">
-            <ul class="patient-info">
-                <li>Name: John Smith</li>
-                <li>Age: 35</li>
-                <li>Gender: male</li>
-                <li>Email: johnsmith@example.com</li>
-            </ul>
-            <a href="addNewNote.html">
-                <button class="notes-button">Notes</button>
-            </a>
+    <!-- global navigation bar -->
+    <header class="navbar">
+        <a href="therapistDashboard.html">CaRe</a>
+    </header>
+    
+    <div class="therapistContainer">
+        <div class="historyleft">
+            <button class="back-btn">Back</button>
         </div>
-        
-        <div class="journal-lists">
-            <div class="journal-header">
-                <label for="Journals">Journals</label>
-                <img src="/image/calendar.png" alt="Calendar Icon">
-                <p>Date Range</p>
-               
+        <div class="patientDetailContainer">
+            <h1>Patient Details</h1>
+
+            <div class="user-details">
+                <ul class="patient-info">
+                    <li>Name: John Smith</li>
+                    <li>Age: 35</li>
+                    <li>Gender: male</li>
+                    <li>Email: johnsmith@example.com</li>
+                </ul>
+                <a href="addNewNote.html">
+                    <button class="notes-button">Notes</button>
+                </a>
             </div>
-            
 
-            <table class="journalLists-table">
-                <thead>
-                    <tr>
-                        <th>State</th>
-                        <th>Title</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>●</td>
-                        <td>Journal Title 1</td>
-                        <td>13/08/2024</td>
-                    </tr>
-                    <tr>
-                        <td>✔</td>
-                        <td>Journal Title 2</td>
-                        <td>11/08/2024</td>
-                    </tr>
-                    <tr>
-                        <td>✔</td>
-                        <td>Journal Title 3</td>
-                        <td>09/08/2024</td>
-                    </tr>
-                    <tr>
-                        <td>✔</td>
-                        <td>Journal Title 4</td>
-                        <td>07/08/2024</td>
-                    </tr>
-                    <tr>
-                        <td>✔</td>
-                        <td>Journal Title 5</td>
-                        <td>06/08/2024</td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="patientDetailPageViewMore-button">View More</button>
+            <div class="journal-lists">
+                <div class="journal-header">
+                    <label for="Journals">Journals</label>
+                    <img src="/image/calendar.png" alt="Calendar Icon">
+                    <p>Date Range</p>
+
+                </div>
+
+
+                <table class="journalLists-table">
+                    <thead>
+                        <tr>
+                            <th>State</th>
+                            <th>Title</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>●</td>
+                            <td>Journal Title 1</td>
+                            <td>13/08/2024</td>
+                        </tr>
+                        <tr>
+                            <td>✔</td>
+                            <td>Journal Title 2</td>
+                            <td>11/08/2024</td>
+                        </tr>
+                        <tr>
+                            <td>✔</td>
+                            <td>Journal Title 3</td>
+                            <td>09/08/2024</td>
+                        </tr>
+                        <tr>
+                            <td>✔</td>
+                            <td>Journal Title 4</td>
+                            <td>07/08/2024</td>
+                        </tr>
+                        <tr>
+                            <td>✔</td>
+                            <td>Journal Title 5</td>
+                            <td>06/08/2024</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="patientDetailPageViewMore-button">View More</button>
+            </div>
         </div>
+        <div class="historyright">
 
-</div>
-  
+        </div>
+    </div>
+    <footer class="site-footer">
+        <p>&copy; 2024 CaRe | All Rights Reserved</p>
+    </footer>
+
 </body>
+
 </html>

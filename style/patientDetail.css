@@ -1,23 +1,4 @@
 /* ============= therapist-patientDetail page Start - By Zhen ========== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  /* background: url('/mockups/images/back-img-optimized.webp') no-repeat center center fixed; */
-  background-size: cover;
-  background-color: #f0f2f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow-y: auto;
-  position: relative;
-  
-}
 
 .patientDetailPageBack-button {
   position: absolute;
@@ -114,7 +95,7 @@ body {
 }
 
 .journalLists-table, th, td {
-  border: 1px solid #ddd;
+  border: none;
   padding-left: 12px;
   padding-right: 100px;
   padding-top: 15px;
@@ -124,15 +105,16 @@ body {
 }
 
 .journalLists-table  th {
-  background-color: #f2f2f2; /* 表头背景色 */
+  background-color: #386a9b; /* 表头背景色 */
+  color: white;
 }
 
 .journalLists-table   td {
-  background-color: #ffffff; /* 单元格背景色 */
+  background-color: rgb(236, 236, 236); /* 单元格背景色 */
 }
 
 .journalLists-table th:nth-child(2), .journalLists-table td:nth-child(2) {
-  padding-right: 400px; /* 增加第二列的右内边距 */
+  width: 500px; /* 增加第二列的右内边距 */
 }
 
 
@@ -159,7 +141,7 @@ body {
 
 
 .patientDetailPageViewMore-button {
-  background-color: #4091e8;
+  background-color: #386a9b;
   color: white;
   cursor: pointer;
   float: right;
@@ -167,7 +149,7 @@ body {
 }
 
 .patientDetailPageViewMore-button:hover {
-  background-color: #266bb5;
+  background-color: #2b537a;
 }
 
 /* ============= therapist-patientDetail page End  - By Zhen ========== */
