@@ -6,9 +6,9 @@
 }
 
 body {
-    /* background: url('/mockups/images/back-img-optimized.webp') no-repeat center center fixed; */
     background-size: cover;
-    background-color: #f0f2f5;
+    background-image: url(../image/backpattern.jpg);
+    
     /* display: flex; */
     justify-content: center;
     align-items: center;
@@ -64,7 +64,6 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 .navbar a {
     text-decoration: none;
     color: white;
@@ -72,7 +71,6 @@ body {
     font-size: 30px;
     padding-left: 30px;
 }
-
 .navbar span {
     color: white;
     font-weight: bold;
