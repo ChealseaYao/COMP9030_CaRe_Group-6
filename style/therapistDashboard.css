@@ -63,11 +63,11 @@
     margin-top: 10px;
     margin-bottom: 10px;
     color: white;
-    background-color: #f8c41a
+    background-color: #386a9b
 }
 
 .viewPatients:hover {
-    background-color: #d3a717;
+    background-color: #2b537a;
     cursor: pointer;
 }
 
