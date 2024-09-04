@@ -27,13 +27,13 @@ body {
 .tableContainer {
     background-color: rgb(236, 236, 236);
     margin: 5px;
-    max-height: 622px;
+    max-height: 615px;
     overflow-y: auto;
 }
 .star {
     color: #f8c41a;
     border: #2d2c33 2px;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     padding: 0px;
 }
@@ -65,8 +65,10 @@ body {
 }
 .navbar a {
     text-decoration: none;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     color: white;
     font-weight: bold;
+    font-style: italic;
     font-size: 50px;
     padding-left: 30px;
 }

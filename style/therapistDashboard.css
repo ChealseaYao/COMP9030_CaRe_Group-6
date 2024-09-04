@@ -140,8 +140,6 @@
     text-overflow: ellipsis;
 }
 
-
-
 #therapistSummary {
     height: 200px;
     background-color: white;
@@ -155,11 +153,12 @@
     padding: 15px;
 }
 .right h2 {
+    padding-left: 10px;
     padding-top: 15px;
 }
 
 #therapistCalendar {
-    height: 463px;
+    height: 458px;
     background-color: white;
     border-radius: 4px;
     min-width: 100px;
