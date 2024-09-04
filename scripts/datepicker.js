@@ -57,9 +57,6 @@ document.addEventListener("DOMContentLoaded", function() {
     confirmBtn.addEventListener('click', function() {
         const selectedDate = `${yearSelect.value}-${monthSelect.value}-${daySelect.value}`;
         console.log("Selected Date:", selectedDate);
-        // Here you can set the selected date to an input field or display it on the page
-        // Example:
-        // document.getElementById('date-range-input').value = selectedDate;
         calendarPopup.style.display = 'none';
     });
 
