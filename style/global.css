@@ -26,13 +26,12 @@ body {
 
 .tableContainer {
     background-color: rgb(236, 236, 236);
-    padding: 5px;
     margin: 5px;
     max-height: 622px;
     overflow-y: auto;
 }
 .star {
-    color: rgb(111, 33, 255);
+    color: #f8c41a;
     border: #2d2c33 2px;
     font-size: 30px;
     text-align: center;

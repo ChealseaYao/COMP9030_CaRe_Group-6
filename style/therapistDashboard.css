@@ -12,6 +12,10 @@
     min-width: fit-content;
     text-align: left;
 }
+.centre h1 {
+    color: #f8c41a;
+    padding-bottom: 25px;
+}
 
 .right {
     width: 28%;
@@ -59,11 +63,12 @@
     margin-top: 10px;
     margin-bottom: 10px;
     color: white;
-    background-color: #007bff
+    background-color: #f8c41a
 }
 
 .viewPatients:hover {
-    background-color: #0056b3;
+    background-color: #d3a717;
+    cursor: pointer;
 }
 
 #therapistStatistics {
@@ -85,7 +90,9 @@
     border-radius: 5px;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+}
+#global_journalList h3 {
+    padding-left: 5px;
 }
 
 .global_journalLists-table {
