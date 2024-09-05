@@ -55,6 +55,7 @@
 
 .patientList-body .patient-list {
   width: 60%;
+  max-width: 800px;
   text-align: left;
   background-color: #fff;
   padding: 15px;
@@ -78,7 +79,7 @@
   min-height: 450px;
 }
 
-.groups .nameAndButton {
+.nameAndButton {
   display: flex;
   justify-content: space-between;
 }
