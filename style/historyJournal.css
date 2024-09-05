@@ -21,6 +21,16 @@
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+.searchPannel {
+    display: flex;
+}
+.searchPannel .date-picker-container {
+    padding-top: 10px;
+}
+.searchPannel .calendar-popup {
+    min-width: 350px;
+    text-align: left;
+}
 .historyJournal-table{
     width: 100%;
     border-collapse: collapse;

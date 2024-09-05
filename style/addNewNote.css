@@ -50,29 +50,7 @@
     background-color: #f2f2f2;
 }
 
-.date-picker-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    position: relative;
-}
 
-#date-range-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 250px;
-}
-
-#date-icon {
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-#date-icon img {
-    width: 20px;
-    height: 20px;
-}
 
 .note-history-note {
     width: 100%;
