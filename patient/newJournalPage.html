@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Today's Journal</title>
-    <link rel="stylesheet" href="../style/newJournal.css" />
-  </head>
-  <body class="newJournal-body">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Today's Journal</title>
+  <link rel="stylesheet" href="../style/newJournal.css" />
+  <link rel="stylesheet" href="../style/global.css" />
+</head>
+
+<body class="newJournal-body">
+  <header class="navbar">
+    <a href="patientDashboard.html"><img src="/image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+  </header>
+  <div class="therapistContainer">
+    <div class="leftbox">
+      <!-- should be selected patient journal list page -->
+      <a href="patientDashboard.html">
+        <button class="back-btn">Back</button>
+      </a>
+    </div>
     <div class="container">
       <div class="header">
-        <button class="back-button">← Back</button>
+        <div>
+          <h1>Today's Journal</h1>
+        </div>
         <div>
           <button class="upload-button">Upload File</button>
           <div class="upload-info">Uploaded: file.jpg</div>
         </div>
       </div>
-      <h1>Today's Journal</h1>
+
       <form>
         <label for="day-description">How was your day?</label>
         <textarea id="day-description" rows="4"></textarea>
@@ -58,7 +73,14 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="rightbox">
 
-    <script src="../scripts/submitModal.js"></script>
-  </body>
+  </div>
+  <script src="../scripts/submitModal.js"></script>
+  <footer class="site-footer">
+    <p>&copy; 2024 CaRe | All Rights Reserved</p>
+  </footer>
+</body>
+
 </html>
