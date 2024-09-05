@@ -1,14 +1,25 @@
-
-
 /* ---------------------------------Patient List Page -----------------------------------*/
+.patientList-body .leftbox {
+  width: 15%;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: fit-content;
+}
 
-.patientList-body .badge-section {
-  background-color: #f4f4f4;
+.leftbox h3 {
+  margin-top: 60px;
+  margin-right: 60px;
+  align-self: flex-end;
+}
+
+.badge-section {
+  background-color: #e7e7e7;
   padding: 10px;
-  width:90%;
-  min-width: 120px;
-  margin-top: 30px;
-  margin-right: 20px;
+  width: 120px;
+  margin-top: 10px;
+  align-self: flex-end;
   border-radius: 8px;
   text-align: center;
 }
@@ -24,7 +35,10 @@
   height: 20px;
   border-radius: 50%;
   margin-right: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   border: 1px solid #000;
+  flex-shrink: 0;
 }
 
 .patientList-body .good {
@@ -43,29 +57,51 @@
   width: 60%;
   text-align: left;
   background-color: #fff;
-  padding: 10px;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin-right: 20px;
-  min-height: 450px;
+  min-height: 511px;
 }
+
+.patient-list h2 {
+  margin-bottom: 10px;
+}
+
 .patientList-body .groups {
-  width: 32%;
+  width: 25%;
   text-align: left;
   background-color: #fff;
-  padding: 10px;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   min-height: 450px;
 }
 
-.patientList-body .back-button,
-.patientList-body .search-bar,
+.groups .nameAndButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+.groups h3 {
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
 .patientList-body .create-new {
-  margin-bottom: 20px;
-  padding: 10px;
+  font-size: 16px;
+  border: none;
+  width: 100px;
+  height: 35px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  color: white;
+  background-color: #f8c41a;
+  float: right;
+  margin-bottom: 10px;
+}
+
+.create-new:hover {
+  background-color: #c69e18;
   cursor: pointer;
 }
 
@@ -96,17 +132,23 @@
   height: 20px;
   border-radius: 50%;
   display: inline-block;
+  margin-right: 10px;
 }
 
 .patientList-body .members {
-  margin-top: 20px;
   padding: 10px;
-  background-color: #f4f4f4;
+  background-color: #e7e7e7;
   border-radius: 8px;
+  min-height: 200px;
+}
+
+.members p {
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .patientList-body .member-item {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   padding: 5px;
   margin-bottom: 5px;
   display: flex;

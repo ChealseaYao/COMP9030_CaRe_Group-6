@@ -21,8 +21,8 @@
         <button class="back-btn">Back</button>
       </a>
 
+      <h3>Badge</h3>
       <div class="badge-section">
-        <h3>Badge</h3>
         <div class="badge-item">
           <span class="status good"></span> Good Status
         </div>
@@ -37,7 +37,11 @@
 
     <div class="patient-list">
       <h2>Patient List</h2>
-      <input type="text" class="search-bar" placeholder="🔍 search" />
+      <form class="search-bar">
+        <input type="text" placeholder="Search..." name="search" />
+        <button type="submit">Search</button>
+      </form>
+      <!-- <input type="text" class="search-bar" placeholder="🔍 search" /> -->
       <div class="patient-item">
         <div>
           <span class="patient-icon">☰</span>
@@ -46,21 +50,24 @@
         </div>
         <div>
           <span class="status good"></span>
-          <button>Details</button>
+          <button class="details">Details</button>
         </div>
       </div>
       <!-- Repeat for each patient -->
     </div>
 
     <div class="groups">
-      <h2>Groups</h2>
-      <button class="create-new">Create New</button>
+      <div class="nameAndButton">
+        <h2>Groups</h2>
+        <button class="create-new">Create New</button>
+      </div>
+        
       <div class="group-item">Tuesday 3pm Session</div>
       <div class="group-item">Friday Special</div>
       <div class="group-item">Anxiety Group</div>
       <div class="group-item">Avengers</div>
+      <h3>Members</h3>
       <div class="members">
-        <h3>Members</h3>
         <p>Avengers</p>
         <div class="member-item">
           Peter Smith <span class="delete-icon">🗑️</span>

@@ -65,7 +65,33 @@ h2, h3 {
     text-align: center;
     padding: 0px;
 }
+/* search function start */
 
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px;
+}
+.search-bar input[type="text"] {
+    font-size: 20px;
+    height: 28px;
+    flex-grow: 1;
+}
+.search-bar button {
+    font-size: 20;
+    border: none;
+    width: 80px;
+    height: 28px;
+    border-radius: 5px;
+    color: white;
+    background-color: #007bff
+}
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+/* search function end */
 
 /* style of Header and Footer start */
 
