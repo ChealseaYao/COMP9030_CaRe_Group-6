@@ -3,6 +3,15 @@ document.addEventListener("DOMContentLoaded", function() {
         '2024-07-20': [
             'Patient discussed concerns about managing stress at work.',
             'Follow-up session: Patient reported better sleep patterns.',
+            'Patient started a new exercise routine as recommended.',
+            'Patient discussed concerns about managing stress at work.',
+            'Follow-up session: Patient reported better sleep patterns.',
+            'Patient started a new exercise routine as recommended.',
+            'Patient discussed concerns about managing stress at work.',
+            'Follow-up session: Patient reported better sleep patterns.',
+            'Patient started a new exercise routine as recommended.',
+            'Patient discussed concerns about managing stress at work.',
+            'Follow-up session: Patient reported better sleep patterns.',
             'Patient started a new exercise routine as recommended.'
         ],
         '2024-07-30': [
