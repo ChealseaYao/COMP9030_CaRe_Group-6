@@ -50,6 +50,23 @@ body {
     margin-top: 5px;
 }
 
+.login-input-group li select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+}
+
+.login-input-group li select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
 .login-input-group li button {
     margin-top: 10px;
     width: 100%;
