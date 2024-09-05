@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const users = [
                 { username: 'Vivian Harper', password: '123', role: 'therapist' },
-                { username: 'Kage', password: '123', role: 'patient' }
+                { username: 'Kage Wong', password: '123', role: 'patient' }
             ];
 
            
