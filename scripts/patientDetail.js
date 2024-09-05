@@ -20,19 +20,13 @@ document.addEventListener("DOMContentLoaded", function() {
         '2024-08-18': [{ state: '✔', content: 'Therapy session went well today. I feel like I’m making progress, slowly but surely.', star: true }],
         '2024-08-17': [{ state: '●', content: 'Had a panic attack while driving. It came out of nowhere, and I had to pull over.', star: false }],
         '2024-08-16': [{ state: '✔', content: 'Tried journaling my feelings today. It helped me understand where my anxiety is coming from.', star: true }],
-        '2024-08-15': [{ state: '●', content: 'Couldn’t sleep last night. My mind was racing with worries about work and relationships.', star: false }],
-        '2024-08-14': [{ state: '✔', content: 'Felt more at peace today. I spent some time reading and practicing mindfulness.', star: false }],
-        '2024-08-13': [{ state: '●', content: 'This is an example of a very long journal that might include many internal thoughts.', star: true }],
-        '2024-08-12': [{ state: '✔', content: 'Discussed boundaries in therapy today. I think it’s something I need to work on.', star: false }],
-        '2024-08-11': [{ state: '●', content: 'Still feeling anxious about upcoming events. I can’t seem to stop worrying about them.', star: false }],
-        '2024-08-10': [{ state: '✔', content: 'Had a good day overall. Managed to do my chores without feeling overwhelmed.', star: false }]
+        '2024-08-15': [{ state: '●', content: 'Couldn’t sleep last night. My mind was racing with worries about work and relationships.', star: false }]
     };
-    
 
     // 显示默认最新的5条记录
     function displayLatestJournals() {
         const sortedDates = Object.keys(journalData).sort((a, b) => new Date(b) - new Date(a));
-        const latestDates = sortedDates.slice(0, 5);
+        const latestDates = sortedDates.slice(0, 5);  // 获取最新的5条数据
 
         renderTable(latestDates);
     }
@@ -54,68 +48,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 处理日历图标点击，过滤选择的日期
-    const confirmBtn = document.getElementById('confirm-btn');
-    confirmBtn.addEventListener('click', function() {
-        const year = document.getElementById('year').value;
-        const month = document.getElementById('month').value.padStart(2, '0');
-        const day = document.getElementById('day').value.padStart(2, '0');
-        
-        const selectedDate = `${year}-${month}-${day}`;
-        
-        if (journalData[selectedDate]) {
-            renderTable([selectedDate]); // 只显示选择的日期的数据
-        } else {
-            alert("No journals found for the selected date.");
-        }
-    });
-
-    // 初始化日期选择器，年、月、日
-    function initDatePicker() {
-        const currentYear = new Date().getFullYear();
-        const yearSelect = document.getElementById('year');
-        const monthSelect = document.getElementById('month');
-        const daySelect = document.getElementById('day');
-        
-        // 年份选择
-        for (let i = currentYear; i >= 2020; i--) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            yearSelect.appendChild(option);
-        }
-        
-        // 月份选择
-        for (let i = 1; i <= 12; i++) {
-            const option = document.createElement('option');
-            option.value = i.toString().padStart(2, '0');
-            option.textContent = i;
-            monthSelect.appendChild(option);
-        }
-        
-        // 日期选择（动态变化）
-        monthSelect.addEventListener('change', updateDays);
-        yearSelect.addEventListener('change', updateDays);
-        
-        function updateDays() {
-            const year = parseInt(yearSelect.value);
-            const month = parseInt(monthSelect.value);
-            const daysInMonth = new Date(year, month, 0).getDate(); // 获取该月的天数
-            daySelect.innerHTML = ''; // 清空日期选择
-            
-            for (let i = 1; i <= daysInMonth; i++) {
-                const option = document.createElement('option');
-                option.value = i.toString().padStart(2, '0');
-                option.textContent = i;
-                daySelect.appendChild(option);
-            }
-        }
-        
-        // 初始化时更新日期
-        updateDays();
-    }
-
-    // 初始化日期选择器和显示最新记录
-    initDatePicker();
+    // 初始化时显示最新的5条内容
     displayLatestJournals();
 });
