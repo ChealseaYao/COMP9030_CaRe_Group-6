@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             
             const users = [
-                { username: 'Vivian Harper', password: 'therapist123', role: 'therapist' },
-                { username: 'Kage', password: 'patient123', role: 'patient' }
+                { username: 'Vivian Harper', password: '123', role: 'therapist' },
+                { username: 'Kage', password: '123', role: 'patient' }
             ];
 
            
