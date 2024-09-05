@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: fit-content;
 }
 
 .leftbox h3 {
@@ -27,6 +26,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .patientList-body .badge-item .status {
@@ -50,6 +50,14 @@
 
 .patientList-body .danger {
   background-color: red;
+}
+
+.patientList-body .status {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .patientList-body .patient-list {
@@ -106,7 +114,26 @@
   cursor: pointer;
 }
 
-.patientList-body .patient-item,
+.patientList-body .patient-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.patientList-body .patient-item > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.patientList-body .right-section {
+  display: flex;
+  align-items: center;
+}
+
 .patientList-body .group-item {
   border: 1px solid #ccc;
   padding: 10px;
@@ -136,6 +163,12 @@
   margin-right: 10px;
 }
 
+.patientList-body .status-container {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px; /* Adds space between the status and the button */
+}
+
 .patientList-body .members {
   padding: 10px;
   background-color: #e7e7e7;
@@ -159,6 +192,10 @@
 }
 
 .patientList-body .delete-icon {
+  cursor: pointer;
+}
+
+button {
   cursor: pointer;
 }
 

@@ -24,13 +24,13 @@
 
         <h3>Badge</h3>
         <div class="badge-section">
-          <div class="badge-item">
+          <div class="badge-item" draggable="true" data-status="good">
             <span class="status good"></span> Good Status
           </div>
-          <div class="badge-item">
+          <div class="badge-item" draggable="true" data-status="bad">
             <span class="status bad"></span> Bad Status
           </div>
-          <div class="badge-item">
+          <div class="badge-item" draggable="true" data-status="danger">
             <span class="status danger"></span> Danger Status
           </div>
         </div>
@@ -46,18 +46,49 @@
         </div>
 
         <!-- <input type="text" class="search-bar" placeholder="🔍 search" /> -->
-        <div class="patient-item">
+        <div class="patient-item" data-patient="John Smith">
           <div>
-            <span class="patient-icon">☰</span>
-            <strong>Name: John Smith</strong><br />
-            Age: 35
+            <div>
+              <span class="patient-icon">☰</span>
+              <strong>Name: John Smith</strong><br />
+            </div>
+            Age: 34
           </div>
-          <div>
-            <span class="status good"></span>
+          <div class="right-section">
+            <div class="status-container"></div>
             <button class="details">Details</button>
           </div>
         </div>
-        <!-- Repeat for each patient -->
+
+        <div class="patient-item" data-patient="Tony Smith">
+          <div>
+            <div>
+              <span class="patient-icon">☰</span>
+              <strong>Name: Tony Smith</strong><br />
+            </div>
+            Age: 36
+          </div>
+          <div class="right-section">
+            <div class="status-container"></div>
+            <button class="details">Details</button>
+          </div>
+        </div>
+
+        <div class="patient-item" data-patient="Tony Smith">
+          <div>
+            <div>
+              <span class="patient-icon">☰</span>
+              <strong>Name: Bob Smith</strong><br />
+            </div>
+            Age: 35
+          </div>
+          <div class="right-section">
+            <div class="status-container"></div>
+            <button class="details">Details</button>
+          </div>
+        </div>
+
+        <!-- other patients -->
       </div>
 
       <div class="groups">
@@ -108,90 +139,9 @@
     <script src="../scripts/createNewModal.js"></script>
     <script src="../scripts/groupSelection.js"></script>
     <script src="../scripts/memberDeletion.js"></script>
+    <script src="../scripts/drag&drop.js"></script>
     <footer class="site-footer">
       <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
   </body>
 </html>
-
-<!-- <script>
-  //--------------------------------------------------------------------------create a new group confirmation------------------------------------------------------
-  // Get the modal
-  var modal = document.getElementById("createGroupModal");
-  // Get the button that opens the modal
-  var btn = document.querySelector(".create-new");
-  // Get the cancel button
-  var cancelButton = document.getElementById("cancelButton");
-  // Get the confirm button
-  var confirmButton = document.getElementById("confirmButton");
-  // When the user clicks the button, open the modal
-  btn.onclick = function () {
-    modal.style.display = "flex";
-  };
-  // When the user clicks on cancel button, close the modal
-  cancelButton.onclick = function () {
-    modal.style.display = "none";
-  };
-  // Optional: When the user clicks on confirm button, do something and close the modal
-  confirmButton.onclick = function () {
-    // Do something with the group name (e.g., add it to the list)
-    modal.style.display = "none";
-  };
-  // Close the modal when clicking outside of the modal content
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
-  //--------------------------------------------------------------------------select group color------------------------------------------------------------------
-  // Select all group items
-  var groupItems = document.querySelectorAll(".group-item");
-  // Add click event listener to each group item
-  groupItems.forEach(function (item) {
-    item.addEventListener("click", function () {
-      // Remove 'selected' class from all group items
-      groupItems.forEach(function (group) {
-        group.classList.remove("selected");
-      });
-
-      // Add 'selected' class to the clicked group item
-      item.classList.add("selected");
-    });
-  });
-  //----------------------------------------------------------------------remove member comfirmation---------------------------------------------------------
-  // Get the modal
-  var deleteModal = document.getElementById("confirmDeleteModal");
-  // Get the delete buttons (bin icons)
-  var deleteButtons = document.querySelectorAll(".delete-icon");
-  // Get the cancel and confirm buttons in the modal
-  var cancelDeleteButton = document.getElementById("cancelDeleteButton");
-  var confirmDeleteButton = document.getElementById("confirmDeleteButton");
-  // Variable to keep track of which member to delete
-  var memberToDelete = null;
-  // When the user clicks the bin button, open the modal
-  deleteButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      // Store the member element to delete
-      memberToDelete = button.closest(".member-item");
-      deleteModal.style.display = "flex";
-    });
-  });
-  // When the user clicks on cancel button, close the modal
-  cancelDeleteButton.onclick = function () {
-    deleteModal.style.display = "none";
-  };
-  // When the user clicks on confirm button, delete the member and close the modal
-  confirmDeleteButton.onclick = function () {
-    if (memberToDelete) {
-      memberToDelete.remove(); // Remove the member item
-      memberToDelete = null; // Reset the reference
-    }
-    deleteModal.style.display = "none";
-  };
-  // Close the modal when clicking outside of the modal content
-  window.onclick = function (event) {
-    if (event.target == deleteModal) {
-      deleteModal.style.display = "none";
-    }
-  };
-</script> -->
