@@ -34,6 +34,15 @@
     margin-top: 20px;
 }
 
+#jour-confirm-btn {
+    background-color: #007bff;
+    text-emphasis-color: white;
+}
+
+#jour-cancel-btn {
+    background-color: #f44336;
+}
+
 .popup-overlay {
     
     display: none;
