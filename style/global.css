@@ -18,12 +18,12 @@ h2, h3 {
     color: #102e5d;
 }
 
-.historyleft {
+.leftbox {
     width: 28%;
     padding: 10px;
     text-align: left;
 }
-.historyright {
+.rightbox {
     width: 28%;
     padding: 10px;
 }
@@ -49,6 +49,7 @@ h2, h3 {
     padding: 30px;
     flex-wrap: nowrap;
     text-align: center;
+    min-height: 800px;
 }
 
 .tableContainer {
