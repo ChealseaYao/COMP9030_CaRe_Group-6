@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // 模拟后端数据
+    // 模拟的 journalData 数据
     const journalData = {
         '2024-09-03': [{ state: '✔', content: 'Today I felt more in control of my emotions. I managed to calm myself down when I started to feel anxious.', star: false }],
         '2024-09-02': [{ state: '✔', content: 'Discussed my progress in therapy today. Feeling hopeful about learning new coping mechanisms.', star: false }],
@@ -27,56 +27,93 @@ document.addEventListener("DOMContentLoaded", function() {
         '2024-08-11': [{ state: '●', content: 'Still feeling anxious about upcoming events. I can’t seem to stop worrying about them.', star: false }],
         '2024-08-10': [{ state: '✔', content: 'Had a good day overall. Managed to do my chores without feeling overwhelmed.', star: false }]
     };
-    
 
-    // 显示默认最新的5条记录
-    function displayLatestJournals() {
-        const sortedDates = Object.keys(journalData).sort((a, b) => new Date(b) - new Date(a));
-        const latestDates = sortedDates.slice(0, 5);
+    // 渲染表格函数
+    function renderTable(data) {
+        const tableBody = document.querySelector(".historyJournal-table tbody");
+        tableBody.innerHTML = ''; // 清空表格内容
 
-        renderTable(latestDates);
-    }
-
-    // 渲染表格内容
-    function renderTable(dates) {
-        const tableBody = document.querySelector(".journalLists-table tbody");
-        tableBody.innerHTML = ''; // 清空表格
-
-        dates.forEach(date => {
-            journalData[date].forEach(journal => {
+        if (data.length > 0) {
+            data.forEach(item => {
                 const rowHTML = `
                     <tr>
-                        <td>${journal.content}</td>
-                        <td>${date}</td>
+                        <td>${item.state}</td>
+                        <td class="star">${item.star ? '★' : ''}</td>
+                        <td>${item.content}</td>
+                        <td>${item.date}</td>
                     </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHTML);
             });
-        });
+        } else {
+            const noDataHTML = `<tr><td colspan="4">No journals found.</td></tr>`;
+            tableBody.insertAdjacentHTML('beforeend', noDataHTML);
+        }
     }
 
-    // 处理日历图标点击，过滤选择的日期
+    // 搜索函数
+    function searchJournals(keyword) {
+        const results = [];
+
+        // 遍历 journalData 查找匹配关键词的条目
+        Object.keys(journalData).forEach(date => {
+            journalData[date].forEach(journal => {
+                if (journal.content.toLowerCase().includes(keyword.toLowerCase())) {
+                    results.push({
+                        ...journal,
+                        date: date
+                    });
+                }
+            });
+        });
+
+        return results;
+    }
+
+    // 默认展示所有数据
+    const allJournals = Object.keys(journalData).reduce((acc, date) => {
+        journalData[date].forEach(journal => {
+            acc.push({ ...journal, date });
+        });
+        return acc;
+    }, []);
+    renderTable(allJournals);
+
+    // 搜索框逻辑
+    const searchInput = document.querySelector('input[name="search"]');
+    const searchButton = document.querySelector('button[type="submit"]');
+
+    searchButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        const keyword = searchInput.value.trim();
+
+        if (keyword) {
+            const filteredJournals = searchJournals(keyword);
+            renderTable(filteredJournals);
+        } else {
+            // 如果搜索框为空，则显示所有数据
+            renderTable(allJournals);
+        }
+    });
+
+    // 处理日历点击
     const confirmBtn = document.getElementById('confirm-btn');
     confirmBtn.addEventListener('click', function() {
         const year = document.getElementById('year').value;
         const month = document.getElementById('month').value.padStart(2, '0');
         const day = document.getElementById('day').value.padStart(2, '0');
-        
+
         const selectedDate = `${year}-${month}-${day}`;
-        
-        if (journalData[selectedDate]) {
-            renderTable([selectedDate]); // 只显示选择的日期的数据
-        } else {
-            alert("No journals found for the selected date.");
-        }
+        const filteredJournals = allJournals.filter(journal => journal.date === selectedDate);
+        renderTable(filteredJournals);
     });
 
-    // 初始化日期选择器，年、月、日
+    // 初始化日期选择器
     function initDatePicker() {
         const currentYear = new Date().getFullYear();
         const yearSelect = document.getElementById('year');
         const monthSelect = document.getElementById('month');
         const daySelect = document.getElementById('day');
-        
+
         // 年份选择
         for (let i = currentYear; i >= 2020; i--) {
             const option = document.createElement('option');
@@ -84,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
             option.textContent = i;
             yearSelect.appendChild(option);
         }
-        
+
         // 月份选择
         for (let i = 1; i <= 12; i++) {
             const option = document.createElement('option');
@@ -92,17 +129,14 @@ document.addEventListener("DOMContentLoaded", function() {
             option.textContent = i;
             monthSelect.appendChild(option);
         }
-        
-        // 日期选择（动态变化）
-        monthSelect.addEventListener('change', updateDays);
-        yearSelect.addEventListener('change', updateDays);
-        
+
+        // 日期选择
         function updateDays() {
             const year = parseInt(yearSelect.value);
             const month = parseInt(monthSelect.value);
-            const daysInMonth = new Date(year, month, 0).getDate(); // 获取该月的天数
-            daySelect.innerHTML = ''; // 清空日期选择
-            
+            const daysInMonth = new Date(year, month, 0).getDate();
+            daySelect.innerHTML = '';
+
             for (let i = 1; i <= daysInMonth; i++) {
                 const option = document.createElement('option');
                 option.value = i.toString().padStart(2, '0');
@@ -110,12 +144,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 daySelect.appendChild(option);
             }
         }
-        
+
+        yearSelect.addEventListener('change', updateDays);
+        monthSelect.addEventListener('change', updateDays);
+
         // 初始化时更新日期
         updateDays();
     }
 
-    // 初始化日期选择器和显示最新记录
+    // 初始化日期选择器
     initDatePicker();
-    displayLatestJournals();
 });
