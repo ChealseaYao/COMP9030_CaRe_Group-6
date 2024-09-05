@@ -1,53 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Hsin-Hui Chu">
     <title>Patient Journal</title>
+    <script src="/scripts/journal.js"></script>
+    <link rel="stylesheet" href="/style/global.css">
+    <link rel="stylesheet" href="/style/modal.css">
+    <link rel="stylesheet" href="/style/therapistJournal.css">
     <link rel="stylesheet" href="/style/patientJournal.css">
 </head>
+
 <body>
-    <div class="journalleft">
-        <a href="viewHistoryRecord.html">
-            <button class="back-button">Back</button>
-        </a>
-    </div>
+    <header class="navbar">
+        <a href="patientDashboard.html"><img src="/image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+    </header>
+    <div class="therapistContainer">
+        <div class="leftbox">
+            <!-- should be selected patient journal list page -->
+            <a href="viewHistoryRecord.html">
+                <button class="back-btn">Back</button>
+            </a>
+        </div>
+        <div class="container">
+            <div class="entry-header">Kang Wong</div>
+            <div class="entry-date">Date: 13/08/2024</div>
+            <div class="entry-content">
+                Today was a tough day.
+                I panicked in front of my co-workers.
+                The presentation should be smooth as usual,
+                but as soon as I realized I forgot to take my medicine,
+                I couldn't help but shaking and panic...
+            </div>
+            <div class="details">
+                <label>Sleeping Time:</label>
+                <div>01:00 - 07:00</div>
+                <label>Food:</label>
+                <div>Cereal with Milk, Sandwich, Chicken Noodle Soup</div>
+                <label>Exercise:</label>
+                <div>none</div>
+            </div>
+            <div class="download">
+                <label>Attached File:</label>
+                <div>hamburger.png</div>
+                <!--這裡是download button-->
+                <a href="starIcon.png" download="hamburger.png"><button>Download</button></a>
+            </div>
+            <button class="delete-button" onclick="showPopup()">Delete</button>
 
-    <div class="container">
-        <div class="entry-header">Kang Wong</div>
-        <div class="entry-date">Date: 13/08/2024</div>
-        <div class="entry-content">
-            Today was a tough day. 
-            I panicked in front of my co-workers. 
-            The presentation should be smooth as usual, 
-            but as soon as I realized I forgot to take my medicine, 
-            I couldn't help but shaking and panic...
-        </div>
-        <div class="details">
-            <span><label>Sleeping Time:</label> 01:00 - 07:00</span>
-            <span><label>Food:</label> Cereal with Milk, Sandwich, Chicken Noodle Soup</span>
-            <span><label>Exercise:</label> none</span>
-        </div>
-        <div class="download">
-            <label>Attached File:</label>
-            <!--這裡是download button-->
-            <a href="starIcon.png" download="hamburger.png"><button>Download</button></a>
-        </div>
-        <button class="delete-button" onclick="showPopup()">Delete</button>
-        
-        <!--Popup page-->
-        <div class="popup-overlay" id="popupOverlay"></div>
-        <div class="popup" id="popup">
-        <p>Do you want to delete the journal?</p>
-        <button onclick="hidePopup()">Cancel</button>
-        <button onclick="confirmDelete()">Confirm</button>
-        </div>
+            <!--Popup page-->
+            <div class="popup-overlay" id="popupOverlay"></div>
+            <div class="popup" id="popup">
+                <p>Do you want to delete the journal?</p>
+                <div class="modal-buttons">
+                    <button onclick="hidePopup()">Cancel</button>
+                    <button onclick="confirmDelete()">Confirm</button>
+                </div>
 
-        <script src="/scripts/jounal.js" defer></script>
+            </div>
+        </div>
     </div>
-    <footer class="copyright">
-        <p>2024 CaRe. All rights reserved.</p>
+    <footer class="site-footer">
+        <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
 </body>
+
 </html>

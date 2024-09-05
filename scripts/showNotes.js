@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // 更新后的笔记数据
     let notesData = {
         '2024-07-20': [
+            'Patient discussed concerns about managing stress at work.',
+            'Follow-up session: Patient reported better sleep patterns.',
+            'Patient started a new exercise routine as recommended.',
+            'Patient discussed concerns about managing stress at work.',
+            'Follow-up session: Patient reported better sleep patterns.',
+            'Patient started a new exercise routine as recommended.',
+            'Patient discussed concerns about managing stress at work.',
+            'Follow-up session: Patient reported better sleep patterns.',
+            'Patient started a new exercise routine as recommended.',
             'Patient discussed concerns about managing stress at work.',
             'Follow-up session: Patient reported better sleep patterns.',
             'Patient started a new exercise routine as recommended.'
@@ -65,17 +73,17 @@ document.addEventListener("DOMContentLoaded", function() {
         ]
     };
 
-    // 初始化显示最新的三条内容
+    // Initialize and display the latest three contents
     function displayLatestNotes() {
         const tableBody = document.querySelector(".note-history-note tbody");
-        tableBody.innerHTML = ''; // 清空表格内容
+        tableBody.innerHTML = '';
 
-        // 获取最新的三条记录，按日期排序
+        // Get the latest three records, sorted by date
         const latestNotes = Object.keys(notesData)
-            .sort((a, b) => new Date(b) - new Date(a)) // 按日期降序排列
-            .slice(0, 3); // 获取前三条记录
+            .sort((a, b) => new Date(b) - new Date(a)) 
+            .slice(0, 3); 
 
-        // 动态生成表格行
+        
         latestNotes.forEach(date => {
             notesData[date].forEach(note => {
                 const newRowHTML = `
@@ -88,32 +96,32 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
-        // 绑定删除按钮事件
+       
         bindDeleteButtons();
     }
 
-    // 绑定日期选择器确认按钮的事件
+    // Bind the event of the date picker confirmation button
     const confirmBtn = document.getElementById('confirm-btn');
     confirmBtn.addEventListener('click', function() {
-        // 获取用户选择的日期
+       
         const year = document.getElementById('year').value;
-        const month = document.getElementById('month').value.padStart(2, '0'); // 确保月份为两位数
-        const day = document.getElementById('day').value.padStart(2, '0'); // 确保日期为两位数
+        const month = document.getElementById('month').value.padStart(2, '0');
+        const day = document.getElementById('day').value.padStart(2, '0'); 
 
-        // 格式化日期为 yyyy-MM-dd
+        
         const selectedDate = `${year}-${month}-${day}`;
         console.log("Selected Date:", selectedDate);
 
-        // 查找对应的内容
+        
         const noteContentArray = notesData[selectedDate];
 
         if (noteContentArray) {
             const tableBody = document.querySelector(".note-history-note tbody");
 
-            // 清空表格
+            
             tableBody.innerHTML = '';
 
-            // 生成新的表格行
+            
             noteContentArray.forEach(noteContent => {
                 const newRowHTML = `
                     <tr data-date="${selectedDate}">
@@ -124,40 +132,137 @@ document.addEventListener("DOMContentLoaded", function() {
                 tableBody.insertAdjacentHTML('beforeend', newRowHTML);
             });
 
-            // 重新绑定删除按钮事件
+            
             bindDeleteButtons();
         } else {
             alert("No notes found for the selected date.");
         }
 
-        // 关闭日期选择器
+        
         const calendarPopup = document.querySelector('.calendar-popup');
         calendarPopup.style.display = 'none';
     });
 
-    // 绑定删除按钮事件的函数
+    // 
+    // function bindDeleteButtons() {
+    //     const deleteButtons = document.querySelectorAll(".delete-button");
+    //     deleteButtons.forEach(button => {
+    //         button.addEventListener('click', function(event) {
+    //             const row = event.target.closest('tr');
+    //             if (row) {
+    //                 const date = row.getAttribute('data-date');
+    //                 const note = row.querySelector('td:nth-child(2)').textContent;
+                    
+    //                 // 
+    //                 notesData[date] = notesData[date].filter(n => n !== note);
+    //                 if (notesData[date].length === 0) {
+    //                     delete notesData[date];
+    //                 }
+                    
+    //                 // 
+    //                 row.remove();
+    //             }
+    //         });
+    //     });
+    // 
+
+    // Function to bind the delete button event (after modification, a modal box pops up)
     function bindDeleteButtons() {
         const deleteButtons = document.querySelectorAll(".delete-button");
         deleteButtons.forEach(button => {
             button.addEventListener('click', function(event) {
-                const row = event.target.closest('tr');
-                if (row) {
-                    const date = row.getAttribute('data-date');
-                    const note = row.querySelector('td:nth-child(2)').textContent;
-                    
-                    // 删除数据对象中的对应记录
-                    notesData[date] = notesData[date].filter(n => n !== note);
-                    if (notesData[date].length === 0) {
-                        delete notesData[date];
-                    }
-                    
-                    // 从表格中删除该行
-                    row.remove();
-                }
+                currentRow = event.target.closest('tr'); 
+                currentDate = currentRow.getAttribute('data-date'); 
+                currentNote = currentRow.querySelector('td:nth-child(2)').textContent; 
+
+                
+                const deleteModal = document.getElementById('note-deleteModal');
+                deleteModal.style.display = 'block'; 
             });
         });
     }
 
-    // 初始化显示最新三条内容
+    // Bind the cancel and confirm button events of the modal box
+    const cancelBtn = document.getElementById('note-cancelBtn');
+    const deConfirmBtn = document.getElementById('note-confirmBtn');
+    
+    // Hide the modal when the cancel button is clicked
+    cancelBtn.addEventListener('click', function() {
+        const deleteModal = document.getElementById('note-deleteModal');
+        deleteModal.style.display = 'none'; 
+    });
+
+    
+    deConfirmBtn.addEventListener('click', function() {
+       
+        notesData[currentDate] = notesData[currentDate].filter(note => note !== currentNote);
+        if (notesData[currentDate].length === 0) {
+            delete notesData[currentDate]; // If all notes for the current date are deleted, delete that date
+        }
+
+        
+        if (currentRow) {
+            currentRow.remove();
+        }
+
+        
+        const deleteModal = document.getElementById('note-deleteModal');
+        deleteModal.style.display = 'none';
+    });
+
+    // Process the save button click event and display a modal box indicating successful saving
+    const saveBtn = document.getElementById('note-save');
+    const saveModal = document.getElementById('saveModal');
+    const saveConfirmBtn = document.getElementById('saveConfirmBtn');
+
+    saveBtn.addEventListener('click', function() {
+        // 1. Get the new note content entered by the user
+        const newNoteContent = document.getElementById('new-note').value.trim(); // Get the text box content and remove extra spaces
+
+        if (newNoteContent === '') {
+            alert("Please enter a note."); 
+            return;
+        }
+
+        // 2. Get the current date in the format of 'yyyy-MM-dd'
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0]; 
+
+        // 3. Add a new note to the notesData data structure
+        if (!notesData[formattedDate]) {
+            notesData[formattedDate] = []; 
+        }
+        notesData[formattedDate].push(newNoteContent); 
+
+        // 4. Dynamically update the page to show newly added notes
+        const tableBody = document.querySelector(".note-history-note tbody");
+        const newRowHTML = `
+            <tr data-date="${formattedDate}">
+                <td>${formattedDate}</td>
+                <td>${newNoteContent}</td>
+                <td><button class="delete-button">Delete</button></td>
+            </tr>`;
+        tableBody.insertAdjacentHTML('beforeend', newRowHTML); 
+
+        // 5. Rebind the delete button event to ensure that the newly added delete button also has functionality
+        bindDeleteButtons();
+
+        // 6. Displays a modal box showing successful saving
+        document.getElementById('new-note').value = '';
+
+        // 7. Displays a modal box showing successful saving
+        saveModal.style.display = 'block';
+    });
+
+    
+    saveConfirmBtn.addEventListener('click', function() {
+        saveModal.style.display = 'none'; 
+    });
+
+
+
+    // Initialize and display the latest three items
     displayLatestNotes();
 });
+
+

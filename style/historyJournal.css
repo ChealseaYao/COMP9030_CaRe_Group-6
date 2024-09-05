@@ -21,13 +21,24 @@
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+.searchPannel {
+    display: flex;
+}
+.searchPannel .date-picker-container {
+    padding-top: 10px;
+}
+.searchPannel .calendar-popup {
+    min-width: 350px;
+    text-align: left;
+}
 .historyJournal-table{
     width: 100%;
     border-collapse: collapse;
     padding: 5px;
 }
 .historyJournal-table th {
-    background-color: #f2f2f2;
+    background-color: #386a9b;
+    color: white;
 }
 
 .historyJournal-table th, td {
@@ -38,62 +49,21 @@
     padding-bottom: 12px;
     text-align: left;
 }
-.thearpistHJT th:nth-child(3),
-.thearpistHJT td:nth-child(3) {
-    width: 700px;
-    min-width: 200px;
-}
-.thearpistHJT th:nth-child(2) {
+
+.historyJournal-table td:nth-child(1),
+.historyJournal-table th:nth-child(1) {
+    text-align: center;
     min-width: 80px;
 }
-.thearpistHJT td:nth-child(1),
-.thearpistHJT th:nth-child(1) {
-    text-align: center;
-}
-
-
-.back-btn {
-    font-size: large;
-    border: none;
-    width: 60px;
-    height: 35px;
-    border-radius: 5px;
-    color: white;
-    background-color: #007bff
-}
-.back-btn:hover {
-    background-color: #0056b3;
-}
-
-.patientHJT th:nth-child(2) {
+.historyJournal-table th:nth-child(2),
+.historyJournal-table td:nth-child(2) {
     width: 700px;
     min-width: 200px;
 }
-.patientHJT th:nth-child(1) {
-    min-width: 70px;
+.historyJournal-table th:nth-child(3),
+.historyJournal-table td:nth-child(3) {
+    min-width: 160px;
 }
-.search-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px;
-}
-.search-bar input[type="text"] {
-    font-size: 20px;
-    height: 28px;
-    flex-grow: 1;
-}
-.search-bar button {
-    font-size: 20;
-    border: none;
-    width: 80px;
-    height: 28px;
-    border-radius: 5px;
-    color: white;
-    background-color: #007bff
-}
-.search-bar button:hover {
-    background-color: #0056b3;
-}
+
 
 /* ============= therapist-historyJournal page End - By Wenqiang ========== */

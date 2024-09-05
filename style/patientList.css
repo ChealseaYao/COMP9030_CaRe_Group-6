@@ -1,20 +1,24 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-}
-
 /* ---------------------------------Patient List Page -----------------------------------*/
-.patientList-body .container {
+.patientList-body .leftbox {
+  margin-right: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  min-width: fit-content;
 }
 
-.patientList-body .badge-section {
-  width: 15%;
-  background-color: #f4f4f4;
+.leftbox h3 {
+  margin-top: 60px;
+  margin-right: 60px;
+  align-self: flex-end;
+}
+
+.badge-section {
+  background-color: #e7e7e7;
   padding: 10px;
-  margin-right: 20px;
+  width: 120px;
+  margin-top: 10px;
+  align-self: flex-end;
   border-radius: 8px;
   text-align: center;
 }
@@ -30,7 +34,10 @@ body {
   height: 20px;
   border-radius: 50%;
   margin-right: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   border: 1px solid #000;
+  flex-shrink: 0;
 }
 
 .patientList-body .good {
@@ -45,22 +52,57 @@ body {
   background-color: red;
 }
 
-.patientList-body .patient-list,
-.patientList-body .groups {
-  width: 40%;
+.patientList-body .patient-list {
+  width: 60%;
+  min-width: 520px;
+  max-width: 800px;
+  text-align: left;
   background-color: #fff;
-  padding: 10px;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+  min-height: 511px;
 }
 
-.patientList-body .back-button,
-.patientList-body .search-bar,
+.patient-list h2 {
+  margin-bottom: 10px;
+}
+
+.patientList-body .groups {
+  width: 25%;
+  text-align: left;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  min-height: 450px;
+}
+
+.nameAndButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+.groups h3 {
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
 .patientList-body .create-new {
-  margin-bottom: 20px;
-  padding: 10px;
+  font-size: 16px;
+  border: none;
+  width: 100px;
+  height: 35px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  color: white;
+  background-color: #f8c41a;
+  float: right;
+  margin-bottom: 10px;
+}
+
+.create-new:hover {
+  background-color: #c69e18;
   cursor: pointer;
 }
 
@@ -91,17 +133,23 @@ body {
   height: 20px;
   border-radius: 50%;
   display: inline-block;
+  margin-right: 10px;
 }
 
 .patientList-body .members {
-  margin-top: 20px;
   padding: 10px;
-  background-color: #f4f4f4;
+  background-color: #e7e7e7;
   border-radius: 8px;
+  min-height: 200px;
+}
+
+.members p {
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .patientList-body .member-item {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   padding: 5px;
   margin-bottom: 5px;
   display: flex;

@@ -1,12 +1,20 @@
 /*---patientJournal--- Start*/
 .delete-button {
-    padding: 5px 10px;
+    display: block;
+    font-size: 16px;
+    padding: 7px 12px;
     background-color: #f44336;
     border: none;
     color: white;
     cursor: pointer;
-    margin-top: 10px;
+    margin: 20px auto;
+    border-radius: 5px;
 }
+
+.delete-button:hover {
+    background-color: #ca382d;
+}
+
 .popup {
     display: none;
     position: fixed;
@@ -15,16 +23,28 @@
     transform: translate(-50%, -50%);
     padding: 20px;
     background-color: white;
-    border: 2px solid black;
+    border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
+
 .popup button {
-    padding: 5px 10px;
-    margin-right: 10px;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
+
+#jour-confirm-btn {
+    background-color: #007bff;
+    text-emphasis-color: white;
+}
+
+#jour-cancel-btn {
+    background-color: #f44336;
+}
+
 .popup-overlay {
+    
     display: none;
     position: fixed;
     top: 0;
@@ -34,4 +54,5 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 900;
 }
+
 /*---patientJournal--- End*/

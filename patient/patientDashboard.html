@@ -6,15 +6,24 @@
   <meta name="author" content="Zhen Liu">
   <meta name="description" content="patient of COMP9030_CaRe_Groups6">
   <title>Patient Dashboard</title>
+  <link rel="stylesheet" href="/style/global.css">
   <link rel="stylesheet" href="/style/patientDashboard.css">
+  <script src="/scripts/selectAffirmation.js"></script>
 </head>
 <body>
+    <!-- global navigation bar -->
+    <header class="navbar">
+        <a href="patientDashboard.html"><img src="/image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+    </header>
   <div class="patientDashboard"> 
         <div class="left-panel">
           <h1>G'Day Kage!</h1>
             
             <div class="content-list">
-                <button class="newJournal-button">New Journal</button>
+                <a href="newJournalPage.html">
+                 <button class="newJournal-button">New Journal</button>  
+                </a>
+                
                 <table class="contentList-table">
                     <thead>
                         <tr>
@@ -45,7 +54,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="patientDashboardViewMore-Button">View More</button>
+                <a href="viewHistoryRecord.html">
+                    <button class="patientDashboardViewMore-Button">View More</button>
+                </a>
+                
             </div>
         </div>
         
@@ -72,15 +84,21 @@
                 <p>Continue good sleep cycle and diet, try to record more journals.</p>
             </div>
             <div class="affirmation">
-                <h3>Daily Affirmation</h3>
-                <form>
-                    <label><input type="radio" name="affirmation" value="option1"> Very Good Daily affirmation example</label><br>
-                    <label><input type="radio" name="affirmation" value="option2"> Better affirmation for patient</label><br>
-                    <label><input type="radio" name="affirmation" value="option3" checked> Best Daily affirmation for the patient</label>
+                <h3>Pick Your Daily Affirmation ✔</h3>
+                
+                
+                <form id="affirmationForm">
+                  <label><input type="radio" name="affirmation" value="option1"> I am loved, I am valued.</label><br>
+                  <label><input type="radio" name="affirmation" value="option2"> I can handle whatever comes my way.</label><br>
+                  <label><input type="radio" name="affirmation" value="option3"> Every day is a new beginning.</label>
                 </form>
             </div>
         </div>
     </div>
+
+    <footer class="site-footer">
+        <p>&copy; 2024 CaRe | All Rights Reserved</p>
+    </footer>
   
 </body>
 </html>

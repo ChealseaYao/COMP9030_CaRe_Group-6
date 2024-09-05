@@ -1,62 +1,32 @@
 /* ============= therapist-patientDetail page Start - By Zhen ========== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  /* background: url('/mockups/images/back-img-optimized.webp') no-repeat center center fixed; */
-  background-size: cover;
-  background-color: #f0f2f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow-y: auto;
-  position: relative;
-  
-}
-
-.patientDetailPageBack-button {
-  position: absolute;
-  top: 110px;
-  left: 20px; 
-  font-size: large;
-  border: none;
-  width: 60px;
-  height: 35px;
-  border-radius: 5px;
-  color: white;
-  background-color: #007bff;
-  
-  
-}
-.patientDetailPageBack-button:hover {
-  background-color: #0056b3;
-  cursor: pointer;
-}
-
 
 .patientDetailContainer {
-  max-width: 1500px; /* 容器最大宽度 */
-  margin: 0 auto; /* 水平居中显示 */
-  background-color: #ffffff; /* 容器背景颜色 */
-  padding: 30px; /* 容器内边距 */
-  border-radius: 8px; /* 边框圆角 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 容器阴影 */
-  overflow-y: auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 54%;
+  max-width: 800px;
+  min-width: 360px;
+  max-height: fit-content;
+  text-align: left;
   
 }
+
+.patientDetailContainer h1 {
+  color: #102e5d;
+  text-align: center;
+}
+
+
 
 .user-details {
   display: flex;
   align-items: flex-start; /* 保证子元素从容器的顶部开始对齐 */
   justify-content: space-between; /* 文本和按钮分布在容器的两端 */
   width: 100%;
-  margin-top: 15px;
-  margin-bottom: 20px;
+  margin-top: 40px;
+  margin-bottom: 30px;
 }
 
 
@@ -77,46 +47,28 @@ body {
   margin-bottom: 5px; /* 增加每个列表项之间的底部外边距 */
 }
 
-
-
 .notes-button {
   margin-left: 20px; /* 为按钮和文本之间提供一些空间 */
 }
 
-.journal-lists label {
-  display: block; /* 标签块级显示 */
-  margin-bottom: 5px; /* 标签下边距 */
-  font-weight: bold; /* 字体加粗 */
- 
-}
-
-.journal-header {
-  display: flex;
-  align-items: center; /* Aligns items vertically in the center */
-  justify-content: flex-start; /* Align items to the start of the container */
-  margin-bottom: 5px;
-}
-
-.journal-header img {
-  width: 20px;
-  height: 20px;
-  margin-left: 30px;
-  margin-right: 5px;
+#journals {
+  text-align: left; 
+  font-weight: bold;
+  color: #102e5d;
   
-  cursor: pointer;
-}
-
-
+  }
+  
 
 .journalLists-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 5px;
 }
 
 .journalLists-table, th, td {
-  border: 1px solid #ddd;
+  border: none;
   padding-left: 12px;
-  padding-right: 100px;
+  padding-right: 18px;
   padding-top: 15px;
   padding-bottom: 15px;
   text-align: left;
@@ -124,15 +76,19 @@ body {
 }
 
 .journalLists-table  th {
-  background-color: #f2f2f2; /* 表头背景色 */
+  background-color: #386a9b; /* 表头背景色 */
+  color: white;
 }
 
 .journalLists-table   td {
-  background-color: #ffffff; /* 单元格背景色 */
+  background-color: rgb(236, 236, 236); /* 单元格背景色 */
 }
 
+.journalLists-table th:nth-child(1), .journalLists-table td:nth-child(1) {
+  min-width: 500px; /* 增加第一列的右内边距 */
+}
 .journalLists-table th:nth-child(2), .journalLists-table td:nth-child(2) {
-  padding-right: 400px; /* 增加第二列的右内边距 */
+  min-width: 130px; /* 增加第二列的右内边距 */
 }
 
 
@@ -141,33 +97,33 @@ body {
   border: none; /* 无边框 */
   border-radius: 5px; /* 按钮边角圆滑 */
   cursor: pointer; /* 鼠标悬停时显示手型图标 */
-  margin-right: 10px; /* 右边距 */
   font-size: 16px; /* 文本大小 */  
 }
 
 .notes-button {
-  background-color: #d871a6;
+  background-color: #f8c41a;;
   color: white;
-  cursor: pointer;
   float: right;
 }
 
 .notes-button:hover {
-  background-color: #9f557b;
+  background-color: #c69e18;
+  cursor: pointer;
 }
 
 
 
 .patientDetailPageViewMore-button {
-  background-color: #4091e8;
+  background-color: #386a9b;
   color: white;
-  cursor: pointer;
   float: right;
   margin-top: 10px;
+  margin-right: 10px;
 }
 
 .patientDetailPageViewMore-button:hover {
-  background-color: #266bb5;
+  background-color: #2b537a;
+  cursor: pointer;
 }
 
 /* ============= therapist-patientDetail page End  - By Zhen ========== */
