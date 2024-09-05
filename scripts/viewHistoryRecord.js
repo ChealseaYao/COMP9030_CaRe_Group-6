@@ -1,3 +1,5 @@
+
+
 document.addEventListener("DOMContentLoaded", function() {
     // 默认的 journal 数据
     const journalData = {
@@ -73,49 +75,11 @@ document.addEventListener("DOMContentLoaded", function() {
         renderTable(filteredData);
     });
 
-    // 填充年份、月份、日期选择器
-    const currentYear = new Date().getFullYear();
+    // 日期选择功能
+    const confirmBtn = document.getElementById('confirm-btn');
     const yearSelect = document.getElementById('year');
     const monthSelect = document.getElementById('month');
     const daySelect = document.getElementById('day');
-
-    // 填充年份
-    for (let i = currentYear; i >= 2020; i--) {
-        const option = document.createElement('option');
-        option.value = i;
-        option.textContent = i;
-        yearSelect.appendChild(option);
-    }
-
-    // 填充月份
-    for (let i = 1; i <= 12; i++) {
-        const option = document.createElement('option');
-        option.value = i.toString().padStart(2, '0');
-        option.textContent = i;
-        monthSelect.appendChild(option);
-    }
-
-    // 根据年份和月份更新日期
-    function updateDays() {
-        const year = parseInt(yearSelect.value);
-        const month = parseInt(monthSelect.value);
-        const daysInMonth = new Date(year, month, 0).getDate();
-        daySelect.innerHTML = '';
-
-        for (let i = 1; i <= daysInMonth; i++) {
-            const option = document.createElement('option');
-            option.value = i.toString().padStart(2, '0');
-            option.textContent = i;
-            daySelect.appendChild(option);
-        }
-    }
-
-    yearSelect.addEventListener('change', updateDays);
-    monthSelect.addEventListener('change', updateDays);
-    updateDays();  // 初始化日期选择器
-
-    // 处理日期选择的筛选
-    const confirmBtn = document.getElementById('confirm-btn');
 
     confirmBtn.addEventListener('click', function() {
         const selectedDate = `${yearSelect.value}-${monthSelect.value.padStart(2, '0')}-${daySelect.value.padStart(2, '0')}`;
@@ -133,3 +97,5 @@ document.addEventListener("DOMContentLoaded", function() {
         renderTable(filteredData);
     });
 });
+
+

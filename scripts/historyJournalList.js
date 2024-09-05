@@ -107,51 +107,5 @@ document.addEventListener("DOMContentLoaded", function() {
         renderTable(filteredJournals);
     });
 
-    // 初始化日期选择器
-    function initDatePicker() {
-        const currentYear = new Date().getFullYear();
-        const yearSelect = document.getElementById('year');
-        const monthSelect = document.getElementById('month');
-        const daySelect = document.getElementById('day');
-
-        // 年份选择
-        for (let i = currentYear; i >= 2020; i--) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            yearSelect.appendChild(option);
-        }
-
-        // 月份选择
-        for (let i = 1; i <= 12; i++) {
-            const option = document.createElement('option');
-            option.value = i.toString().padStart(2, '0');
-            option.textContent = i;
-            monthSelect.appendChild(option);
-        }
-
-        // 日期选择
-        function updateDays() {
-            const year = parseInt(yearSelect.value);
-            const month = parseInt(monthSelect.value);
-            const daysInMonth = new Date(year, month, 0).getDate();
-            daySelect.innerHTML = '';
-
-            for (let i = 1; i <= daysInMonth; i++) {
-                const option = document.createElement('option');
-                option.value = i.toString().padStart(2, '0');
-                option.textContent = i;
-                daySelect.appendChild(option);
-            }
-        }
-
-        yearSelect.addEventListener('change', updateDays);
-        monthSelect.addEventListener('change', updateDays);
-
-        // 初始化时更新日期
-        updateDays();
-    }
-
-    // 初始化日期选择器
-    initDatePicker();
+    
 });
