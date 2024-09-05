@@ -59,14 +59,19 @@
 }
 
 .note-history-note thead {
-    background-color: #f2f2f2;
+    background-color: #386a9b;
+    color: white;
     font-weight: bold;
 }
+.note-history-note td {
+    background-color: rgb(236, 236, 236);
+}
+
 
 .note-history-note th,
 .note-history-note td {
     padding: 15px;
-    border: 1px solid #ccc;
+    border: none;
     text-align: left;
 }
 

@@ -37,7 +37,8 @@
     padding: 5px;
 }
 .historyJournal-table th {
-    background-color: #f2f2f2;
+    background-color: #386a9b;
+    color: white;
 }
 
 .historyJournal-table th, td {
@@ -48,26 +49,20 @@
     padding-bottom: 12px;
     text-align: left;
 }
-.thearpistHJT th:nth-child(3),
-.thearpistHJT td:nth-child(3) {
-    width: 700px;
-    min-width: 200px;
-}
-.thearpistHJT th:nth-child(2) {
+
+.historyJournal-table td:nth-child(1),
+.historyJournal-table th:nth-child(1) {
+    text-align: center;
     min-width: 80px;
 }
-.thearpistHJT td:nth-child(1),
-.thearpistHJT th:nth-child(1) {
-    text-align: center;
-}
-
-
-.patientHJT th:nth-child(2) {
+.historyJournal-table th:nth-child(2),
+.historyJournal-table td:nth-child(2) {
     width: 700px;
     min-width: 200px;
 }
-.patientHJT th:nth-child(1) {
-    min-width: 70px;
+.historyJournal-table th:nth-child(3),
+.historyJournal-table td:nth-child(3) {
+    min-width: 160px;
 }
 
 
