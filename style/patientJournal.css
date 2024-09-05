@@ -1,11 +1,18 @@
 /*---patientJournal--- Start*/
 .delete-button {
-    padding: 5px 10px;
+    display: block;
+    font-size: 16px;
+    padding: 7px 12px;
     background-color: #f44336;
     border: none;
     color: white;
     cursor: pointer;
     margin-top: 10px;
+    border-radius: 5px;
+    margin: 0 auto;
+    }
+.delete-button:hover {
+    background-color: #ca382d;
 }
 .popup {
     display: none;
