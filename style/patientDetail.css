@@ -11,6 +11,8 @@
   color: #102e5d;
 }
 
+
+
 .user-details {
   display: flex;
   align-items: flex-start; /* 保证子元素从容器的顶部开始对齐 */

@@ -67,11 +67,18 @@ h2, h3 {
 
 
 /* style of Header and Footer start */
+
+#logo-icon {
+    height: 90px;
+    margin-top: 17px;
+  }
+
+
 .navbar {
     width: 100%;
     height: 100px;
     background-color: #386a9b;
-    padding-left: 30px;
+    padding-left: 10px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -107,4 +114,3 @@ h2, h3 {
     padding-left: 30px;
 }
 /* style of Header and Footer end */
-
