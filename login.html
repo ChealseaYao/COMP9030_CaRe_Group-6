@@ -6,14 +6,22 @@
     <meta name="author" content="Min Yao">
     <title>Login</title>
     <link rel="stylesheet" href="style/login.css">
+    <script src="/scripts/login.js"></script>
 </head>
 <body>
     <div class="login-container"> 
-        <form action="/therapist/therapistDashboard.html" class="login-form" method="get">
+        <form  class="login-form" method="get" id="loginForm">
             <h2>Login</h2>
             <ul class="login-input-group">
                 <li>Username<input type="text" name="Username" id="Username" required></li>
                 <li>Password <input type="password" name="password" id="password" required></li>
+                <li>
+                    Role: 
+                    <select id="role" name="role">
+                        <option value="therapist">Therapist</option>
+                        <option value="patient">Patient</option>
+                    </select>
+                </li>
                 <li><button type="submit" >Sign in</button></li>
                 <li><a href="" id="forget-password" >Forgot password?</a></li>
                 <li id="account"><span>new here?<a href="" id="create-account"> creat an account</a></span></li>
