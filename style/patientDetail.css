@@ -1,14 +1,19 @@
 /* ============= therapist-patientDetail page Start - By Zhen ========== */
 
 .patientDetailContainer {
-  margin: 0 auto; /* 水平居中显示 */
-  padding: 30px; /* 容器内边距 */
-  overflow-y: auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  max-height: fit-content;
+  text-align: left;
   
 }
 
 .patientDetailContainer h1 {
   color: #102e5d;
+  text-align: center;
 }
 
 
@@ -18,8 +23,8 @@
   align-items: flex-start; /* 保证子元素从容器的顶部开始对齐 */
   justify-content: space-between; /* 文本和按钮分布在容器的两端 */
   width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 40px;
+  margin-bottom: 30px;
 }
 
 
@@ -131,7 +136,7 @@
 .journalLists-table, th, td {
   border: none;
   padding-left: 12px;
-  padding-right: 100px;
+  padding-right: 18px;
   padding-top: 15px;
   padding-bottom: 15px;
   text-align: left;
@@ -147,8 +152,11 @@
   background-color: rgb(236, 236, 236); /* 单元格背景色 */
 }
 
+.journalLists-table th:nth-child(1), .journalLists-table td:nth-child(1) {
+  width: 400px; /* 增加第一列的右内边距 */
+}
 .journalLists-table th:nth-child(2), .journalLists-table td:nth-child(2) {
-  width: 500px; /* 增加第二列的右内边距 */
+  min-width: 140px; /* 增加第二列的右内边距 */
 }
 
 

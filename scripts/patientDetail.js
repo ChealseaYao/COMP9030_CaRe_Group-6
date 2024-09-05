@@ -1,36 +1,36 @@
 document.addEventListener("DOMContentLoaded", function() {
     // 模拟后端数据
     const journalData = {
-        '2024-09-03': [{ state: '✔', title: 'Journal Title 15' }],
-        '2024-09-01': [{ state: '✔', title: 'Journal Title 14' }],
-        '2024-08-31': [{ state: '●', title: 'Journal Title 13' }],
-        '2024-08-29': [{ state: '✔', title: 'Journal Title 12' }],
-        '2024-08-27': [{ state: '✔', title: 'Journal Title 11' }],
-        '2024-08-25': [{ state: '●', title: 'Journal Title 10' }],
-        '2024-08-23': [{ state: '✔', title: 'Journal Title 9' }],
-        '2024-08-21': [{ state: '✔', title: 'Journal Title 8' }],
-        '2024-08-19': [{ state: '✔', title: 'Journal Title 7' }],
-        '2024-08-17': [{ state: '●', title: 'Journal Title 6' }],
-        '2024-08-13': [{ state: '●', title: 'Journal Title 1' }],
-        '2024-08-11': [{ state: '✔', title: 'Journal Title 2' }],
-        '2024-08-09': [{ state: '✔', title: 'Journal Title 3' }],
-        '2024-08-07': [{ state: '✔', title: 'Journal Title 4' }],
-        '2024-08-06': [{ state: '✔', title: 'Journal Title 5' }],
-        '2024-08-04': [{ state: '✔', title: 'Journal Title 16' }],
-        '2024-08-02': [{ state: '●', title: 'Journal Title 17' }],
-        '2024-08-01': [{ state: '✔', title: 'Journal Title 18' }],
-        '2024-07-30': [{ state: '✔', title: 'Journal Title 19' }],
-        '2024-07-28': [{ state: '✔', title: 'Journal Title 20' }],
-        '2024-07-25': [{ state: '●', title: 'Journal Title 21' }],
-        '2024-07-23': [{ state: '✔', title: 'Journal Title 22' }],
-        '2024-07-21': [{ state: '✔', title: 'Journal Title 23' }],
-        '2024-07-19': [{ state: '✔', title: 'Journal Title 24' }],
-        '2024-07-17': [{ state: '●', title: 'Journal Title 25' }],
-        '2024-07-15': [{ state: '✔', title: 'Journal Title 26' }],
-        '2024-07-13': [{ state: '✔', title: 'Journal Title 27' }],
-        '2024-07-11': [{ state: '✔', title: 'Journal Title 28' }],
-        '2024-07-09': [{ state: '✔', title: 'Journal Title 29' }],
-        '2024-07-07': [{ state: '✔', title: 'Journal Title 30' }]
+        '2024-09-03': [{ content: 'Journal content 15' }],
+        '2024-09-01': [{ content: 'Journal content 14' }],
+        '2024-08-31': [{ content: 'Journal content 13' }],
+        '2024-08-29': [{ content: 'Journal content 12' }],
+        '2024-08-27': [{ content: 'Journal content 11' }],
+        '2024-08-25': [{ content: 'Journal content 10' }],
+        '2024-08-23': [{ content: 'Journal content 9' }],
+        '2024-08-21': [{ content: 'Journal content 8' }],
+        '2024-08-19': [{ content: 'Journal content 7' }],
+        '2024-08-17': [{ content: 'Journal content 6' }],
+        '2024-08-13': [{ content: 'Journal content 1' }],
+        '2024-08-11': [{ content: 'Journal content 2' }],
+        '2024-08-09': [{ content: 'Journal content 3' }],
+        '2024-08-07': [{ content: 'Journal content 4' }],
+        '2024-08-06': [{ content: 'Journal content 5' }],
+        '2024-08-04': [{ content: 'Journal content 16' }],
+        '2024-08-02': [{ content: 'Journal content 17' }],
+        '2024-08-01': [{ content: 'Journal content 18' }],
+        '2024-07-30': [{ content: 'Journal content 19' }],
+        '2024-07-28': [{ content: 'Journal content 20' }],
+        '2024-07-25': [{ content: 'Journal content 21' }],
+        '2024-07-23': [{ content: 'Journal content 22' }],
+        '2024-07-21': [{ content: 'Journal content 23' }],
+        '2024-07-19': [{ content: 'Journal content 24' }],
+        '2024-07-17': [{ content: 'Journal content 25' }],
+        '2024-07-15': [{ content: 'Journal content 26' }],
+        '2024-07-13': [{ content: 'Journal content 27' }],
+        '2024-07-11': [{ content: 'Journal content 28' }],
+        '2024-07-09': [{ content: 'Journal content 29' }],
+        '2024-07-07': [{ content: 'Journal content 30' }]
     };
     
 
@@ -51,8 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
             journalData[date].forEach(journal => {
                 const rowHTML = `
                     <tr>
-                        <td>${journal.state}</td>
-                        <td>${journal.title}</td>
+                        <td>${journal.content}</td>
                         <td>${date}</td>
                     </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHTML);
