@@ -29,4 +29,48 @@ document.addEventListener("DOMContentLoaded", function () {
       statusContainer.appendChild(span);
     });
   });
+
+  // Enable dragging of patient items
+  const patientItems = document.querySelectorAll(".patient-item");
+  patientItems.forEach((patient) => {
+    patient.setAttribute("draggable", true); // Make patient items draggable
+
+    patient.addEventListener("dragstart", function (e) {
+      // Set the patient name (assuming it's inside a <strong> tag)
+      const patientName = patient.querySelector("strong").textContent;
+      e.dataTransfer.setData("text", patientName);
+    });
+  });
+
+  // Enable dropping on the members container
+  const membersContainer = document.getElementById("membersContainer");
+  membersContainer.addEventListener("dragover", allowDrop);
+
+  membersContainer.addEventListener("drop", function (e) {
+    e.preventDefault();
+    const patientName = e.dataTransfer.getData("text");
+
+    // Check if the patient is already a member
+    const existingMembers = [...membersContainer.querySelectorAll(".member-item")];
+    const isAlreadyMember = existingMembers.some(member => member.textContent.includes(patientName));
+
+    if (!isAlreadyMember) {
+      // Create a new member item for the dropped patient
+      const memberItem = document.createElement("div");
+      memberItem.classList.add("member-item");
+      memberItem.textContent = patientName;
+
+      // Add delete icon
+      const deleteIcon = document.createElement('span');
+      deleteIcon.classList.add('delete-icon');
+      deleteIcon.textContent = '🗑️';
+      deleteIcon.style.cursor = "pointer";
+      memberItem.appendChild(deleteIcon);
+
+      // Append the new member item to the members container
+      membersContainer.appendChild(memberItem);
+      attachDeleteListeners();
+    }
+  });
+
 });
