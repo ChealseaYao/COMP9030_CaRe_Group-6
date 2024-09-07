@@ -91,6 +91,11 @@
   min-width: 130px; 
 }
 
+.journalLists-table a {
+  text-decoration: none;
+  color: black;
+}
+
 
 .notes-button, .patientDetailPageViewMore-button {
   padding: 10px 20px; 
