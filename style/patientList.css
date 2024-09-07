@@ -72,6 +72,17 @@
   margin-right: 20px;
   min-height: 511px;
 }
+.patientList-body .tableContainer {
+  background-color: white;
+  max-height: 475px;
+}
+.groups .tableContainer {
+  max-height: 200px;
+}
+.members .tableContainer {
+  background-color: #e7e7e7;
+  max-height: 180px;
+}
 
 .patient-list h2 {
   margin-bottom: 10px;
@@ -124,14 +135,26 @@
   border-radius: 5px;
 }
 
-.patientList-body .patient-item > div:first-child {
+.patientList-body .left-section {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
 }
+
 
 .patientList-body .right-section {
   display: flex;
   align-items: center;
+}
+.details {
+  border: none;
+  color: white;
+  background-color: rgb(31, 159, 31);
+  border-radius: 5px;
+  padding: 5px 8px;
+}
+.details:hover {
+  background-color: green;
 }
 
 .patientList-body .group-item {
@@ -153,6 +176,7 @@
 
 .patientList-body .patient-icon {
   margin-right: 10px;
+  font-size: 25px;
 }
 
 .patientList-body .status {
