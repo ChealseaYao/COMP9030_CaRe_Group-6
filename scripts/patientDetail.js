@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const formattedDate = formatDate(date);  
                 const rowHTML = `
                     <tr>
-                        <td><a href="/patient/journal.html">${journal.content}</a></td>
+                        <td><a href="/therapist/journal.html">${journal.content}</a></td>
                         <td>${formattedDate}</td>
                     </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHTML);
