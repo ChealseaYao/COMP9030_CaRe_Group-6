@@ -1,12 +1,13 @@
 /*---Star bage---Start*/
-function toggleStar() {
-    const starIcon = document.getElementById('starIcon');
-    if (starIcon.src.includes('starIcon.png')) {
-        starIcon.src = 'star.png';
-    } else {
-        starIcon.src = 'starIcon.png';
-    }
-}
+var starIcon = document.getElementById("starIcon");
+
+starIcon.addEventListener("click", function() {
+  if (starIcon.textContent === "☆") {
+    starIcon.textContent = "★"; // Change to full star
+  } else {
+    starIcon.textContent = "☆"; // Change back to empty star
+  }
+});
 /*---Star bage---End*/
 
 /*---Popup---Start*/

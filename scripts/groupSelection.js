@@ -18,25 +18,31 @@ var groupNameDisplay = document.getElementById("currentGroupName");
 // Select the container where members will be displayed
 var membersContainer = document.getElementById("membersContainer");
 
-// Add click event listener to each group item
+function handleGroupClick(item) {
+  // Remove 'selected' class from all group items
+  var allGroups = document.querySelectorAll(".group-item");
+  allGroups.forEach(function (group) {
+    group.classList.remove("selected");
+  });
+
+  // Add 'selected' class to the clicked group item
+  item.classList.add("selected");
+
+  // Update the content of the groupNameDisplay <p> with the clicked group's name
+  groupNameDisplay.textContent = item.textContent;
+
+  // Get the group name
+  var selectedGroup = item.textContent;
+
+  // Update the members list for the selected group
+  updateMembersList(selectedGroup);
+}
+
+// Add click event listener to each existing group item
+var groupItems = document.querySelectorAll(".group-item");
 groupItems.forEach(function (item) {
   item.addEventListener("click", function () {
-    // Remove 'selected' class from all group items
-    groupItems.forEach(function (group) {
-      group.classList.remove("selected");
-    });
-
-    // Add 'selected' class to the clicked group item
-    item.classList.add("selected");
-
-    // Update the content of the groupNameDisplay <p> with the clicked group's name
-    groupNameDisplay.textContent = item.textContent;
-
-    // Get the group name
-    var selectedGroup = item.textContent;
-
-    // Update the members list for the selected group
-    updateMembersList(selectedGroup);
+    handleGroupClick(item);
   });
 });
 
@@ -64,3 +70,46 @@ function updateMembersList(group) {
   });
   attachDeleteListeners();
 }
+  function attachDeleteListeners() {
+    var deleteButtons = document.querySelectorAll(".delete-icon");
+
+    deleteButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var memberItem = button.parentElement;
+        memberItem.remove(); // Remove the member when the delete icon is clicked
+      });
+    });
+  }
+
+  // Function to add a new group dynamically
+  function addNewGroup(groupName) {
+    // Add the new group to the groupMembers object (initially with no members)
+    groupMembers[groupName] = [];
+
+    // Create a new div element for the group
+    var newGroupItem = document.createElement("div");
+    newGroupItem.classList.add("group-item");
+    newGroupItem.textContent = groupName;
+
+    // Append the new group item to the group container
+    var groupContainer = document.getElementById("groupContainer");
+    groupContainer.appendChild(newGroupItem);
+
+    // Attach click event listener to the newly created group
+    newGroupItem.addEventListener("click", function () {
+      handleGroupClick(newGroupItem);
+    });
+  }
+
+  function attachDeleteListeners() {
+    var deleteButtons = document.querySelectorAll(".delete-icon");
+
+    deleteButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var memberItem = button.parentElement;
+        memberItem.remove(); // Remove the member when the delete icon is clicked
+      });
+    });
+  }
+
+

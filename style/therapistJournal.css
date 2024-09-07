@@ -39,9 +39,11 @@
     padding: 5px;
     margin-top: 3px;
     margin-bottom: 15px;
+    color: #102e5d;
 }
 .details label {
     font-weight: bold;
+    color: #102e5d;
 }
 .download {
     display: flex;
@@ -72,11 +74,8 @@
 .star {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 40px;
     cursor: pointer;
-}
-.star img {
-    width: 40px;
-    height: 40px;
+    font-size: 50px;
 }
 /*---therapistJournal--- End*/
