@@ -1,7 +1,5 @@
-
-
 document.addEventListener("DOMContentLoaded", function() {
-    // 默认的 journal 数据
+    // Default journal data
     const journalData = {
         '2024-09-03': { no: 1, content: 'Today I felt more in control of my emotions. I managed to calm myself down when I started to feel anxious.' },
         '2024-09-02': { no: 2, content: 'Discussed my progress in therapy today. Feeling hopeful about learning new coping mechanisms.' },
@@ -30,10 +28,16 @@ document.addEventListener("DOMContentLoaded", function() {
         '2024-08-10': { no: 25, content: 'Had a good day overall. Managed to do my chores without feeling overwhelmed.' }
     };
 
-    // 渲染表格
+    // Function to format date from 'yyyy-MM-dd' to 'dd/MM/yyyy'
+    function formatDate(dateString) {
+        const dateParts = dateString.split('-');
+        return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+    }
+
+    // Render table
     function renderTable(filteredData) {
         const tableBody = document.querySelector(".historyJournal-table tbody");
-        tableBody.innerHTML = '';  // 清空表格
+        tableBody.innerHTML = '';  // Clear table
 
         if (filteredData.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="3">No records found</td></tr>';
@@ -51,23 +55,23 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 初始化时显示所有数据
+    // Get all journal data with formatted date
     function getAllJournals() {
         return Object.keys(journalData).map(date => ({
             no: journalData[date].no,
             content: journalData[date].content,
-            date: date
+            date: formatDate(date) // Format the date here
         }));
     }
 
     renderTable(getAllJournals());
 
-    // 搜索功能
+    // Search function
     const searchInput = document.querySelector('.search-bar input[name="search"]');
     const searchButton = document.querySelector('.search-bar button[type="submit"]');
 
     searchButton.addEventListener('click', function(event) {
-        event.preventDefault(); // 防止页面刷新
+        event.preventDefault(); // Prevent page refresh
 
         const keyword = searchInput.value.toLowerCase();
         const filteredData = getAllJournals().filter(journal => journal.content.toLowerCase().includes(keyword));
@@ -75,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
         renderTable(filteredData);
     });
 
-    // 日期选择功能
+    // Date picker function
     const confirmBtn = document.getElementById('confirm-btn');
     const yearSelect = document.getElementById('year');
     const monthSelect = document.getElementById('month');
@@ -84,18 +88,17 @@ document.addEventListener("DOMContentLoaded", function() {
     confirmBtn.addEventListener('click', function() {
         const selectedDate = `${yearSelect.value}-${monthSelect.value.padStart(2, '0')}-${daySelect.value.padStart(2, '0')}`;
         
-        // 根据选择的日期过滤 journalData
+        // Filter journalData by selected date
         const filteredData = Object.keys(journalData)
             .filter(date => date === selectedDate)
             .map(date => ({
                 no: journalData[date].no,
                 content: journalData[date].content,
-                date: date
+                date: formatDate(date) // Format the date
             }));
 
-        // 重新渲染表格
+        // Re-render table
         renderTable(filteredData);
     });
 });
-
 
