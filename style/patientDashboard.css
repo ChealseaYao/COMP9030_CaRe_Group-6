@@ -57,6 +57,11 @@
   text-align: left;
 }
 
+.contentList-table a {
+  text-decoration: none;
+  color: black;
+}
+
 .content-list {
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -186,6 +191,8 @@
 
 
 }
+
+
 
 
 
