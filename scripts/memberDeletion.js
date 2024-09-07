@@ -2,8 +2,7 @@
 
 // Get the modal
 var deleteModal = document.getElementById("confirmDeleteModal");
-// Get the delete buttons (bin icons)
-var deleteButtons = document.querySelectorAll(".delete-icon");
+
 // Get the cancel and confirm buttons in the modal
 var cancelDeleteButton = document.getElementById("cancelDeleteButton");
 var confirmDeleteButton = document.getElementById("confirmDeleteButton");
@@ -11,6 +10,10 @@ var confirmDeleteButton = document.getElementById("confirmDeleteButton");
 // Variable to keep track of which member to delete
 var memberToDelete = null;
 
+
+function attachDeleteListeners() {
+
+  var deleteButtons = document.querySelectorAll(".delete-icon");
 // When the user clicks the bin button, open the modal
 deleteButtons.forEach(function (button) {
   button.addEventListener("click", function () {
@@ -19,6 +22,7 @@ deleteButtons.forEach(function (button) {
     deleteModal.style.display = "flex";
   });
 });
+}
 
 // When the user clicks on cancel button, close the modal
 cancelDeleteButton.onclick = function () {

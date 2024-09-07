@@ -81,7 +81,7 @@
 }
 .members .tableContainer {
   background-color: #e7e7e7;
-  max-height: 180px;
+  height: 180px;
 }
 
 .patient-list h2 {
