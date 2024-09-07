@@ -27,28 +27,36 @@ document.addEventListener('DOMContentLoaded', function() {
         '2024-08-10': { no: 25, content: 'Had a good day overall. Managed to do my chores without feeling overwhelmed.' }
     };
 
-    // 获取并返回按日期降序排序的前5条数据
+    // Function to format the date from 'yyyy-MM-dd' to 'dd/MM/yyyy'
+    function formatDate(dateString) {
+        const dateParts = dateString.split('-');
+        return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+    }
+
+    // Retrieve and return the top 5 latest journal entries, sorted by date in descending order
     function getLatestJournals() {
         return Object.keys(journalData)
-            .sort((a, b) => new Date(b) - new Date(a)) // 按日期降序排序
-            .slice(0, 5) // 获取最新的5条数据
+            .sort((a, b) => new Date(b) - new Date(a)) // Sort by date in descending order
+            .slice(0, 5) // Get the latest 5 entries
             .map(date => ({
                 no: journalData[date].no,
                 content: journalData[date].content,
-                date: date
+                date: formatDate(date) // Format the date
             }));
     }
 
-    // 渲染表格
+    // Render the table with the provided filtered data
     function renderTable(filteredData) {
         const tableBody = document.querySelector('.contentList-table tbody');
-        tableBody.innerHTML = ''; // 清空表格
+        tableBody.innerHTML = ''; // Clear table
 
+        // If no data is found, display a message
         if (filteredData.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="3">No records found</td></tr>';
             return;
         }
 
+        // Loop through each journal entry and insert rows into the table
         filteredData.forEach(journal => {
             const rowHTML = `
                 <tr>
@@ -60,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 页面加载时渲染最新的5条数据
+    // Render the latest 5 entries on page load
     const latestJournals = getLatestJournals();
     renderTable(latestJournals);
 });
+
