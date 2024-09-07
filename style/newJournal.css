@@ -27,7 +27,7 @@
 
 .newJournal-body .upload-button {
   padding: 10px 15px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 5px;
   background-color: #f8c41a;
   color: white;
@@ -140,8 +140,14 @@
   cursor: pointer;
   background-color: white;
 }
+.modal-buttons #cancelSubmitButton:hover {
+  background-color: #ddd;
+}
 
 .modal-buttons #confirmSubmitButton {
   background-color: #1565c0;
   color: white;
+}
+.modal-buttons #confirmSubmitButton:hover {
+  background-color: #004a99;
 }

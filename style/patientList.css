@@ -278,3 +278,15 @@ button {
   background-color: #1565c0;
   color: white;
 }
+.modal-buttons #cancelButton:hover, 
+#cancelDeleteButton:hover {
+  background-color: #ddd;
+}
+
+.modal-buttons #confirmButton:hover,
+.modal-buttons #confirmDeleteButton:hover {
+  background-color: #004a99;
+}
+
+
+
