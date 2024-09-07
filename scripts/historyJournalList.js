@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const rowHTML = `
                     <tr>
                         <td class="star">${item.star ? '★' : ''}</td>
-                        <td>${item.content}</td>
+                        <td><a href="/therapist/journal.html">${item.content}</a></td>
                         <td>${item.date}</td>
                     </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHTML);
