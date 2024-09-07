@@ -22,6 +22,8 @@
 .entry-date {
     font-size: 16px;
     margin-bottom: 20px;
+    font-weight: bold;
+    color: #102e5d;
 }
 .entry-content {
     background-color: #f0f0f0;
@@ -39,7 +41,6 @@
     padding: 5px;
     margin-top: 3px;
     margin-bottom: 15px;
-    color: #102e5d;
 }
 .details label {
     font-weight: bold;
@@ -56,6 +57,7 @@
 .download label {
     font-weight: bold;
     text-wrap: nowrap;
+    color: #102e5d;
 }
 .download div {
     border-radius: 5px;
