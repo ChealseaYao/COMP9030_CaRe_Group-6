@@ -29,16 +29,14 @@
   padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f8c41a;;
+  background-color: #f8c41a;
   color: white;
   cursor: pointer;
 }
 
 .upload-button:hover {
   background-color: #c69e18;
-  
 }
-
 
 .newJournal-body .upload-info {
   font-size: 0.8em;
@@ -91,9 +89,8 @@
   cursor: pointer;
 }
 .submit-button:hover {
-    background-color: green;
+  background-color: green;
 }
-
 
 .main-newJournal label {
   font-weight: bold;
@@ -124,10 +121,16 @@
   width: 100%;
 }
 
+.modal-content p {
+  padding-top: 10px;
+}
+
 .modal-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  padding: 5px;
+  padding-bottom: 5px;
 }
 
 .modal-buttons button {
@@ -136,4 +139,9 @@
   border-radius: 5px;
   cursor: pointer;
   background-color: white;
+}
+
+.modal-buttons #confirmSubmitButton {
+  background-color: #1565c0;
+  color: white;
 }
