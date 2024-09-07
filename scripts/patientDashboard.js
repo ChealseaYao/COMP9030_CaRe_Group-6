@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         filteredData.forEach(journal => {
             const rowHTML = `
                 <tr>
-                    <td>${journal.content}</td>
+                    <td><a href="/patient/journal.html">${journal.content}</a></td> 
                     <td>${journal.date}</td>
                 </tr>
             `;
