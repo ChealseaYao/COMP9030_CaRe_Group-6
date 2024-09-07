@@ -2,6 +2,8 @@
 // Select all group items
 var groupItems = document.querySelectorAll(".group-item");
 
+var groupNameDisplay = document.getElementById("currentGroupName");
+
 // Add click event listener to each group item
 groupItems.forEach(function (item) {
   item.addEventListener("click", function () {
@@ -12,5 +14,8 @@ groupItems.forEach(function (item) {
 
     // Add 'selected' class to the clicked group item
     item.classList.add("selected");
+
+    groupNameDisplay.textContent = item.textContent;
   });
 });
+
