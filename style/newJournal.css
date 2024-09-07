@@ -13,6 +13,7 @@
 .newJournal-body h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #102e5d;
 }
 
 .newJournal-body .header {
@@ -28,9 +29,16 @@
   padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: white;
+  background-color: #f8c41a;;
+  color: white;
   cursor: pointer;
 }
+
+.upload-button:hover {
+  background-color: #c69e18;
+  
+}
+
 
 .newJournal-body .upload-info {
   font-size: 0.8em;
@@ -84,6 +92,12 @@
 }
 .submit-button:hover {
     background-color: green;
+}
+
+
+.main label {
+  font-weight: bold;
+  color: #102e5d;
 }
 
 /* ---------------------------------------------------Modal Styles ---------------------------------------*/
