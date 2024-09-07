@@ -49,6 +49,11 @@
     padding-bottom: 12px;
     text-align: left;
 }
+.historyJournal-table a {
+    text-decoration: none;
+    color: black;
+    
+}
 
 .historyJournal-table td:nth-child(1),
 .historyJournal-table th:nth-child(1) {
