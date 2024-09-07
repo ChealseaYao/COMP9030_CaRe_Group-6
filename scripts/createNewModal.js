@@ -31,12 +31,7 @@ confirmButton.onclick = function () {
   // Validate the input to make sure it's not empty
   if (newGroupName) {
     // Create a new div element for the group
-    var newGroupItem = document.createElement("div");
-    newGroupItem.classList.add("group-item"); // Add the appropriate class
-    newGroupItem.textContent = newGroupName; // Set the text to the new group name
-
-    // Append the new group item to the group container
-    groupContainer.appendChild(newGroupItem);
+    addNewGroup(newGroupName); 
 
     // Close the modal and clear the input field
     modal.style.display = "none";
