@@ -1,9 +1,13 @@
 /* ---------------------------------Patient List Page -----------------------------------*/
+.patientList-body .therapistContainer {
+  
+}
 .patientList-body .leftbox {
   margin-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 15%;
 }
 
 .leftbox h3 {
@@ -63,7 +67,6 @@
 .patientList-body .patient-list {
   width: 60%;
   min-width: 520px;
-  max-width: 800px;
   text-align: left;
   background-color: #fff;
   padding: 15px;
