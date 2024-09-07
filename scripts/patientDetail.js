@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function() {
     // 模拟后端数据
     const journalData = {
@@ -31,6 +32,15 @@ document.addEventListener("DOMContentLoaded", function() {
         renderTable(latestDates);
     }
 
+    // 日期格式转换函数
+    function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');  // 月份从0开始计数
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
     // 渲染表格内容
     function renderTable(dates) {
         const tableBody = document.querySelector(".journalLists-table tbody");
@@ -38,10 +48,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         dates.forEach(date => {
             journalData[date].forEach(journal => {
+                const formattedDate = formatDate(date);  // 转换日期格式
                 const rowHTML = `
                     <tr>
                         <td>${journal.content}</td>
-                        <td>${date}</td>
+                        <td>${formattedDate}</td>
                     </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHTML);
             });
