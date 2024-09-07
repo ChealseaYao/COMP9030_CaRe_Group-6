@@ -3,8 +3,8 @@
 
 .patientDashboard {
  
-  margin: 0 auto; /* 水平居中显示 */
-  padding: 30px; /* 容器内边距 */
+  margin: 0 auto; 
+  padding: 30px; 
   display: flex;
   justify-content: space-between;
   overflow-y: auto;
@@ -65,13 +65,13 @@
   padding: 20px;
   min-height: 471px;
   margin-bottom: 20px;
-  flex-direction: column; /* 使按钮与表格垂直排列 */
+  flex-direction: column; 
   display: flex; /* Set display to flex */
   justify-content: space-between; /* Align children with space in between */
 }
 
 .contentList-table th {
-  background-color: #386a9b; /* 表头背景色 */
+  background-color: #386a9b; 
   color: white;
 }
 .contentList-table td {
@@ -92,19 +92,19 @@
 }
 
 .patientDashboardViewMore-Button, .newJournal-button {
-  padding: 10px 20px; /* 按钮内边距 */
-  border: none; /* 无边框 */
-  border-radius: 5px; /* 按钮边角圆滑 */
-  cursor: pointer; /* 鼠标悬停时显示手型图标 */
-  font-size: 16px; /* 文本大小 */  
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 16px; 
 }
 
 .patientDashboardViewMore-Button {
   background-color: #386a9b;
   color: white;
-  align-self: flex-end; /* 将按钮对齐到右侧 */
+  align-self: flex-end; 
   margin-top: 10px;
-  margin-right: 10px; /* 右边距 */
+  margin-right: 10px; 
   float: right;
   
   
