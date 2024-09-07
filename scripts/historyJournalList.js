@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function() {
     // 模拟的 journalData 数据
     const journalData = {
@@ -28,6 +29,15 @@ document.addEventListener("DOMContentLoaded", function() {
         '2024-08-10': [{ content: 'Had a good day overall. Managed to do my chores without feeling overwhelmed.', star: false }]
     };
 
+    // 日期格式转换函数
+    function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从0开始计数
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`; // 转换为 DD/MM/YYYY 格式
+    }
+
     // 渲染表格函数
     function renderTable(data) {
         const tableBody = document.querySelector(".historyJournal-table tbody");
@@ -35,11 +45,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (data.length > 0) {
             data.forEach(item => {
+                const formattedDate = formatDate(item.date); // 使用 formatDate 转换日期格式
                 const rowHTML = `
                     <tr>
                         <td class="star">${item.star ? '★' : ''}</td>
                         <td><a href="/therapist/journal.html">${item.content}</a></td>
-                        <td>${item.date}</td>
+                        <td>${formattedDate}</td>
                     </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHTML);
             });
