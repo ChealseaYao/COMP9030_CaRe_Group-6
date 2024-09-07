@@ -72,11 +72,8 @@
 .star {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 40px;
     cursor: pointer;
-}
-.star img {
-    width: 40px;
-    height: 40px;
+    font-size: 50px;
 }
 /*---therapistJournal--- End*/
