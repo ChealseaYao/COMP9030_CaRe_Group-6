@@ -73,22 +73,27 @@ document.addEventListener("DOMContentLoaded", function() {
         ]
     };
 
-    // Initialize and display the latest three contents
+    // Function to convert date from 'yyyy-MM-dd' to 'dd/MM/yyyy'
+    function formatDate(dateString) {
+        const dateParts = dateString.split('-');
+        return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+    }
+
+    // Initialize and display the latest three notes
     function displayLatestNotes() {
         const tableBody = document.querySelector(".note-history-note tbody");
         tableBody.innerHTML = '';
 
-        // Get the latest three records, sorted by date
+        // Get the latest three records sorted by date
         const latestNotes = Object.keys(notesData)
             .sort((a, b) => new Date(b) - new Date(a)) 
             .slice(0, 3); 
 
-        
         latestNotes.forEach(date => {
             notesData[date].forEach(note => {
                 const newRowHTML = `
                     <tr data-date="${date}">
-                        <td>${date}</td>
+                        <td>${formatDate(date)}</td>
                         <td>${note}</td>
                         <td><button class="delete-button">Delete</button></td>
                     </tr>`;
@@ -96,77 +101,52 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
-       
         bindDeleteButtons();
     }
 
-    // Bind the event of the date picker confirmation button
+    // Bind the event for the date picker confirmation button
     const confirmBtn = document.getElementById('confirm-btn');
     confirmBtn.addEventListener('click', function() {
-       
+        // Get the selected year, month, and day, and pad the values
         const year = document.getElementById('year').value;
         const month = document.getElementById('month').value.padStart(2, '0');
         const day = document.getElementById('day').value.padStart(2, '0'); 
 
-        
+        // Construct the date string
         const selectedDate = `${year}-${month}-${day}`;
         console.log("Selected Date:", selectedDate);
 
-        
+        // Retrieve notes for the selected date
         const noteContentArray = notesData[selectedDate];
 
         if (noteContentArray) {
             const tableBody = document.querySelector(".note-history-note tbody");
 
-            
+            // Clear previous notes
             tableBody.innerHTML = '';
 
-            
+            // Display notes for the selected date
             noteContentArray.forEach(noteContent => {
                 const newRowHTML = `
                     <tr data-date="${selectedDate}">
-                        <td>${selectedDate}</td>
+                        <td>${formatDate(selectedDate)}</td>
                         <td>${noteContent}</td>
                         <td><button class="delete-button">Delete</button></td>
                     </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', newRowHTML);
             });
 
-            
             bindDeleteButtons();
         } else {
             alert("No notes found for the selected date.");
         }
 
-        
+        // Hide the date picker popup
         const calendarPopup = document.querySelector('.calendar-popup');
         calendarPopup.style.display = 'none';
     });
 
-    // 
-    // function bindDeleteButtons() {
-    //     const deleteButtons = document.querySelectorAll(".delete-button");
-    //     deleteButtons.forEach(button => {
-    //         button.addEventListener('click', function(event) {
-    //             const row = event.target.closest('tr');
-    //             if (row) {
-    //                 const date = row.getAttribute('data-date');
-    //                 const note = row.querySelector('td:nth-child(2)').textContent;
-                    
-    //                 // 
-    //                 notesData[date] = notesData[date].filter(n => n !== note);
-    //                 if (notesData[date].length === 0) {
-    //                     delete notesData[date];
-    //                 }
-                    
-    //                 // 
-    //                 row.remove();
-    //             }
-    //         });
-    //     });
-    // 
-
-    // Function to bind the delete button event (after modification, a modal box pops up)
+    // Bind delete button event (after modification, a modal box pops up)
     function bindDeleteButtons() {
         const deleteButtons = document.querySelectorAll(".delete-button");
         deleteButtons.forEach(button => {
@@ -175,94 +155,89 @@ document.addEventListener("DOMContentLoaded", function() {
                 currentDate = currentRow.getAttribute('data-date'); 
                 currentNote = currentRow.querySelector('td:nth-child(2)').textContent; 
 
-                
                 const deleteModal = document.getElementById('note-deleteModal');
                 deleteModal.style.display = 'block'; 
             });
         });
     }
 
-    // Bind the cancel and confirm button events of the modal box
+    // Bind the cancel and confirm buttons in the modal
     const cancelBtn = document.getElementById('note-cancelBtn');
     const deConfirmBtn = document.getElementById('note-confirmBtn');
     
-    // Hide the modal when the cancel button is clicked
+    // Hide modal when cancel button is clicked
     cancelBtn.addEventListener('click', function() {
         const deleteModal = document.getElementById('note-deleteModal');
         deleteModal.style.display = 'none'; 
     });
 
-    
+    // Delete note when confirm button is clicked
     deConfirmBtn.addEventListener('click', function() {
-       
+        // Remove the note from the data structure
         notesData[currentDate] = notesData[currentDate].filter(note => note !== currentNote);
         if (notesData[currentDate].length === 0) {
-            delete notesData[currentDate]; // If all notes for the current date are deleted, delete that date
+            delete notesData[currentDate]; // Delete the date if no notes remain
         }
 
-        
+        // Remove the row from the table
         if (currentRow) {
             currentRow.remove();
         }
 
-        
+        // Hide the delete modal
         const deleteModal = document.getElementById('note-deleteModal');
         deleteModal.style.display = 'none';
     });
 
-    // Process the save button click event and display a modal box indicating successful saving
+    // Handle save button click event and show success modal
     const saveBtn = document.getElementById('note-save');
     const saveModal = document.getElementById('saveModal');
     const saveConfirmBtn = document.getElementById('saveConfirmBtn');
 
     saveBtn.addEventListener('click', function() {
-        // 1. Get the new note content entered by the user
-        const newNoteContent = document.getElementById('new-note').value.trim(); // Get the text box content and remove extra spaces
+        // 1. Get the new note entered by the user
+        const newNoteContent = document.getElementById('new-note').value.trim(); // Get the input value and remove extra spaces
 
         if (newNoteContent === '') {
             alert("Please enter a note."); 
             return;
         }
 
-        // 2. Get the current date in the format of 'yyyy-MM-dd'
+        // 2. Get the current date in 'yyyy-MM-dd' format
         const today = new Date();
         const formattedDate = today.toISOString().split('T')[0]; 
 
-        // 3. Add a new note to the notesData data structure
+        // 3. Add the new note to the notesData structure
         if (!notesData[formattedDate]) {
             notesData[formattedDate] = []; 
         }
         notesData[formattedDate].push(newNoteContent); 
 
-        // 4. Dynamically update the page to show newly added notes
+        // 4. Dynamically update the page with the new note
         const tableBody = document.querySelector(".note-history-note tbody");
         const newRowHTML = `
             <tr data-date="${formattedDate}">
-                <td>${formattedDate}</td>
+                <td>${formatDate(formattedDate)}</td>
                 <td>${newNoteContent}</td>
                 <td><button class="delete-button">Delete</button></td>
             </tr>`;
         tableBody.insertAdjacentHTML('beforeend', newRowHTML); 
 
-        // 5. Rebind the delete button event to ensure that the newly added delete button also has functionality
+        // 5. Re-bind the delete button event to include the new note's delete button
         bindDeleteButtons();
 
-        // 6. Displays a modal box showing successful saving
+        // 6. Clear the input field
         document.getElementById('new-note').value = '';
 
-        // 7. Displays a modal box showing successful saving
+        // 7. Show success modal
         saveModal.style.display = 'block';
     });
 
-    
+    // Close the success modal when confirm button is clicked
     saveConfirmBtn.addEventListener('click', function() {
         saveModal.style.display = 'none'; 
     });
 
-
-
-    // Initialize and display the latest three items
+    // Initialize and display the latest three notes
     displayLatestNotes();
 });
-
-
