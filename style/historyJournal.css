@@ -55,20 +55,30 @@
     
 }
 
-.historyJournal-table td:nth-child(1),
-.historyJournal-table th:nth-child(1) {
+.thearpistHJT td:nth-child(1),
+.thearpistHJT th:nth-child(1) {
     text-align: center;
     min-width: 80px;
 }
-.historyJournal-table th:nth-child(2),
-.historyJournal-table td:nth-child(2) {
+.thearpistHJT th:nth-child(2),
+.thearpistHJT td:nth-child(2) {
     width: 700px;
     min-width: 200px;
 }
-.historyJournal-table th:nth-child(3),
-.historyJournal-table td:nth-child(3) {
+.thearpistHJT th:nth-child(3),
+.thearpistHJT td:nth-child(3) {
     min-width: 160px;
 }
 
+.patientHJT td:nth-child(1),
+.patientHJT th:nth-child(1) {
+    width: 700px;
+    min-width: 200px;
+    text-align: left;
+}
+.patientHJT th:nth-child(2),
+.patientHJT td:nth-child(2) {
+    min-width: 160px;
+}
 
 /* ============= therapist-historyJournal page End - By Wenqiang ========== */
