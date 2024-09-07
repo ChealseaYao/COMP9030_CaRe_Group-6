@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", function() {
-    // 模拟后端数据
+    
     const journalData = {
         '2024-09-03': [{ state: '✔', content: 'Today I felt more in control of my emotions. I managed to calm myself down when I started to feel anxious.', star: false }],
         '2024-09-02': [{ state: '✔', content: 'Discussed my progress in therapy today. Feeling hopeful about learning new coping mechanisms.', star: false }],
@@ -24,31 +24,31 @@ document.addEventListener("DOMContentLoaded", function() {
         '2024-08-15': [{ state: '●', content: 'Couldn’t sleep last night. My mind was racing with worries about work and relationships.', star: false }]
     };
 
-    // 显示默认最新的5条记录
+    
     function displayLatestJournals() {
         const sortedDates = Object.keys(journalData).sort((a, b) => new Date(b) - new Date(a));
-        const latestDates = sortedDates.slice(0, 5);  // 获取最新的5条数据
+        const latestDates = sortedDates.slice(0, 5);  
 
         renderTable(latestDates);
     }
 
-    // 日期格式转换函数
+    
     function formatDate(dateStr) {
         const date = new Date(dateStr);
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');  // 月份从0开始计数
+        const month = String(date.getMonth() + 1).padStart(2, '0');  
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
     }
 
-    // 渲染表格内容
+    
     function renderTable(dates) {
         const tableBody = document.querySelector(".journalLists-table tbody");
-        tableBody.innerHTML = ''; // 清空表格
+        tableBody.innerHTML = ''; 
 
         dates.forEach(date => {
             journalData[date].forEach(journal => {
-                const formattedDate = formatDate(date);  // 转换日期格式
+                const formattedDate = formatDate(date);  
                 const rowHTML = `
                     <tr>
                         <td>${journal.content}</td>
@@ -59,6 +59,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 初始化时显示最新的5条内容
+    
     displayLatestJournals();
 });

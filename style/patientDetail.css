@@ -22,8 +22,8 @@
 
 .user-details {
   display: flex;
-  align-items: flex-start; /* 保证子元素从容器的顶部开始对齐 */
-  justify-content: space-between; /* 文本和按钮分布在容器的两端 */
+  align-items: flex-start; 
+  justify-content: space-between; 
   width: 100%;
   margin-top: 40px;
   margin-bottom: 30px;
@@ -37,18 +37,18 @@
 }
 
 .patient-info {
-  list-style-type: none; /* 去除小圆点 */
-  flex-grow: 1;/* 允许文本占据多余的空间 */
+  list-style-type: none; 
+  flex-grow: 1;
   padding-top: 10px;
   
 }
 
 .patient-info li {
-  margin-bottom: 5px; /* 增加每个列表项之间的底部外边距 */
+  margin-bottom: 5px; 
 }
 
 .notes-button {
-  margin-left: 20px; /* 为按钮和文本之间提供一些空间 */
+  margin-left: 20px; 
 }
 
 #journals {
@@ -76,28 +76,28 @@
 }
 
 .journalLists-table  th {
-  background-color: #386a9b; /* 表头背景色 */
+  background-color: #386a9b; 
   color: white;
 }
 
 .journalLists-table   td {
-  background-color: rgb(236, 236, 236); /* 单元格背景色 */
+  background-color: rgb(236, 236, 236); 
 }
 
 .journalLists-table th:nth-child(1), .journalLists-table td:nth-child(1) {
-  min-width: 500px; /* 增加第一列的右内边距 */
+  min-width: 500px; 
 }
 .journalLists-table th:nth-child(2), .journalLists-table td:nth-child(2) {
-  min-width: 130px; /* 增加第二列的右内边距 */
+  min-width: 130px; 
 }
 
 
 .notes-button, .patientDetailPageViewMore-button {
-  padding: 10px 20px; /* 按钮内边距 */
-  border: none; /* 无边框 */
-  border-radius: 5px; /* 按钮边角圆滑 */
-  cursor: pointer; /* 鼠标悬停时显示手型图标 */
-  font-size: 16px; /* 文本大小 */  
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-size: 16px;  
 }
 
 .notes-button {
