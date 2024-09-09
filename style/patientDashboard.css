@@ -2,13 +2,13 @@
 /* ============= patient-patientDashboard page Start - By Zhen ========== */
 
 .patientDashboard {
- 
   margin: 0 auto; 
   padding: 30px; 
   display: flex;
   justify-content: space-between;
   overflow-y: auto;
   min-height: 800px;
+  min-width: fit-content;
 }
 
 
@@ -19,10 +19,11 @@
 }
 
 .left-panel {
-  width: 46%;
+  width: 47%;
   text-align: left;
   min-width: 300px;
   padding: 10px;
+  min-width: fit-content;
 }
 
 .right-panel {

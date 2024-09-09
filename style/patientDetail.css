@@ -7,7 +7,6 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 54%;
   max-width: 800px;
-  min-width: 360px;
   max-height: fit-content;
   text-align: left;
   
@@ -85,10 +84,10 @@
 }
 
 .journalLists-table th:nth-child(1), .journalLists-table td:nth-child(1) {
-  min-width: 500px; 
+  min-width: 65%; 
 }
 .journalLists-table th:nth-child(2), .journalLists-table td:nth-child(2) {
-  min-width: 130px; 
+  min-width: 35%; 
 }
 
 .journalLists-table a {
