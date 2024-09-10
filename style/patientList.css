@@ -1,5 +1,6 @@
 /* ---------------------------------Patient List Page -----------------------------------*/
-
+.patientList-body .therapistContainer {
+}
 .patientList-body .leftbox {
   margin-right: 10px;
   display: flex;
