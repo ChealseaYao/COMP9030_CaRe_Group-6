@@ -24,14 +24,41 @@
     background-color: #fff;
     padding: 20px;
     padding-top: 40px;
+<<<<<<< HEAD
     border-radius: 8px;
     border: 1px solid #ccc;
+=======
+    background-color: #fff;
+    border-radius: 8px;
+>>>>>>> a5c0fd9357bd4f7e7c08e6d853ced43751a2d30b
     width: 300px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
 }
 
+<<<<<<< HEAD
+=======
+.popup button {
+    padding: 10px 20px;
+    margin: 10px;
+    margin-top: 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#jour-confirm-btn {
+    background-color: #007bff;
+    text-emphasis-color: white;
+}
+
+#jour-cancel-btn {
+    background-color: #f44336;
+}
+
+>>>>>>> a5c0fd9357bd4f7e7c08e6d853ced43751a2d30b
 .popup-overlay {
     
     display: none;
