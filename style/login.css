@@ -8,6 +8,9 @@
     margin: 100px auto;
     text-align: left;
 }
+.login-body .therapistContainer {
+    min-height: 850px;
+}
 
 .login-form h2 {
     margin-bottom: 20px;
