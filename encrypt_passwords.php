@@ -2,8 +2,9 @@
  1. 复制db.sql到自己的phpMyAdmin的SQL，创建db
  2. 确认dbconn.inc.php里的密码与自己在自己phpmyadmin中设置的一致，默认没有密码
  3. 将项目文件COMP9030_CARE_GROUPS-6放到/Applications/XAMPP/xamppfiles/htdocs/COMP9030_CaRe_Groups-6这个目录下，确保在htdocs里(mac与Windows不同,能成功运行就行)
- 4. 在网页运行test.php,出现数据
- 5. 运行logintest.php(密码在db.sql加密密码后面备注)，登录进去，正常显示dashboard.
+ 4. 在网页上运行encrypt_passwords.php进行加密密码
+ 5. 在网页运行test.php,出现数据
+ 6. 运行logintest.php(密码在db.sql密码后面备注)，登录进去，正常显示dashboard.
 -->
 
 
