@@ -118,7 +118,7 @@ GRANT ALL PRIVILEGES ON CaReDB.* TO dbadmin@localhost;
 
 INSERT INTO `user` (username, password_hash, role, full_name) VALUES
 ('johndoe', '$2y$10$CIdLJDnFmIKmSAjrtRp4sORAsl6ZM4PZJPKa2q2w1ORZ01JmbYE4m', 'patient', 'John Doe'), -- password: hashed_password1
-('jane', 'hashed_pass$2y$10$E.3po59bHp/cJk/cMAW41e3Mnkzx5mOVUL2Nt6DmllAXKZCP3nVUeword2', 'patient', 'Jane Roe'), -- password: hashed_password2
+('jane', '$2y$10$E.3po59bHp/cJk/cMAW41e3Mnkzx5mOVUL2Nt6DmllAXKZCP3nVUeword2', 'patient', 'Jane Roe'), -- password: hashed_password2
 ('jimS', '$2y$10$YV3C92ns48GAR.UJzCdSReYX/i5KLvbMRyDXKuTosM3BkzZY109Ey', 'patient', 'Jim Smith'), -- password: hashed_password3
 ('alicebrn', '$2y$10$FnHhtvjhmBbg4oYNA88ebOXb7.SPrBrTLF9NqzRgPOFvEjKXLdyAK', 'therapist', 'Dr. Alice Brown'), -- password: hashed_password4
 ('bob', '$2y$10$H4udxioH4Wq4ppLCCeizzuvkMHUb6P08Q9TRDc4lKDXvK3.iha3T6', 'therapist', 'Dr. Bob White'), -- password: hashed_password5
