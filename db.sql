@@ -117,14 +117,14 @@ GRANT ALL PRIVILEGES ON CaReDB.* TO dbadmin@localhost;
 
 
 INSERT INTO `user` (username, password_hash, role, full_name) VALUES
-('johndoe', '$2y$10$CIdLJDnFmIKmSAjrtRp4sORAsl6ZM4PZJPKa2q2w1ORZ01JmbYE4m', 'patient', 'John Doe'), -- password: hashed_password1
-('jane', '$2y$10$E.3po59bHp/cJk/cMAW41e3Mnkzx5mOVUL2Nt6DmllAXKZCP3nVUeword2', 'patient', 'Jane Roe'), -- password: hashed_password2
-('jimS', '$2y$10$YV3C92ns48GAR.UJzCdSReYX/i5KLvbMRyDXKuTosM3BkzZY109Ey', 'patient', 'Jim Smith'), -- password: hashed_password3
-('alicebrn', '$2y$10$FnHhtvjhmBbg4oYNA88ebOXb7.SPrBrTLF9NqzRgPOFvEjKXLdyAK', 'therapist', 'Dr. Alice Brown'), -- password: hashed_password4
-('bob', '$2y$10$H4udxioH4Wq4ppLCCeizzuvkMHUb6P08Q9TRDc4lKDXvK3.iha3T6', 'therapist', 'Dr. Bob White'), -- password: hashed_password5
-('green', '$2y$10$nCzP5V0p2n.ujhEjKGpT1OMT2p.Weg5BAj8WaUUy3jl59wZd/pMq.', 'therapist', 'Dr. Charlie Green'), -- password: hashed_password6
-('joycelynn', '$2y$10$7ld3VxqVH8ww/lUe9sP9PedPOI3/55jmpyvFB.lasN1aTAmLDgPC2', 'auditor', 'randon Jones'), -- password: hashed_password7
-('stanleyrivera', '$2y$10$ghFfF0.tmuucQSUDbbwzGOYP.BMLur1zt7ulY1Knm0hiRJ7Gg2Eym', 'professional_staff', 'Jeffrey Ruiz'); -- password: hashed_password8
+('johndoe', 'hashed_password1', 'patient', 'John Doe'), -- password: hashed_password1
+('jane', 'hashed_password2', 'patient', 'Jane Roe'), -- password: hashed_password2
+('jimS', 'hashed_password3', 'patient', 'Jim Smith'), -- password: hashed_password3
+('alicebrn', 'hashed_password4', 'therapist', 'Dr. Alice Brown'), -- password: hashed_password4
+('bob', 'hashed_password5', 'therapist', 'Dr. Bob White'), -- password: hashed_password5
+('green', 'hashed_password6', 'therapist', 'Dr. Charlie Green'), -- password: hashed_password6
+('joycelynn', 'hashed_password7', 'auditor', 'randon Jones'), -- password: hashed_password7
+('stanleyrivera', 'hashed_password8', 'professional_staff', 'Jeffrey Ruiz'); -- password: hashed_password8
 
 
 INSERT INTO therapist (user_id, therapist_title, therapist_image) VALUES
