@@ -126,6 +126,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo "<p>No patients found.</p>";
                 }
 
+                // Query to get group names
+                $sql = "SELECT group_name FROM `group`"; // Assuming your table is named `group`
+                $group_result = $conn->query($sql);
+
                 $conn->close();
                 ?>
             </div>
@@ -137,10 +141,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button class="create-new">Create New</button>
             </div>
             <div id="groupContainer" class="tableContainer">
-                <div class="group-item">Tuesday 3pm Session</div>
-                <div class="group-item">Friday Special</div>
-                <div class="group-item">Anxiety Group</div>
-                <div class="group-item">Avengers</div>
+                <!-- PHP to display group names dynamically -->
+                <?php
+                if ($group_result->num_rows > 0) {
+                    while ($group_row = $group_result->fetch_assoc()) {
+                        echo '<div class="group-item">' . htmlspecialchars($group_row['group_name']) . '</div>';
+                    }
+                } else {
+                    echo "<p>No groups found.</p>";
+                }
+                ?>
             </div>
             <h3>Members</h3>
             <div class="members">
