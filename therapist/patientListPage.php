@@ -3,11 +3,10 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "caredb"; // Replace with your actual database name
+$dbname = "caredb"; 
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -19,22 +18,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $data['user_id'];
     $status = $data['status'];
 
-    // Update the patient's status in the database
-    $sql = "UPDATE patient SET badge = ? WHERE user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('si', $status, $user_id);
+    // Ensure the status is one of the allowed values
+    if (in_array($status, ['good status', 'bad status', 'danger status'])) {
+        // Update the patient's status in the database
+        $sql = "UPDATE patient SET badge = ? WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('si', $status, $user_id);
 
-    if ($stmt->execute()) {
-        echo json_encode(['success' => true]);
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false]);
+        }
+
+        $stmt->close();
     } else {
-        echo json_encode(['success' => false]);
+        // Invalid status value
+        echo json_encode(['success' => false, 'error' => 'Invalid status']);
     }
 
-    $stmt->close();
     $conn->close();
-    exit; // Stop further script execution since this is an AJAX request
+    exit; 
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -148,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../scripts/createNewModal.js"></script>
     <script src="../scripts/groupSelection.js"></script>
     <script src="../scripts/memberDeletion.js"></script>
-    <script src="../scripts/drag&drop.js"></script>
+    <script src="../scripts//drag&drop.js"></script>
 
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
