@@ -45,32 +45,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if this is a request to fetch group members
     if (isset($data['group_id'])) {
         $group_id = $data['group_id'];
-
-        // Query to get members of the group
+    
+        // Query to get members of the selected group
         $sql = "SELECT user.full_name 
                 FROM group_patient 
-                JOIN patient ON group_patient.patient_id = patient.user_id
+                JOIN patient ON group_patient.patient_id = patient.patient_id
                 JOIN user ON patient.user_id = user.user_id
                 WHERE group_patient.group_id = ?";
+        
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $group_id);
         $stmt->execute();
         $result = $stmt->get_result();
-
+    
         $members = [];
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $members[] = ['name' => $row['full_name']];
             }
         }
-
+    
         $stmt->close();
         $conn->close();
-
+    
         // Return the members as JSON
         echo json_encode(['members' => $members]);
         exit;
     }
+    
+    
 }
 
 // Continue with the rest of your HTML and page rendering code below
