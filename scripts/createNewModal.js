@@ -46,11 +46,7 @@ if (modal) {
       // Validate the input to make sure it's not empty
       if (newGroupName) {
         // Call the function to add a new group to the group container
-        addNewGroup(newGroupName);
-
-        // Close the modal and clear the input field
-        modal.style.display = "none";
-        groupNameInput.value = ""; // Clear input after adding
+        createGroup(newGroupName);
       } else {
         alert("Please enter a group name."); // Alert if the input is empty
       }
@@ -59,33 +55,45 @@ if (modal) {
     console.error("Confirm button not found in the DOM.");
   }
 
-  // Close the modal when clicking outside of the modal content
-  window.onclick = function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-      groupNameInput.value = ""; // Clear input field
-    }
-  };
-} else {
-  console.error("Create Group modal not found in the DOM.");
-}
+  // Function to create a new group via AJAX and update the UI
+  function createGroup(groupName) {
+    // Send AJAX request to create the group on the server
+    fetch("../therapist/patientListPage.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ action: "create_group", group_name: groupName }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log("Group created successfully");
+          // Update the UI by adding the new group to the group container
+          addNewGroupUI(data.group_id, groupName); // Assuming the server responds with the group_id
+          // Close the modal and clear the input field
+          modal.style.display = "none";
+          groupNameInput.value = ""; // Clear input after adding
+        } else {
+          console.error("Failed to create group:", data.error);
+        }
+      })
+      .catch((error) => console.error("Error creating group:", error));
+  }
 
-// Function to add a new group dynamically to the group container
-function addNewGroup(groupName) {
-  if (groupContainer) {
-    // Create a new div element for the group
+  // Function to update the UI by adding the new group
+  function addNewGroupUI(groupId, groupName) {
     var newGroupItem = document.createElement("div");
     newGroupItem.classList.add("group-item");
+    newGroupItem.setAttribute("data-group-id", groupId); // Set group ID attribute
     newGroupItem.textContent = groupName;
 
     // Append the new group item to the group container
     groupContainer.appendChild(newGroupItem);
 
-    // Attach a click event listener to the newly created group item
+    // Attach click event listener to the newly created group item
     newGroupItem.addEventListener("click", function () {
       handleGroupClick(newGroupItem);
     });
-  } else {
-    console.error("Group container not found in the DOM.");
   }
 }

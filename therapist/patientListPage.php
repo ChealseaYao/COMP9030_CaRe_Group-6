@@ -91,6 +91,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['members' => $members]);
         exit;
     }
+
+    // Handle creating a new group
+    if (isset($data['action']) && $data['action'] === 'create_group' && isset($data['group_name'])) {
+        $group_name = $data['group_name'];
+
+        // Insert new group into the group table
+        $sql = "INSERT INTO `group` (group_name) VALUES (?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $group_name);
+
+        if ($stmt->execute()) {
+            // Get the ID of the newly created group
+            $group_id = $stmt->insert_id;
+
+            // Return success response with the new group ID
+            echo json_encode(['success' => true, 'group_id' => $group_id]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to create group']);
+        }
+
+        $stmt->close();
+        $conn->close();
+        exit;
+    }
+
 }
 
 // Handle DELETE request for deleting a member
