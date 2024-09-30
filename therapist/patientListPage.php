@@ -11,35 +11,69 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle AJAX request for status update
+// Get the request method and handle accordingly
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the posted data
     $data = json_decode(file_get_contents("php://input"), true);
-    $user_id = $data['user_id'];
-    $status = $data['status'];
 
-    // Ensure the status is one of the allowed values
-    if (in_array($status, ['good status', 'bad status', 'danger status'])) {
-        // Update the patient's status in the database
-        $sql = "UPDATE patient SET badge = ? WHERE user_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('si', $status, $user_id);
+    // Check if this is a status update request
+    if (isset($data['user_id']) && isset($data['status'])) {
+        // Handle status update
+        $user_id = $data['user_id'];
+        $status = $data['status'];
 
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true]);
+        // Ensure the status is one of the allowed values
+        if (in_array($status, ['good status', 'bad status', 'danger status'])) {
+            // Update the patient's status in the database
+            $sql = "UPDATE patient SET badge = ? WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('si', $status, $user_id);
+
+            if ($stmt->execute()) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false]);
+            }
+
+            $stmt->close();
         } else {
-            echo json_encode(['success' => false]);
+            // Invalid status value
+            echo json_encode(['success' => false, 'error' => 'Invalid status']);
+        }
+        exit;
+    }
+
+    // Check if this is a request to fetch group members
+    if (isset($data['group_id'])) {
+        $group_id = $data['group_id'];
+
+        // Query to get members of the group
+        $sql = "SELECT user.full_name 
+                FROM group_patient 
+                JOIN patient ON group_patient.patient_id = patient.user_id
+                JOIN user ON patient.user_id = user.user_id
+                WHERE group_patient.group_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $group_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $members = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $members[] = ['name' => $row['full_name']];
+            }
         }
 
         $stmt->close();
-    } else {
-        // Invalid status value
-        echo json_encode(['success' => false, 'error' => 'Invalid status']);
-    }
+        $conn->close();
 
-    $conn->close();
-    exit; 
+        // Return the members as JSON
+        echo json_encode(['members' => $members]);
+        exit;
+    }
 }
+
+// Continue with the rest of your HTML and page rendering code below
 ?>
 
 
@@ -125,12 +159,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     echo "<p>No patients found.</p>";
                 }
-
-                // Query to get group names
-                $sql = "SELECT group_name FROM `group`"; // Assuming your table is named `group`
-                $group_result = $conn->query($sql);
-
-                $conn->close();
                 ?>
             </div>
         </div>
@@ -143,9 +171,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div id="groupContainer" class="tableContainer">
                 <!-- PHP to display group names dynamically -->
                 <?php
+                $sql = "SELECT group_id, group_name FROM `group`"; // Assuming your table is named `group`
+                $group_result = $conn->query($sql);
+
                 if ($group_result->num_rows > 0) {
                     while ($group_row = $group_result->fetch_assoc()) {
-                        echo '<div class="group-item">' . htmlspecialchars($group_row['group_name']) . '</div>';
+                        echo '<div class="group-item" data-group-id="' . $group_row['group_id'] . '">';
+                        echo htmlspecialchars($group_row['group_name']);
+                        echo '</div>';
                     }
                 } else {
                     echo "<p>No groups found.</p>";
@@ -163,9 +196,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="../scripts/createNewModal.js"></script>
-    <script src="../scripts/groupSelection.js"></script>
+    <script src="../scripts//groupSelection.js"></script>
     <script src="../scripts/memberDeletion.js"></script>
-    <script src="../scripts//drag&drop.js"></script>
+    <script src="../scripts/drag&drop.js"></script>
 
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
