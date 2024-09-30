@@ -116,6 +116,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Handle search request
+    if (isset($data['action']) && $data['action'] === 'search_patient' && isset($data['search_query'])) {
+        $search_query = '%' . $data['search_query'] . '%'; // Use wildcards for partial search
+
+        // Query to search for patients by name
+        $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
+                FROM patient
+                JOIN user ON patient.user_id = user.user_id
+                WHERE user.full_name LIKE ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $search_query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $patients = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $patients[] = [
+                    'full_name' => $row['full_name'],
+                    'age' => $row['age'],
+                    'badge' => $row['badge'],
+                    'user_id' => $row['user_id']
+                ];
+            }
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        // Return the matching patients as JSON
+        echo json_encode(['patients' => $patients]);
+        exit;
+    }
+
+    // Handle fetching all patients when no search query is provided
+    if (isset($data['action']) && $data['action'] === 'fetch_all_patients') {
+        // Query to get all patients
+        $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
+                FROM patient
+                JOIN user ON patient.user_id = user.user_id";
+        $result = $conn->query($sql);
+
+        $patients = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $patients[] = [
+                    'full_name' => $row['full_name'],
+                    'age' => $row['age'],
+                    'badge' => $row['badge'],
+                    'user_id' => $row['user_id']
+                ];
+            }
+        }
+
+        $conn->close();
+
+        // Return all patients as JSON
+        echo json_encode(['patients' => $patients]);
+        exit;
+    }
 }
 
 // Handle DELETE request for deleting a member
@@ -305,6 +365,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     <script src="../scripts//memberDeletion.js"></script>
     <script src="../scripts//drag&dropBadge.js"></script> 
     <script src="../scripts//drag&dropMember.js"></script> 
+    <script src="../scripts//searchPatient.js"></script> 
 
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
