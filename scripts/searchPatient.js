@@ -97,6 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("Error fetching patients:", error));
   }
 
-  // Fetch all patients on initial load
-  fetchAllPatients();
+  //   // Fetch all patients on initial load
+  //   fetchAllPatients();
 });
