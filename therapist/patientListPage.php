@@ -11,73 +11,98 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get the request method and handle accordingly
+// Handle AJAX request for different actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Check if this is a status update request
+    // Handle status update
     if (isset($data['user_id']) && isset($data['status'])) {
-        // Handle status update
         $user_id = $data['user_id'];
         $status = $data['status'];
-
-        // Ensure the status is one of the allowed values
+        
         if (in_array($status, ['good status', 'bad status', 'danger status'])) {
-            // Update the patient's status in the database
             $sql = "UPDATE patient SET badge = ? WHERE user_id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('si', $status, $user_id);
-
             if ($stmt->execute()) {
                 echo json_encode(['success' => true]);
             } else {
                 echo json_encode(['success' => false]);
             }
-
             $stmt->close();
         } else {
-            // Invalid status value
             echo json_encode(['success' => false, 'error' => 'Invalid status']);
         }
         exit;
     }
 
-    // Check if this is a request to fetch group members
+    // Handle fetching group members
     if (isset($data['group_id'])) {
         $group_id = $data['group_id'];
-    
-        // Query to get members of the selected group
+
         $sql = "SELECT user.full_name 
                 FROM group_patient 
                 JOIN patient ON group_patient.patient_id = patient.patient_id
                 JOIN user ON patient.user_id = user.user_id
                 WHERE group_patient.group_id = ?";
-        
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $group_id);
         $stmt->execute();
         $result = $stmt->get_result();
-    
+
         $members = [];
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $members[] = ['name' => $row['full_name']];
             }
         }
-    
+
         $stmt->close();
         $conn->close();
-    
-        // Return the members as JSON
+
         echo json_encode(['members' => $members]);
         exit;
     }
-    
-    
 }
 
-// Continue with the rest of your HTML and page rendering code below
+// Handle DELETE request for deleting a member
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $data = json_decode(file_get_contents("php://input"), true);
+    $group_id = $data['group_id'];
+    $member_name = $data['member_name'];
+
+    // Find the patient's user_id by their full name
+    $sql = "SELECT user_id FROM user WHERE full_name = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $member_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $user_id = $user['user_id'];
+
+        // Now delete the member from group_patient table
+        $sql = "DELETE FROM group_patient WHERE group_id = ? AND patient_id = (SELECT patient_id FROM patient WHERE user_id = ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $group_id, $user_id);
+
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to delete member']);
+        }
+
+        $stmt->close();
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Member not found']);
+    }
+
+    $conn->close();
+    exit;
+}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -195,13 +220,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- Dynamic members list -->
                 </div>
             </div>
+
+            <!-- create new group modal -->
+            <div class="modal" id="createGroupModal">
+                <div class="modal-content">
+                <h3>Create a New Group</h3>
+                <div class="group">
+                    <label for="groupName">Group </label>
+                    <input type="text" id="groupName" name="groupName" />
+                </div>
+                <div class="modal-buttons">
+                    <button id="cancelButton">Cancel</button>
+                    <button id="confirmButton">Confirm</button>
+                </div>
+                </div>
+            </div>
+
+            <!--  delete member modal -->
+            <div class="modal" id="confirmDeleteModal">
+                <div class="modal-content">
+                <p>Do you want to remove this member?</p>
+                <div class="modal-buttons">
+                    <button id="cancelDeleteButton">Cancel</button>
+                    <button id="confirmDeleteButton">Confirm</button>
+                </div>
+            </div>
+      </div>
         </div>
     </div>
 
-    <script src="../scripts/createNewModal.js"></script>
+    <script src="../scripts//createNewModal.js"></script>
     <script src="../scripts//groupSelection.js"></script>
-    <script src="../scripts/memberDeletion.js"></script>
-    <script src="../scripts/drag&drop.js"></script>
+    <script src="../scripts//memberDeletion.js"></script>
+    <script src="../scripts//drag&drop.js"></script>
 
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>

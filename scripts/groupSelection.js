@@ -79,13 +79,45 @@ function updateMembersList(members) {
   attachDeleteListeners();
 }
 
+// groupSelection.js
+
 function attachDeleteListeners() {
   var deleteButtons = document.querySelectorAll(".delete-icon");
 
   deleteButtons.forEach(function (button) {
     button.addEventListener("click", function () {
       var memberItem = button.parentElement;
-      memberItem.remove(); // Remove the member when the delete icon is clicked
+      var memberName = memberItem.textContent.replace("🗑️", "").trim(); // Get the member's name
+
+      // Get the group ID from the currently selected group
+      var groupId = document
+        .querySelector(".group-item.selected")
+        .getAttribute("data-group-id");
+
+      // Send an AJAX request to delete the member from the group
+      deleteGroupMember(groupId, memberName, memberItem);
     });
   });
+}
+
+// Function to send an AJAX request to delete a group member
+function deleteGroupMember(groupId, memberName, memberItem) {
+  fetch("../therapist/patientListPage.php", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ group_id: groupId, member_name: memberName }), // Send group_id and member_name
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Remove the member from the UI
+        memberItem.remove();
+        console.log("Member deleted successfully");
+      } else {
+        console.error("Failed to delete member:", data.error);
+      }
+    })
+    .catch((error) => console.error("Error deleting member:", error));
 }
