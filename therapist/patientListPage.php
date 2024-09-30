@@ -36,6 +36,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Handle adding a member to a group
+    if (isset($data['group_id']) && isset($data['user_id'])) {
+        $group_id = $data['group_id'];
+        $user_id = $data['user_id'];
+
+        $sql = "INSERT INTO group_patient (group_id, patient_id) 
+                VALUES (?, (SELECT patient_id FROM patient WHERE user_id = ?))";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $group_id, $user_id);
+
+        if ($stmt->execute()) {
+            $sql = "SELECT full_name FROM user WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $patient = $result->fetch_assoc();
+
+            echo json_encode(['success' => true, 'patient_name' => $patient['full_name']]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to add member']);
+        }
+
+        $stmt->close();
+        $conn->close();
+        exit;
+    }
+
     // Handle fetching group members
     if (isset($data['group_id'])) {
         $group_id = $data['group_id'];
@@ -103,8 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                         // Output HTML for each patient
                         echo '<div class="patient-item" data-user-id="' . $row['user_id'] . '">';
                         echo '<div class="left-section">';
-                        echo '<div class="patient-icon">☰</div>';
+                        echo '<div class="patient-icon" draggable="true">☰</div>'; // Icon now draggable
                         echo '<div>';
                         echo '<strong>' . htmlspecialchars($row['full_name']) . '</strong><br>';
                         echo 'Age: ' . htmlspecialchars($row['age']);
@@ -252,7 +278,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     <script src="../scripts//createNewModal.js"></script>
     <script src="../scripts//groupSelection.js"></script>
     <script src="../scripts//memberDeletion.js"></script>
-    <script src="../scripts//drag&drop.js"></script>
+    <script src="../scripts//drag&dropBadge.js"></script> 
+    <script src="../scripts//drag&dropMember.js"></script> 
 
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
