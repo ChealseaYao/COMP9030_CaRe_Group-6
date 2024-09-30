@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // allow dropping
+  // Allow dropping
   function allowDrop(event) {
     event.preventDefault(); // Necessary to allow the drop event
   }
+
   // Enable dragging of status badges
   const badges = document.querySelectorAll(".badge-item");
   badges.forEach((badge) => {
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
       e.dataTransfer.setData("status", e.target.getAttribute("data-status"));
     });
   });
+
   // Allow dropping on patients
   const patients = document.querySelectorAll(".patient-item");
   patients.forEach((patient) => {
@@ -27,50 +29,33 @@ document.addEventListener("DOMContentLoaded", function () {
       const span = document.createElement("span");
       span.classList.add("status", status);
       statusContainer.appendChild(span);
+
+      // Get the user ID from the data attribute
+      const userId = patient.getAttribute("data-user-id");
+
+      // Send the updated status to the server via AJAX
+      updatePatientStatus(userId, status);
     });
   });
 
-  // Enable dragging of patient items
-  const patientItems = document.querySelectorAll(".patient-item");
-  patientItems.forEach((patient) => {
-    patient.setAttribute("draggable", true); // Make patient items draggable
-
-    patient.addEventListener("dragstart", function (e) {
-      // Set the patient name (assuming it's inside a <strong> tag)
-      const patientName = patient.querySelector("strong").textContent;
-      e.dataTransfer.setData("text", patientName);
-    });
-  });
-
-  // Enable dropping on the members container
-  const membersContainer = document.getElementById("membersContainer");
-  membersContainer.addEventListener("dragover", allowDrop);
-
-  membersContainer.addEventListener("drop", function (e) {
-    e.preventDefault();
-    const patientName = e.dataTransfer.getData("text");
-
-    // Check if the patient is already a member
-    const existingMembers = [...membersContainer.querySelectorAll(".member-item")];
-    const isAlreadyMember = existingMembers.some(member => member.textContent.includes(patientName));
-
-    if (!isAlreadyMember) {
-      // Create a new member item for the dropped patient
-      const memberItem = document.createElement("div");
-      memberItem.classList.add("member-item");
-      memberItem.textContent = patientName;
-
-      // Add delete icon
-      const deleteIcon = document.createElement('span');
-      deleteIcon.classList.add('delete-icon');
-      deleteIcon.textContent = '🗑️';
-      deleteIcon.style.cursor = "pointer";
-      memberItem.appendChild(deleteIcon);
-
-      // Append the new member item to the members container
-      membersContainer.appendChild(memberItem);
-      attachDeleteListeners();
-    }
-  });
-
+  // Function to send the updated status to the server
+  function updatePatientStatus(userId, status) {
+    // Use Fetch API to send an AJAX request to the server
+    fetch("updatePatientStatus.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user_id: userId, status: status }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log("Patient status updated successfully");
+        } else {
+          console.error("Failed to update patient status");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+  }
 });
