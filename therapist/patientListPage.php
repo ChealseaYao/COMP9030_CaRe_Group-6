@@ -255,7 +255,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 <h2>Patient List</h2>
                 <form class="search-bar">
                     <input type="text" placeholder="Search..." name="search">
-                    <button type="submit">Search</button>
                 </form>
             </div>
             <div class="tableContainer">
