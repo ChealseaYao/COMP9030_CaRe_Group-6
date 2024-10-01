@@ -147,7 +147,7 @@ $conn->close();
       </form>
 
         <!-- submit confirmation modal -->
-        <div class="modal" id="submitJournalModal">
+        <!-- <div class="modal" id="submitJournalModal">
           <div class="modal-content">
             <p>Do you want to submit the journal?</p>
             <div class="modal-buttons">
@@ -155,7 +155,7 @@ $conn->close();
               <button id="confirmSubmitButton">Confirm</button>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="rightbox"></div>
