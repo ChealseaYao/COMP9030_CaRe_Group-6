@@ -12,6 +12,8 @@
 </head>
 
 <body>
+    <!--php code-->
+    
     <!-- global navigation bar -->
     <header class="navbar">
         <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
