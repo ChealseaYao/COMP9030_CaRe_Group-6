@@ -214,6 +214,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $conn->close();
     exit;
 }
+
+
 ?>
 
 <!DOCTYPE html>
