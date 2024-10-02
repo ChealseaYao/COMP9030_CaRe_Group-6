@@ -98,10 +98,10 @@ if ($result && mysqli_num_rows($result) > 0) {
         }
         exit();
     } else {
-        echo "Invalid password.";
+        echo "<script>alert('Invalid password.'); window.location.href='login.php';</script>";
     }
 } else {
-    echo "Invalid username or role.";
+    echo "<script>alert('Invalid username or role.'); window.location.href='login.php';</script>";
 }
 
 // Close the database connection
