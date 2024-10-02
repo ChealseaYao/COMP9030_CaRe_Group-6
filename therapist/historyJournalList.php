@@ -11,7 +11,24 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$patient_id = $_GET['patient_id'];
+// $patient_id = $_GET['patient_id'];
+$patient_id = 4;
+
+$sql_name = "SELECT full_name FROM user 
+             INNER JOIN patient ON user.user_id = patient.user_id 
+             WHERE patient.patient_id = ?";
+$stmt_name = $conn->prepare($sql_name);
+$stmt_name->bind_param("i", $patient_id);
+$stmt_name->execute();
+$result_name = $stmt_name->get_result();
+
+$patient_name = "";
+if ($result_name->num_rows > 0) {
+    $row = $result_name->fetch_assoc();
+    $patient_name = $row['full_name'];
+} else {
+    $patient_name = "Unknown Patient";
+}
 
 $sql = "SELECT journal_id, journal_date, journal_content, highlight 
         FROM journal 
@@ -21,7 +38,6 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $patient_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
 ?>
 
 
@@ -35,7 +51,6 @@ $result = $stmt->get_result();
     <meta name="description" content="therapist of COMP9030_CaRe_Groups6">
     <title>Therapist - History Journal List</title>
     <script src="../scripts/datepicker.js"></script>
-    <script src="../scripts/historyJournalList.js"></script>
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/historyJournal.css">
 </head>
@@ -54,7 +69,7 @@ $result = $stmt->get_result();
         <div class="centre">
             <h1>
                 <!-- John Smith should be user's Full name -->
-                History Journals of John Smith
+                History Journals of <?php echo htmlspecialchars($patient_name); ?>
             </h1>
             <div id="historyJournal">
                 <div class="searchPannel">
