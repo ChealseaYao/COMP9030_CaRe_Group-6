@@ -1,10 +1,10 @@
 <?php
 // Start session and check if the user is logged in
-// session_start();
-// if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-//     header("Location: login.php");
-//     exit();
-// }
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
+    header("Location: login.php");
+    exit();
+}
 
 $servername = "localhost";
 $username = "root";
@@ -18,8 +18,7 @@ if ($conn->connect_error) {
 }
 
 // Get therapist's user_id from the session
-// $user_id = $_SESSION['user_id'];
-$user_id = 9;
+$user_id = $_SESSION['user_id'];
 
 // Fetch therapist details
 $therapist_query = $conn->prepare("SELECT user.full_name, therapist.therapist_title FROM user JOIN therapist ON user.user_id = therapist.user_id WHERE user.user_id = ?");
@@ -89,7 +88,7 @@ $journals_result = $journals_query->get_result();
                 </div>
 
             </div>
-            <a href="patientListPage.html">
+            <a href="patientListPage.php">
                 <button class="viewPatients">View Patients</button>
             </a>
             <div id="therapistStatistics">

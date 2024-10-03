@@ -228,12 +228,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 <body class="patientList-body">
     <!-- global navigation bar -->
     <header class="navbar">
-        <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
     </header>
 
     <div class="therapistContainer">
         <div class="leftbox">
-            <a href="therapistDashboard.html">
+            <a href="therapistDashboard.php">
                 <button class="back-btn">Back</button>
             </a>
             <h3>Badge</h3>
