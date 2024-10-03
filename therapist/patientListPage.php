@@ -290,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                         }
 
                         echo '</div>';
-                        echo '<a href="patientDetail.html"><button class="details">Details</button></a>';
+                        echo '<a href="patientDetail.php"><button class="details">Details</button></a>';
                         echo '</div>';
                         echo '</div>';
                     }
