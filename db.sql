@@ -117,7 +117,6 @@ GRANT ALL PRIVILEGES ON CaReDB.* TO dbadmin@localhost;
 
 
 INSERT INTO `user` (username, password_hash, role, full_name) VALUES
-
 ('johndoe', 'hashed_password1', 'patient', 'John Doe'), -- password: hashed_password1
 ('jane', 'hashed_password2', 'patient', 'Jane Roe'), -- password: hashed_password2
 ('jimS', 'hashed_password3', 'patient', 'Jim Smith'), -- password: hashed_password3
