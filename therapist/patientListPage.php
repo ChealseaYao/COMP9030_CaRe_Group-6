@@ -309,7 +309,7 @@ $stmt->close();
                 <!-- PHP Code to Fetch and Display Patients Dynamically -->
                 <?php
                 // Query to get patient data with names and status
-                $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
+                $sql = "SELECT patient.patient_id, patient.age, patient.badge, user.full_name, patient.user_id
                         FROM patient
                         JOIN user ON patient.user_id = user.user_id";
                 $result = $conn->query($sql);
