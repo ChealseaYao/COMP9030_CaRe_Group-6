@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sleep_time = $_POST['sleep_time'] ?? '';
     $wake_time = $_POST['wake_time'] ?? '';
     $highlight = 1; // Set highlight to 1
-    $patient_id = 5; // Set patient_id to 5 (hardcoded)
+    $patient_id = 4; // Set patient_id to 5 (hardcoded)
 
     // Get the current date for journal_date
     $journal_date = date('Y-m-d');
@@ -145,17 +145,6 @@ $conn->close();
 
         <button type="submit" class="submit-button">Submit</button>
       </form>
-
-        <!-- submit confirmation modal -->
-        <!-- <div class="modal" id="submitJournalModal">
-          <div class="modal-content">
-            <p>Do you want to submit the journal?</p>
-            <div class="modal-buttons">
-              <button id="cancelSubmitButton">Cancel</button>
-              <button id="confirmSubmitButton">Confirm</button>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
     <div class="rightbox"></div>
