@@ -215,6 +215,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     exit;
 }
 
+// Min's getting patitientList part
+session_start(); // 启动会话
+
+// 检查用户是否已登录，并且是therapist角色
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
+    header("Location: login.php"); // 未登录则重定向到登录页面
+    exit();
+}
+
+$user_id = $_SESSION['user_id']; // 获取当前登录的用户ID
+
+// 连接数据库
+include '../inc/dbconn.inc.php'; // 请确保该路径指向您的数据库连接文件
+
+// 查询therapist表以获取当前登录用户的therapist_id
+$query = "SELECT therapist_id FROM therapist WHERE user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$therapist = $result->fetch_assoc();
+
+if (!$therapist) {
+    echo "Therapist not found.";
+    exit();
+}
+
+$therapist_id = $therapist['therapist_id']; // 获取当前therapist的therapist_id
+
+// 查询当前therapist的所有患者
+$query = "SELECT patient_id, age, user.full_name as name FROM patient 
+          INNER JOIN user ON patient.user_id = user.user_id 
+          WHERE patient.therapist_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $therapist_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// 将患者数据存储到一个数组
+$patients = [];
+while ($row = $result->fetch_assoc()) {
+    $patients[] = $row;
+}
+
+$stmt->close();
+$conn->close();
 
 ?>
 
@@ -292,7 +338,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                         }
 
                         echo '</div>';
-                        echo '<a href="patientDetail.html"><button class="details">Details</button></a>';
+                        echo '<a href="patientDetail.html?patient_id=' . $row['patient_id'] . '"><button class="details">Details</button></a>';    // Jacky: The patient_id
                         echo '</div>';
                         echo '</div>';
                     }
