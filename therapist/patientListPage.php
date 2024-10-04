@@ -260,7 +260,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $stmt->close();
-$conn->close();
+
 
 ?>
 
@@ -327,7 +327,7 @@ $conn->close();
                         echo '</div>';
                         echo '<div class="right-section">';
                         echo '<div class="status-container">';
-
+                
                         // Add a span with the correct status color
                         if ($row['badge'] === 'good status') {
                             echo '<span class="status good"></span>';
@@ -336,15 +336,17 @@ $conn->close();
                         } elseif ($row['badge'] === 'danger status') {
                             echo '<span class="status danger"></span>';
                         }
-
+                
                         echo '</div>';
-                        echo '<a href="patientDetail.html?patient_id=' . $row['patient_id'] . '"><button class="details">Details</button></a>';    // Jacky: The patient_id
+                        // Update the URL to include patient_id as a query parameter
+                        echo '<a href="patientDetail.html?patient_id=' . $row['patient_id'] . '"><button class="details">Details</button></a>';
                         echo '</div>';
                         echo '</div>';
                     }
                 } else {
                     echo "<p>No patients found.</p>";
                 }
+                
                 ?>
             </div>
         </div>
