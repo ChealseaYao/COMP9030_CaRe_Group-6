@@ -12,8 +12,8 @@ require_once '../inc/dbconn.inc.php';  // Include your database connection setti
 // Get patient's user_id from the session
 $user_id = $_SESSION['user_id'];
 
-// Fetch patient details
-$patient_query = $conn->prepare("SELECT full_name FROM user WHERE user_id = ?");
+// Fetch patient details (full_name from user table and patient_id from patient table)
+$patient_query = $conn->prepare("SELECT u.full_name, p.patient_id FROM user u JOIN patient p ON u.user_id = p.user_id WHERE u.user_id = ?");
 $patient_query->bind_param("i", $user_id);
 $patient_query->execute();
 $patient_result = $patient_query->get_result();
@@ -24,26 +24,35 @@ if (!$patient_result) {
 
 $patient = $patient_result->fetch_assoc();
 $patient_name = $patient['full_name'] ?? 'Unknown Patient';
+$patient_id = $patient['patient_id'];  // get patient_id 
 
-// Fetch journal entries for the patient
-$journal_query = $conn->prepare("SELECT journal_content, journal_date FROM journal WHERE patient_id = ? ORDER BY journal_date DESC LIMIT 5");
-$journal_query->bind_param("i", $user_id);
-$journal_query->execute();
-$journal_result = $journal_query->get_result();
+// Fetch the patient's journals using the correct patient_id
+$query = "SELECT journal_content, journal_date FROM journal WHERE patient_id = ? ORDER BY journal_date DESC LIMIT 5";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $patient_id); 
+$stmt->execute();
+$journal_result = $stmt->get_result();
+$journals = [];
+while ($row = $journal_result->fetch_assoc()) {
+    $journals[] = $row;
+}
 
-
-
-// Calculate stats for the last week's activity
-$week_stats_query = $conn->prepare("
-    SELECT 
-        COUNT(journal_id) AS journal_entries,
-        AVG(TIME_TO_SEC(TIMEDIFF(wake_time, sleep_time))/3600) AS average_sleep_hours,
-        GROUP_CONCAT(DISTINCT exercise ORDER BY journal_date DESC SEPARATOR ', ') AS exercise_summary,
-        GROUP_CONCAT(DISTINCT food ORDER BY journal_date DESC SEPARATOR ', ') AS food_summary
-    FROM journal
-    WHERE patient_id = ? AND journal_date > DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
-");
-$week_stats_query->bind_param("i", $user_id);
+// Calculate stats for the last week's activity using patient_id
+$week_stats_query = $conn->prepare("SELECT 
+COUNT(journal_id) AS journal_entries,
+AVG(
+    CASE
+        WHEN wake_time < sleep_time THEN
+            TIME_TO_SEC(TIMEDIFF(ADDTIME('24:00:00', wake_time), sleep_time))/3600
+        ELSE
+            TIME_TO_SEC(TIMEDIFF(wake_time, sleep_time))/3600
+    END
+) AS average_sleep_hours,
+GROUP_CONCAT(DISTINCT exercise ORDER BY journal_date DESC SEPARATOR ', ') AS exercise_summary,
+GROUP_CONCAT(DISTINCT food ORDER BY journal_date DESC SEPARATOR ', ') AS food_summary
+FROM journal
+WHERE patient_id = ? AND journal_date > DATE_SUB(CURDATE(), INTERVAL 1 WEEK)");
+$week_stats_query->bind_param("i", $patient_id);  
 $week_stats_query->execute();
 $week_stats_result = $week_stats_query->get_result();
 $week_stats = $week_stats_result->fetch_assoc();
@@ -73,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
   <title>Patient Dashboard</title>
   <link rel="stylesheet" href="../style/global.css">
   <link rel="stylesheet" href="../style/patientDashboard.css">
-  <script src="../scripts/patientDashboard.js"></script>
   <script src="../scripts/selectAffirmation.js"></script>
 </head>
 <body>
@@ -95,14 +103,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($journal = $journal_result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($journal['journal_content']) ?></td>
-                            <td><?= htmlspecialchars($journal['journal_date']) ?></td>
-                        </tr>
-                        <?php endwhile; ?>
+                        <?php if (!empty($journals)): ?>
+                            <?php foreach ($journals as $journal): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($journal['journal_content']); ?></td>
+                                    <td><?php echo date("d/m/Y", strtotime($journal['journal_date'])); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="2">No journals available for this patient.</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
+                
                 <a href="viewHistoryRecord.php">
                     <button class="patientDashboardViewMore-Button">View More</button>
                 </a>
@@ -155,6 +170,6 @@ $patient_query->close();
 $journal_query->close();
 $affirmations_query->close();
 $week_stats_query->close();
+$stmt->close();
 $conn->close();
 ?>
-
