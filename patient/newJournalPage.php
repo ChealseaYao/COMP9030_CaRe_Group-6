@@ -1,16 +1,5 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+include '../inc/dbconn.inc.php';
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form inputs
@@ -90,7 +79,7 @@ $conn->close();
     <div class="therapistContainer">
       <div class="leftbox">
         <!-- should be selected patient journal list page -->
-        <a href="patientDashboard.html">
+        <a href="patientDashboard.php">
           <button class="back-btn">Back</button>
         </a>
       </div>
@@ -148,9 +137,9 @@ $conn->close();
       </div>
     </div>
     <div class="rightbox"></div>
-    <script src="../scripts//submitModal.js"></script>
-    <script src="../scripts//generationOptions.js"></script>
-    <script src="../scripts//uploadFile.js"></script>
+    <script src="../scripts/submitModal.js"></script>
+    <script src="../scripts/generationOptions.js"></script>
+    <script src="../scripts/uploadFile.js"></script>
 
     <footer class="site-footer">
       <p>&copy; 2024 CaRe | All Rights Reserved</p>
