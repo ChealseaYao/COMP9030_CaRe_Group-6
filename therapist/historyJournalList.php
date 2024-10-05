@@ -123,7 +123,7 @@ $result = $stmt->get_result();
                                     
                                     echo "<tr>";
                                     echo "<td class='star'>" . ($highlight ? "★" : "") . "</td>";
-                                    echo "<td><a href='journal.php?journal_id=$journal_id'>$journal_content</a></td>";
+                                    echo "<td><a href='journal.php?journal_id=$journal_id&patient_id=$patient_id'>$journal_content</a></td>";
                                     echo "<td>$formattedDate</td>";
                                     echo "</tr>";
                                 }
