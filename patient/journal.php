@@ -1,46 +1,20 @@
 <!--Created by Hsin Hui Chu-->
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb"; 
+// Start session to access patient information
+// session_start();
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Check if the patient is logged in
+// if (!isset($_SESSION['patient_id'])) {
+//     echo "Please log in to view your journal.";
+//     exit();
+// }
 // Database connection
 include '../inc/dbconn.inc.php'; // Ensure the path is correct
 
-// 接收 AJAX 請求並進行 highlight 狀態變更
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // 解析傳入的 JSON 資料
-    $data = json_decode(file_get_contents("php://input"), true);
+// Get patient ID and patient name from session
+// $patient_id = $_SESSION['patient_id'];
+// $patient_name = $_SESSION['patient_name'];
 
-    if (isset($data['journal_id']) && isset($data['highlight'])) {
-        $journal_id = intval($data['journal_id']);
-        $highlight = intval($data['highlight']);
-
-        // 更新指定 journal_id 的 highlight 狀態
-    if (in_array($highlight, [0, 1])){
-        $sql = "UPDATE journal SET highlight = ? WHERE journal_id = ?";
-        $stmt = $conn->prepare($update_query);
-        $stmt->bind_param('ii', $highlight, $journal_id);
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false]);
-        }
-        $stmt->close();
-    } else {
-        echo json_encode(['success' => false, 'error' => 'Invalid highlight']);
-    }
-    exit();
-    
-    }
-}
 
 // Get journal_id and patient_id from the URL
 $journal_id = isset($_GET['journal_id']) ? intval($_GET['journal_id']) : 0;
@@ -51,10 +25,26 @@ if ($journal_id == 0 || $patient_id == 0) {
     exit();
 }
 
-// Fetch the journal content and related fields
+// 如果有接收到刪除請求，則執行刪除操作
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_journal'])) {
+    $delete_query = "DELETE FROM journal WHERE journal_id = ? AND patient_id = ?";
+    $stmt = $conn->prepare($delete_query);
+    $stmt->bind_param("ii", $journal_id, $patient_id);
+    if ($stmt->execute()) {
+        echo json_encode(["status" => "success", "message" => "Journal entry deleted successfully"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Failed to delete journal entry"]);
+    }
+    $stmt->close();
+    $conn->close();
+    exit();
+}
+
+// Fetch the journal content based on journal_id and patient_id
 $query = "SELECT journal_content, journal_date, sleep_time, wake_time, food, 
-exercise, file_path, original_name, file_type, file_size, highlight FROM journal 
+exercise, file_path, original_name, file_type, file_size FROM journal 
 WHERE journal_id = ? AND patient_id = ?";
+
 $stmt = $conn->prepare($query);
 $stmt->bind_param("ii", $journal_id, $patient_id);
 $stmt->execute();
@@ -68,7 +58,6 @@ if (!$journal_info) {
 
 $stmt->close();
 $conn->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -78,26 +67,51 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Hsin-Hui Chu">
-    <title>Therapist Journal</title>
+    <title>Patient Journal</title>
+    <script src="../scripts/journal.js"></script>
     <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/modal.css">
     <link rel="stylesheet" href="../style/therapistJournal.css">
+    <link rel="stylesheet" href="../style/patientJournal.css">
+    
+    <script>
+    function confirmDelete() {
+            // 呼叫 AJAX 發送刪除請求
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "patientJournal.php?journal_id=<?php echo $journal_id; ?>", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        alert(response.message);
+                        window.location.href = "viewHistoryRecord.html"; // 刪除成功後返回歷史紀錄頁面
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            };
+            xhr.send("delete_journal=true");
+        }
+    </script>
 
 </head>
 
 <body>
-    <!-- global navigation bar -->
     <header class="navbar">
-        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="patientDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
     </header>
     <div class="therapistContainer">
         <div class="leftbox">
             <!-- should be selected patient journal list page -->
-            <a href="patientDetail.php?patient_id=<?php echo $patient_id; ?>">
+            <a href="viewHistoryRecord.html">
                 <button class="back-btn">Back</button>
             </a>
         </div>
         <div class="container">
-            <div class="entry-header">John Smith</div>
+            <div class="entry-header">
+                <?php echo htmlspecialchars($patient_name); ?>
+            </div>
             <div class="entry-date">Date: <?php echo date("d/m/Y", strtotime($journal_info['journal_date'])); ?></div>
             <div class="entry-content">
                 <?php echo htmlspecialchars($journal_info['journal_content']); ?>
@@ -123,16 +137,20 @@ $conn->close();
                     <button disabled>No file to download</button>
                 <?php endif; ?>
             </div>
+            <button class="delete-button" onclick="showPopup()">Delete</button>
 
-            <span class="star" id="starIcon"><?php echo $journal_info['highlight'] == 1 ? '★' : '☆'; ?></span>
+            <!--Popup page-->
+            <div class="popup-overlay" id="popupOverlay"></div>
+            <div class="popup" id="popup">
+                <p>Do you want to delete the journal?</p>
+                <div>
+                    <button id="note-cancelBtn" onclick="hidePopup()">Cancel</button>
+                    <button id="note-confirmBtn" onclick="confirmDelete()">Confirm</button>
+                </div>
+
+            </div>
         </div>
-        <div class="rightbox"></div>
     </div>
-    <script>
-        // 在此初始化 PHP 中的變數到 JavaScript 中
-        var journalId = <?php echo json_encode($journal_id); ?>;
-    </script>
-    <script src="../scripts/journal.js"></script>
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>

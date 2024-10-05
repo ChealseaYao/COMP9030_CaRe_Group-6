@@ -1,3 +1,4 @@
+<!--這是直接merge Jiaqi的資料-->
 <?php
 // Database connection
 $servername = "localhost";
