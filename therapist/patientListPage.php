@@ -64,7 +64,7 @@ $conn->close();
 
     <div class="therapistContainer">
         <div class="leftbox">
-            <a href="therapistDashboard.html">
+            <a href="therapistDashboard.php">
                 <button class="back-btn">Back</button>
             </a>
 

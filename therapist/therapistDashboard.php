@@ -1,15 +1,48 @@
 <?php
-session_start(); // 开启会话
-
-// 检查是否有会话数据
-if (!empty($_SESSION)) {
-    echo "<pre>";
-    print_r($_SESSION); // 输出会话中的所有数据
-    echo "</pre>";
-} else {
-    echo "No session data available.";
+// Start session and check if the user is logged in
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
+    header("Location: login.php");
+    exit();
 }
+
+include '../inc/dbconn.inc.php'; // 请确保该路径指向您的数据库连接文件
+
+// Get therapist's user_id from the session
+$user_id = $_SESSION['user_id'];
+
+// Fetch therapist details
+$therapist_query = $conn->prepare("SELECT user.full_name, therapist.therapist_title FROM user JOIN therapist ON user.user_id = therapist.user_id WHERE user.user_id = ?");
+$therapist_query->bind_param("i", $user_id);
+$therapist_query->execute();
+$therapist_result = $therapist_query->get_result();
+
+if (!$therapist_result) {
+    die("Error fetching therapist details: " . $conn->error);
+}
+
+$therapist = $therapist_result->fetch_assoc();
+$therapist_name = $therapist['full_name'] ?? 'Unknown Therapist';
+$therapist_title = $therapist['therapist_title'] ?? 'Title Not Available';
+
+// Fetch journals of patients assigned to the therapist
+$journals_query = $conn->prepare("SELECT user.full_name AS patient_name, journal.journal_content, journal.journal_date, journal.highlight 
+                                  FROM journal 
+                                  JOIN patient ON journal.patient_id = patient.patient_id 
+                                  JOIN user ON patient.user_id = user.user_id
+                                  WHERE patient.therapist_id = ? 
+                                  ORDER BY journal.journal_date DESC");
+$therapist_id_query = $conn->prepare("SELECT therapist_id FROM therapist WHERE user_id = ?");
+$therapist_id_query->bind_param("i", $user_id);
+$therapist_id_query->execute();
+$therapist_id_result = $therapist_id_query->get_result();
+$therapist_id_row = $therapist_id_result->fetch_assoc();
+$therapist_id = $therapist_id_row['therapist_id'];
+$journals_query->bind_param("i", $therapist_id);
+$journals_query->execute();
+$journals_result = $journals_query->get_result();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,14 +53,11 @@ if (!empty($_SESSION)) {
     <meta name="author" content="Wenqiang Jin">
     <meta name="description" content="therapist of COMP9030_CaRe_Groups6">
     <title>Therapist Dashboard</title>
-    <!-- <link rel="stylesheet" href="/style/global.css">
-    <link rel="stylesheet" href="/style/therapistDashboard.css"> -->
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/therapistDashboard.css">
 </head>
 
 <body class="therapistBody">
-
     <!-- global navigation bar -->
     <header class="navbar">
         <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
@@ -40,11 +70,11 @@ if (!empty($_SESSION)) {
                 <div id="txtinfo">
                     <p id="therapistName">
                         <!-- Vivian Harper should be user's full name -->
-                        Dr. Vivian Harper
+                        <?= htmlspecialchars($therapist_name) ?>
                     </p>
                     <p id="TherapistTitle">
                         <!-- User's title -->
-                        Psychology Doctor
+                        <?= htmlspecialchars($therapist_title) ?>
                     </p>
                 </div>
 
@@ -59,7 +89,7 @@ if (!empty($_SESSION)) {
         <div class="centre">
             <h1>
                 <!-- vivian should be user's first name -->
-                G'day Vivian!
+                G'day <?= htmlspecialchars($therapist_name) ?>!
             </h1>
             <div id="global_journalList">
                 <h3>Latest journals from your patients</h3>
@@ -75,181 +105,16 @@ if (!empty($_SESSION)) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>John CenaJohn Cena</td>
-                                <td>This is an example of very long journal that the latter part of the journal have to be invisible and displayed as ... end.</td>
-                                <td>13/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star">★</td>
-                                <td>Parker. S</td>
-                                <td>Journal Title 2</td>
-                                <td>11/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star">★</td>
-                                <td>Yuri Konoha</td>
-                                <td>Journal Title 3</td>
-                                <td>09/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Jason White</td>
-                                <td>Journal Title 4</td>
-                                <td>07/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Thor</td>
-                                <td>Journal Title 5</td>
-                                <td>06/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Captain</td>
-                                <td>Journal Title 6</td>
-                                <td>06/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Ronaldo.K</td>
-                                <td>Journal Title 7</td>
-                                <td>05/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star">★</td>
-                                <td>Karlos. M</td>
-                                <td>Journal Title 8</td>
-                                <td>04/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Mike. J</td>
-                                <td>Journal Title 9</td>
-                                <td>02/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Mike. J</td>
-                                <td>Journal Title 10</td>
-                                <td>01/08/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Kuber. T</td>
-                                <td>Journal Title 11</td>
-                                <td>26/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 12</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 13</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 14</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 15</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 16</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 17</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 18</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 19</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 20</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 21</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 22</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 23</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 24</td>
-                                <td>25/07/2024</td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="star"></td>
-                                <td>Bob. J</td>
-                                <td>Journal Title 25</td>
-                                <td>25/07/2024</td>
-                            </tr>
+                        <?php while ($journal = $journals_result->fetch_assoc()) : ?>
+                                <tr>
+                                    <td class="star"><?= $journal['highlight'] ? '★' : '' ?></td>
+                                    <td><?= htmlspecialchars($journal['patient_name']) ?></td>
+                                    <td><a href="journalDetail.php?date=<?= urlencode($journal['journal_date']) ?>&patient_name=<?= urlencode($journal['patient_name']) ?>">
+                                        <?= htmlspecialchars(strlen($journal['journal_content']) > 50 ? substr($journal['journal_content'], 0, 50) . '...' : $journal['journal_content']) ?>
+                                    </a></td>
+                                    <td><?= date("d/m/Y", strtotime($journal['journal_date'])) ?></td>
+                                </tr>
+                            <?php endwhile; ?>
                         </tbody>
                     </table>
                 </div>
@@ -275,6 +140,12 @@ if (!empty($_SESSION)) {
     </footer>
 </body>
 
-
-
 </html>
+
+<?php
+// Close database connections
+$therapist_query->close();
+$therapist_id_query->close();
+$journals_query->close();
+$conn->close();
+?>
