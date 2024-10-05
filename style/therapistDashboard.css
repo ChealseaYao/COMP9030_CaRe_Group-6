@@ -123,6 +123,10 @@
     background-color: #386a9b;
     color: white;
 }
+.global_journalLists-table tbody a {
+    text-decoration: none;
+    color: black;
+}
 .global_journalLists-table td:nth-child(1),
 .global_journalLists-table th:nth-child(1) {
     text-align: center;

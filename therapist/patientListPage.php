@@ -322,7 +322,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 
                         echo '</div>';
                         // Update the URL to include patient_id as a query parameter
-                        echo '<a href="patientDetail.html?patient_id=' . $row['patient_id'] . '"><button class="details">Details</button></a>';
+                        echo '<a href="patientDetail.php?patient_id=' . $row['patient_id'] . '"><button class="details">Details</button></a>';
                         echo '</div>';
                         echo '</div>';
                     }
