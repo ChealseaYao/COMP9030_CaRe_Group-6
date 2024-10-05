@@ -1,4 +1,11 @@
 <?php
+// Start session and check if the user is logged in
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
+    header("Location: login.php");
+    exit();
+}
+
 // Database connection
 $servername = "localhost";
 $username = "root";
@@ -10,6 +17,17 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Get therapist's user_id from the session
+$user_id = $_SESSION['user_id'];
+
+$therapist_id_query = $conn->prepare("SELECT therapist_id FROM therapist WHERE user_id = ?");
+$therapist_id_query->bind_param("i", $user_id);
+$therapist_id_query->execute();
+$therapist_id_result = $therapist_id_query->get_result();
+$therapist_id_row = $therapist_id_result->fetch_assoc();
+$therapist_id = $therapist_id_row['therapist_id'];
+
 
 // Handle AJAX request for different actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -95,12 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle creating a new group
     if (isset($data['action']) && $data['action'] === 'create_group' && isset($data['group_name'])) {
         $group_name = $data['group_name'];
-        $therapist_id = 4; 
     
-        // Insert new group into the group table with therapist_id
+        // Insert new group into the group table with therapist_id from session
         $sql = "INSERT INTO `group` (group_name, therapist_id) VALUES (?, ?)"; // Include therapist_id in the SQL query
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('si', $group_name, $therapist_id); // Bind the therapist_id as an integer
+        $stmt->bind_param('si', $group_name, $therapist_id); // Bind the therapist_id from the session
     
         if ($stmt->execute()) {
             // Get the ID of the newly created group
@@ -125,9 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
                 FROM patient
                 JOIN user ON patient.user_id = user.user_id
-                WHERE user.full_name LIKE ? and patient.therapist_id=4";
+                WHERE user.full_name LIKE ? AND patient.therapist_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('s', $search_query);
+        $stmt->bind_param('si', $search_query, $therapist_id); // Bind therapist_id
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -153,12 +170,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle fetching all patients when no search query is provided
     if (isset($data['action']) && $data['action'] === 'fetch_all_patients') {
-        // Query to get all patients
+        // Query to get all patients for the logged-in therapist
         $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
                 FROM patient
                 JOIN user ON patient.user_id = user.user_id
-                WHERE patient.therapist_id=4";
-        $result = $conn->query($sql);
+                WHERE patient.therapist_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $therapist_id); // Bind the therapist_id
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $patients = [];
         if ($result->num_rows > 0) {
@@ -172,6 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        $stmt->close();
         $conn->close();
 
         // Return all patients as JSON
@@ -216,6 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $conn->close();
     exit;
 }
+
 
 
 ?>
@@ -268,8 +290,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 $sql = "SELECT patient.patient_id, patient.age, patient.badge, user.full_name, patient.user_id
                         FROM patient
                         JOIN user ON patient.user_id = user.user_id
-                        WHERE patient.therapist_id = 4";
-                $result = $conn->query($sql);
+                        WHERE patient.therapist_id = ?";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $therapist_id); // Use the $therapist_id you fetched earlier
+                $stmt->execute();
+                $result = $stmt->get_result();
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
