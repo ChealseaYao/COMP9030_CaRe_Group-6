@@ -342,11 +342,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
             <div id="groupContainer" class="tableContainer">
                 <!-- PHP to display group names dynamically -->
                 <?php
-                $sql = "SELECT group_id, group_name FROM `group`"; // Assuming your table is named `group`
-                $group_result = $conn->query($sql);
+                // Prepare the SQL query to fetch groups where therapist_id matches the logged-in therapist
+                $sql = "SELECT group_id, group_name FROM `group` WHERE therapist_id = ?";
 
+                // Prepare the statement
+                $stmt = $conn->prepare($sql);
+
+                // Bind the therapist_id dynamically
+                $stmt->bind_param("i", $therapist_id);
+
+                // Execute the query
+                $stmt->execute();
+
+                // Get the result
+                $group_result = $stmt->get_result();
+
+                // Check if any groups were returned
                 if ($group_result->num_rows > 0) {
                     while ($group_row = $group_result->fetch_assoc()) {
+                        // Output HTML for each group
                         echo '<div class="group-item" data-group-id="' . $group_row['group_id'] . '">';
                         echo htmlspecialchars($group_row['group_name']);
                         echo '</div>';
@@ -354,6 +368,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 } else {
                     echo "<p>No groups found.</p>";
                 }
+
+                // Close the statement
+                $stmt->close();
                 ?>
             </div>
             <h3>Members</h3>
