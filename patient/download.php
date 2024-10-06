@@ -1,6 +1,6 @@
 <?php
 // Database connection
-include '../inc/dbconn.inc.php'; // 確保資料庫連線檔案的路徑正確
+include '../inc/dbconn.inc.php'; // Make sure the path to the database connection file is correct
 
 // Get journal_id from the URL
 $journal_id = isset($_GET['journal_id']) ? intval($_GET['journal_id']) : 0;
@@ -18,6 +18,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 $file_info = $result->fetch_assoc();
 
+// Debug output
+echo "<pre>";
+echo "File information from database:\n";
+print_r($file_info);
+echo "</pre>";
+
 if (!$file_info || empty($file_info['file_path']) || empty($file_info['original_name'])) {
     echo "No file found for the given journal.";
     exit();
@@ -29,9 +35,14 @@ $original_name = $file_info['original_name'];
 $file_type = $file_info['file_type'];
 $file_size = $file_info['file_size'];
 
-// Construct the absolute file path
-// Assuming the `uploads` folder is in the `patient` directory under your htdocs path
-$absolute_file_path = realpath("C:/xampp/htdocs/COMP9030_CaRe_Groups-6/patient/" . $file_path);
+// Debug output for file path
+echo "File path from database: " . $file_path . "<br>";
+echo "Document root: " . $_SERVER['DOCUMENT_ROOT'] . "<br>";
+// Construct the absolute file path using the server's document root
+$project_root = $_SERVER['DOCUMENT_ROOT'] . '/COMP9030_CaRe_Groups-6/patient/';
+$absolute_file_path = realpath($project_root . $file_path);
+// Debug output for absolute file path
+echo "Absolute file path: " . $absolute_file_path . "<br>";
 
 // Check if file exists on the server using absolute path
 if (!$absolute_file_path || !file_exists($absolute_file_path)) {
