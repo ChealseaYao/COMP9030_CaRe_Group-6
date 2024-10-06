@@ -121,7 +121,7 @@ $result = $stmt->get_result();
                                     $formattedDate = date("d/m/Y", strtotime($journal_date));
                                     
                                     echo "<tr>";
-                                    echo "<td><a href='journalDetail.php?journal_id=$journal_id'>$journal_content</a></td>";
+                                    echo "<td><a href='journal.php?journal_id=$journal_id'>$journal_content</a></td>";
                                     echo "<td>$formattedDate</td>";
                                     echo "</tr>";
                                 }
