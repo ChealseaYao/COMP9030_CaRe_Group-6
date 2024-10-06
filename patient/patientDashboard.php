@@ -117,8 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
                         <?php endif; ?>
                     </tbody>
                 </table>
-                
-                <a href="viewHistoryRecord.php">
+                <a href="viewHistoryRecord.php?patient_id=<?= $patient_id ?>">
                     <button class="patientDashboardViewMore-Button">View More</button>
                 </a>
             </div>
