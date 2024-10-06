@@ -38,6 +38,23 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $patient_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$journals = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $journals[] = [
+            'journal_id' => $row['journal_id'],
+            'date' => $row['journal_date'],
+            'content' => $row['journal_content']
+        ];
+    }
+}
+
+// Convert journal data to JSON
+$journalDataJSON = json_encode($journals);
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -110,28 +127,25 @@ $result = $stmt->get_result();
                         </thead>
                         <tbody>
                         <?php
-                            // Fetch and display journal data
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $journal_id = $row['journal_id'];
-                                    $journal_content = $row['journal_content'];
-                                    $journal_date = $row['journal_date'];
+                            // if ($result->num_rows > 0) {
+                            //     while ($row = $result->fetch_assoc()) {
+                            //         $journal_id = $row['journal_id'];
+                            //         $journal_content = $row['journal_content'];
+                            //         $journal_date = $row['journal_date'];
                                     
-                                    // Convert journal_date to a more readable format
-                                    $formattedDate = date("d/m/Y", strtotime($journal_date));
+                            //         $formattedDate = date("d/m/Y", strtotime($journal_date));
                                     
-                                    echo "<tr>";
-                                    echo "<td><a href='journal.php?journal_id=$journal_id'>$journal_content</a></td>";
-                                    echo "<td>$formattedDate</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='3'>No journals found.</td></tr>";
-                            }
+                            //         echo "<tr>";
+                            //         echo "<td><a href='journal.php?journal_id=$journal_id'>$journal_content</a></td>";
+                            //         echo "<td>$formattedDate</td>";
+                            //         echo "</tr>";
+                            //     }
+                            // } else {
+                            //     echo "<tr><td colspan='3'>No journals found.</td></tr>";
+                            // }
 
-                            // Close the statement and connection
-                            $stmt->close();
-                            $conn->close();
+                            // $stmt->close();
+                            // $conn->close();
                             ?>
                         </tbody>
                           
@@ -146,6 +160,11 @@ $result = $stmt->get_result();
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
+    <script>
+        // Pass PHP data to JavaScript
+        const journalData = <?php echo $journalDataJSON; ?>;
+    </script>
+    <script src="../scripts/viewHistoryRecord.js"></script>
 </body>
 
 </html>

@@ -27,6 +27,22 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $patient_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$journals = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $journals[] = [
+            'journal_id' => $row['journal_id'],
+            'date' => $row['journal_date'],
+            'content' => $row['journal_content'],
+            'highlight' => $row['highlight']
+        ];
+    }
+}
+
+// Convert journal data to JSON
+$journalDataJSON = json_encode($journals);
+
 ?>
 
 
@@ -135,6 +151,12 @@ $result = $stmt->get_result();
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
+    <script>
+    const patient_id = <?php echo $patient_id; ?>;
+    const journalData = <?php echo $journalDataJSON; ?>;
+    console.log(journalData);
+</script>
+    <script src="../scripts/historyJournalList.js"></script>
 </body>
 
 </html>
