@@ -127,6 +127,7 @@ INSERT INTO `user` (username, password_hash, role, full_name) VALUES
 ('stanleyrivera', 'hashed_password8', 'professional_staff', 'Jeffrey Ruiz'); -- password: hashed_password8
 
 
+
 INSERT INTO therapist (user_id, therapist_title, therapist_image) VALUES
 (4, 'Clinical Psychologist', 'images/dr_alice_brown.jpg'),
 (5, 'Counseling Psychologist', 'images/dr_bob_white.jpg'),

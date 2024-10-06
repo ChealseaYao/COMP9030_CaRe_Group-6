@@ -1,16 +1,13 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-session_start(); 
+session_start();
 
-// Ensure the therapist is logged in
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
-// fetch patient id
+
 $patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
 if ($patient_id == 0) {
     echo "Invalid Patient ID";
@@ -20,7 +17,7 @@ if ($patient_id == 0) {
 
 include '../inc/dbconn.inc.php'; 
 
-// Fetch the patient's details
+
 $query = "SELECT u.full_name, p.age, p.gender, p.email 
           FROM patient p 
           INNER JOIN user u ON p.user_id = u.user_id 
@@ -37,7 +34,7 @@ if (!$patient_info) {
     exit();
 }
 
-// Fetch the patient's journals
+
 $query = "SELECT journal_content, journal_date FROM journal WHERE patient_id = ? ORDER BY journal_date DESC LIMIT 5";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $patient_id);
@@ -69,6 +66,10 @@ $conn->close();
     <!-- global navigation bar -->
     <header class="navbar">
         <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
     
     <div class="therapistContainer">

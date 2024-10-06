@@ -1,18 +1,16 @@
 <?php
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb"; 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+include '../inc/dbconn.inc.php'; 
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// $patient_id = $_GET['patient_id'];
-$patient_id = 4;
+$patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
+if ($patient_id == 0) {
+    echo "Invalid Patient ID";
+    exit();
+}
 
 $sql_name = "SELECT full_name FROM user 
              INNER JOIN patient ON user.user_id = patient.user_id 
@@ -38,6 +36,23 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $patient_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$journals = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $journals[] = [
+            'journal_id' => $row['journal_id'],
+            'date' => $row['journal_date'],
+            'content' => $row['journal_content']
+        ];
+    }
+}
+
+// Convert journal data to JSON
+$journalDataJSON = json_encode($journals);
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -57,15 +72,15 @@ $result = $stmt->get_result();
 <body class="therapistBody">
     <!-- global navigation bar TBD -->
     <header class="navbar">
-        <a href="patientDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
-        <!-- <span>></span>
-        <a href="browsePatientList.html">View Patients</a>
-        <span>></span>
-        <span>Josh</span> -->
+        <a href="patientDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
     <div class="therapistContainer">
         <div class="historyleft">
-            <a href="patientDashboard.html">
+            <a href="patientDashboard.php">
                 <button class="back-btn">Back</button>
             </a>
         </div>
@@ -110,28 +125,25 @@ $result = $stmt->get_result();
                         </thead>
                         <tbody>
                         <?php
-                            // Fetch and display journal data
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $journal_id = $row['journal_id'];
-                                    $journal_content = $row['journal_content'];
-                                    $journal_date = $row['journal_date'];
+                            // if ($result->num_rows > 0) {
+                            //     while ($row = $result->fetch_assoc()) {
+                            //         $journal_id = $row['journal_id'];
+                            //         $journal_content = $row['journal_content'];
+                            //         $journal_date = $row['journal_date'];
                                     
-                                    // Convert journal_date to a more readable format
-                                    $formattedDate = date("d/m/Y", strtotime($journal_date));
+                            //         $formattedDate = date("d/m/Y", strtotime($journal_date));
                                     
-                                    echo "<tr>";
-                                    echo "<td><a href='journalDetail.php?journal_id=$journal_id'>$journal_content</a></td>";
-                                    echo "<td>$formattedDate</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='3'>No journals found.</td></tr>";
-                            }
+                            //         echo "<tr>";
+                            //         echo "<td><a href='journal.php?journal_id=$journal_id'>$journal_content</a></td>";
+                            //         echo "<td>$formattedDate</td>";
+                            //         echo "</tr>";
+                            //     }
+                            // } else {
+                            //     echo "<tr><td colspan='3'>No journals found.</td></tr>";
+                            // }
 
-                            // Close the statement and connection
-                            $stmt->close();
-                            $conn->close();
+                            // $stmt->close();
+                            // $conn->close();
                             ?>
                         </tbody>
                           
@@ -146,6 +158,11 @@ $result = $stmt->get_result();
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
+    <script>
+        // Pass PHP data to JavaScript
+        const journalData = <?php echo $journalDataJSON; ?>;
+    </script>
+    <script src="../scripts/viewHistoryRecord.js"></script>
 </body>
 
 </html>

@@ -3,8 +3,8 @@ session_start();
 
 // Ensure the patient is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
-    header("Location: login.php");
-    exit;
+    header("Location: ../login.php");
+    exit();
 }
 
 require_once '../inc/dbconn.inc.php';  // Include your database connection settings
@@ -86,8 +86,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
 </head>
 <body>
     <header class="navbar">
-        <a href="patientDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="patientDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+         <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
+    
     <div class="patientDashboard">
         <div class="left-panel">
             <h1>G'Day <?= htmlspecialchars($patient_name) ?>!</h1>
@@ -117,8 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
                         <?php endif; ?>
                     </tbody>
                 </table>
-                
-                <a href="viewHistoryRecord.php">
+                <a href="viewHistoryRecord.php?patient_id=<?= $patient_id ?>">
                     <button class="patientDashboardViewMore-Button">View More</button>
                 </a>
             </div>

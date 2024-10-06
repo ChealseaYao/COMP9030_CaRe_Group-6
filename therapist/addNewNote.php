@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 // Check if user is logged in and is a therapist
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php"); // Redirect to login page if not authenticated
+    header("Location: ../login.php"); // Redirect to login page if not authenticated
     exit();
 }
 
@@ -96,6 +96,10 @@ $conn->close();
     <!-- global navigation bar -->
     <header class="navbar">
         <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
     <div class="therapistContainer">
         <div class="leftbox">

@@ -1,19 +1,11 @@
 
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb"; 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+include '../inc/dbconn.inc.php';
+$patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
+if ($patient_id == 0) {
+    echo "Invalid Patient ID";
+    exit();
 }
-
-// $patient_id = $_GET['patient_id'];
-$patient_id = 4;
 
 $sql_name = "SELECT full_name FROM user 
              INNER JOIN patient ON user.user_id = patient.user_id 
@@ -39,6 +31,22 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $patient_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$journals = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $journals[] = [
+            'journal_id' => $row['journal_id'],
+            'date' => $row['journal_date'],
+            'content' => $row['journal_content'],
+            'highlight' => $row['highlight']
+        ];
+    }
+}
+
+// Convert journal data to JSON
+$journalDataJSON = json_encode($journals);
+
 ?>
 
 
@@ -60,10 +68,14 @@ $result = $stmt->get_result();
     <!-- global navigation bar TBD -->
     <header class="navbar">
         <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
     <div class="therapistContainer">
         <div class="leftbox">
-            <a href="patientDetail.html">
+            <a href="patientDetail.php?patient_id=<?php echo $patient_id; ?>">
                 <button class="back-btn">Back</button>
             </a>
         </div>
@@ -123,7 +135,7 @@ $result = $stmt->get_result();
                                     
                                     echo "<tr>";
                                     echo "<td class='star'>" . ($highlight ? "★" : "") . "</td>";
-                                    echo "<td><a href='journalDetail.php?journal_id=$journal_id'>$journal_content</a></td>";
+                                    echo "<td><a href='journal.php?journal_id=$journal_id&patient_id=$patient_id'>$journal_content</a></td>";
                                     echo "<td>$formattedDate</td>";
                                     echo "</tr>";
                                 }
@@ -147,6 +159,12 @@ $result = $stmt->get_result();
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
+    <script>
+    const patient_id = <?php echo $patient_id; ?>;
+    const journalData = <?php echo $journalDataJSON; ?>;
+    console.log(journalData);
+</script>
+    <script src="../scripts/historyJournalList.js"></script>
 </body>
 
 </html>
