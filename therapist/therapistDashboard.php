@@ -62,6 +62,10 @@ $journals_result = $journals_query->get_result();
     <!-- global navigation bar -->
     <header class="navbar">
         <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logou button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Logout</a>
+         </div>
     </header>
 
     <div class="therapistContainer">

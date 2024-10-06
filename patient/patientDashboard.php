@@ -4,7 +4,7 @@ session_start();
 // Ensure the patient is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
     header("Location: ../login.php");
-    exit;
+    exit();
 }
 
 require_once '../inc/dbconn.inc.php';  // Include your database connection settings
@@ -87,7 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
 <body>
     <header class="navbar">
         <a href="patientDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+         <!-- log out button -->
+         <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Logout</a>
+         </div>
     </header>
+    
     <div class="patientDashboard">
         <div class="left-panel">
             <h1>G'Day <?= htmlspecialchars($patient_name) ?>!</h1>
