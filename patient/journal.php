@@ -12,29 +12,6 @@ require_once '../inc/dbconn.inc.php';  // Include your database connection setti
 // Get patient's user_id from the session
 $user_id = $_SESSION['user_id'];
 
-// Check if delete request is received
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_journal']) && isset($_GET['journal_id'])) {
-    $journal_id = intval($_GET['journal_id']); // Get the journal_id
-    $user_id = $_SESSION['user_id']; // Make sure user_id in session exists correctly
-
-    // Check if parameters are passed correctly
-    var_dump($journal_id, $user_id, $_POST['delete_journal']);
-    // Prepare delete query
-    $delete_query = $conn->prepare("DELETE FROM journal WHERE journal_id = ? AND patient_id = (SELECT patient_id FROM patient WHERE user_id = ?)");
-    $delete_query->bind_param("ii", $journal_id, $user_id);
-
-    if ($delete_query->execute()) {
-        // Return success message in JSON format
-        header("Location: viewHistoryRecord.php");
-        exit;
-    } else {
-        echo "<script>alert('Failed to delete journal entry: " . $conn->error . "');</script>";
-    }
-
-    exit; // Stop further script execution after sending response
-}
-
-
 
 // Fetch patient details (full_name from user table and patient_id from patient table)
 $patient_query = $conn->prepare("SELECT u.full_name, p.patient_id FROM user u JOIN patient p ON u.user_id = p.user_id WHERE u.user_id = ?");
@@ -50,6 +27,28 @@ $patient = $patient_result->fetch_assoc();
 $patient_name = $patient['full_name'] ?? 'Unknown Patient';
 $patient_id = $patient['patient_id'];  // get patient_id 
 $journal_id = $_GET['journal_id'] ?? null; //check journal_id
+
+// Check if delete request is received
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_journal']) && isset($_GET['journal_id'])) {
+    $journal_id = intval($_GET['journal_id']); // Get the journal_id
+    $user_id = $_SESSION['user_id']; // Make sure user_id in session exists correctly
+
+    // Check if parameters are passed correctly
+    var_dump($journal_id, $user_id, $_POST['delete_journal']);
+    // Prepare delete query
+    $delete_query = $conn->prepare("DELETE FROM journal WHERE journal_id = ? AND patient_id = (SELECT patient_id FROM patient WHERE user_id = ?)");
+    $delete_query->bind_param("ii", $journal_id, $user_id);
+
+    if ($delete_query->execute()) {
+        // Return success message in JSON format
+        header("Location: viewHistoryRecord.php?patient_id=" . $patient_id);
+        exit;
+    } else {
+        echo "<script>alert('Failed to delete journal entry: " . $conn->error . "');</script>";
+    }
+
+    exit; // Stop further script execution after sending response
+}
 
 // Fetch the patient's journals using the correct patient_id
 if ($journal_id) {
