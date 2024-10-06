@@ -1,5 +1,23 @@
 <?php
+// Start session and check if the user is logged in
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
+    header("Location: login.php");
+    exit();
+}
+
 include '../inc/dbconn.inc.php';
+
+// Get therapist's user_id from the session
+$user_id = $_SESSION['user_id'];
+
+$patient_id_query = $conn->prepare("SELECT patient_id FROM patient WHERE user_id = ?");
+$patient_id_query->bind_param("i", $user_id);
+$patient_id_query->execute();
+$patient_id_result = $patient_id_query->get_result();
+$patient_id_row = $patient_id_result->fetch_assoc();
+$patient_id = $patient_id_row['patient_id'];
+
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form inputs
@@ -9,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sleep_time = $_POST['sleep_time'] ?? '';
     $wake_time = $_POST['wake_time'] ?? '';
     $highlight = 1; // Set highlight to 1
-    $patient_id = 4; // Set patient_id to 5 (hardcoded)
+
 
     // Get the current date for journal_date
     $journal_date = date('Y-m-d');
