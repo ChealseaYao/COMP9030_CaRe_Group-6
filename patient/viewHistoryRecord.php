@@ -73,10 +73,10 @@ $conn->close();
     <!-- global navigation bar TBD -->
     <header class="navbar">
         <a href="patientDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
-        <!-- <span>></span>
-        <a href="browsePatientList.html">View Patients</a>
-        <span>></span>
-        <span>Josh</span> -->
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
     <div class="therapistContainer">
         <div class="historyleft">

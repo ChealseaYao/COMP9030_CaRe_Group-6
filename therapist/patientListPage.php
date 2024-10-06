@@ -2,21 +2,12 @@
 // Start session and check if the user is logged in
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb"; 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../inc/dbconn.inc.php'; 
 
 // Get therapist's user_id from the session
 $user_id = $_SESSION['user_id'];
@@ -255,6 +246,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     <!-- global navigation bar -->
     <header class="navbar">
         <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>    
     </header>
 
     <div class="therapistContainer">

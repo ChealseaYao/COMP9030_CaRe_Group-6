@@ -2,7 +2,7 @@
 // Start session and check if the user is logged in
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $exercise = $_POST['exercise'] ?? '';
     $sleep_time = $_POST['sleep_time'] ?? '';
     $wake_time = $_POST['wake_time'] ?? '';
-    $highlight = 1; // Set highlight to 1
+    $highlight = 0; // Set highlight to 0
 
 
     // Get the current date for journal_date
@@ -89,9 +89,12 @@ $conn->close();
   <body class="newJournal-body">
     <!-- Header of page -->
     <header class="navbar">
-      <a href="patientDashboard.php"
-        ><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"
-      /></a>
+      <a href="patientDashboard.html"
+        ><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"/></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
 
     <div class="therapistContainer">

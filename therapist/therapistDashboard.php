@@ -2,11 +2,11 @@
 // Start session and check if the user is logged in
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
-include '../inc/dbconn.inc.php'; // 请确保该路径指向您的数据库连接文件
+include '../inc/dbconn.inc.php'; 
 
 
 // Get therapist's user_id from the session
@@ -62,6 +62,10 @@ $journals_result = $journals_query->get_result();
     <!-- global navigation bar -->
     <header class="navbar">
         <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
 
     <div class="therapistContainer">
@@ -106,13 +110,13 @@ $journals_result = $journals_query->get_result();
                             </tr>
                         </thead>
                         <tbody>
-                        <?php while ($journal = $journals_result->fetch_assoc()) : ?>
+                            <?php while ($journal = $journals_result->fetch_assoc()) : ?>
                                 <tr>
                                     <td class="star"><?= $journal['highlight'] ? '★' : '' ?></td>
                                     <td><?= htmlspecialchars($journal['patient_name']) ?></td>
                                     <td><a href="journalDetail.php?date=<?= urlencode($journal['journal_date']) ?>&patient_name=<?= urlencode($journal['patient_name']) ?>">
-                                        <?= htmlspecialchars(strlen($journal['journal_content']) > 50 ? substr($journal['journal_content'], 0, 50) . '...' : $journal['journal_content']) ?>
-                                    </a></td>
+                                            <?= htmlspecialchars(strlen($journal['journal_content']) > 50 ? substr($journal['journal_content'], 0, 50) . '...' : $journal['journal_content']) ?>
+                                        </a></td>
                                     <td><?= date("d/m/Y", strtotime($journal['journal_date'])) ?></td>
                                 </tr>
                             <?php endwhile; ?>
