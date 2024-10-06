@@ -1,63 +1,72 @@
-<!--Created by Hsin Hui Chu-->
 <?php
-// Start session to access patient information
 session_start();
 
-// Check if the patient is logged in
-if (!isset($_SESSION['patient_id'])) {
-    echo "Please log in to view your journal.";
-    exit();
-}
-// Database connection
-include '../inc/dbconn.inc.php'; // Ensure the path is correct
-
-// Get patient ID and patient name from session
-$patient_id = $_SESSION['patient_id'];
-$patient_name = $_SESSION['patient_name'];
-
-
-// Get journal_id and patient_id from the URL
-$journal_id = isset($_GET['journal_id']) ? intval($_GET['journal_id']) : 0;
-$patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
-
-if ($journal_id == 0 || $patient_id == 0) {
-    echo "Invalid Journal ID or Patient ID";
-    exit();
+// Ensure the patient is logged in
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
+    header("Location: login.php");
+    exit;
 }
 
-// 如果有接收到刪除請求，則執行刪除操作
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_journal'])) {
-    $delete_query = "DELETE FROM journal WHERE journal_id = ? AND patient_id = ?";
-    $stmt = $conn->prepare($delete_query);
-    $stmt->bind_param("ii", $journal_id, $patient_id);
-    if ($stmt->execute()) {
-        echo json_encode(["status" => "success", "message" => "Journal entry deleted successfully"]);
+require_once '../inc/dbconn.inc.php';  // Include your database connection settings
+
+// Get patient's user_id from the session
+$user_id = $_SESSION['user_id'];
+
+// Check if delete request is received
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_journal']) && isset($_GET['journal_id'])) {
+    $journal_id = intval($_GET['journal_id']); // Get the journal_id
+    $user_id = $_SESSION['user_id']; // Make sure user_id in session exists correctly
+
+    // Check if parameters are passed correctly
+    var_dump($journal_id, $user_id, $_POST['delete_journal']);
+    // Prepare delete query
+    $delete_query = $conn->prepare("DELETE FROM journal WHERE journal_id = ? AND patient_id = (SELECT patient_id FROM patient WHERE user_id = ?)");
+    $delete_query->bind_param("ii", $journal_id, $user_id);
+
+    if ($delete_query->execute()) {
+        // Return success message in JSON format
+        header("Location: viewHistoryRecord.php");
+        exit;
     } else {
-        echo json_encode(["status" => "error", "message" => "Failed to delete journal entry"]);
+        echo "<script>alert('Failed to delete journal entry: " . $conn->error . "');</script>";
     }
-    $stmt->close();
-    $conn->close();
-    exit();
+
+    exit; // Stop further script execution after sending response
 }
 
-// Fetch the journal content based on journal_id and patient_id
-$query = "SELECT journal_content, journal_date, sleep_time, wake_time, food, 
-exercise, file_path, original_name, file_type, file_size FROM journal 
-WHERE journal_id = ? AND patient_id = ?";
 
+
+// Fetch patient details (full_name from user table and patient_id from patient table)
+$patient_query = $conn->prepare("SELECT u.full_name, p.patient_id FROM user u JOIN patient p ON u.user_id = p.user_id WHERE u.user_id = ?");
+$patient_query->bind_param("i", $user_id);
+$patient_query->execute();
+$patient_result = $patient_query->get_result();
+
+if (!$patient_result) {
+    die("Error fetching patient details: " . $conn->error);
+}
+
+$patient = $patient_result->fetch_assoc();
+$patient_name = $patient['full_name'] ?? 'Unknown Patient';
+$patient_id = $patient['patient_id'];  // get patient_id 
+$journal_id = $_GET['journal_id'] ?? null; //check journal_id
+
+// Fetch the patient's journals using the correct patient_id
+if ($journal_id) {
+$query = "SELECT journal_content, journal_date, sleep_time, wake_time, food, 
+exercise, file_path, original_name, file_type, file_size FROM journal WHERE patient_id = ? ORDER BY journal_date DESC LIMIT 5";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("ii", $journal_id, $patient_id);
+$stmt->bind_param("i", $patient_id); 
 $stmt->execute();
 $journal_result = $stmt->get_result();
-$journal_info = $journal_result->fetch_assoc();
-
-if (!$journal_info) {
-    echo "Journal not found.";
-    exit();
+if ($journal_result->num_rows > 0) {
+    $journal_info = $journal_result->fetch_assoc();
+} else {
+    $journal_info = null;
 }
-
-$stmt->close();
-$conn->close();
+} else {
+die("No journal selected.");
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +85,7 @@ $conn->close();
     
     <script>
     function confirmDelete() {
-            // 呼叫 AJAX 發送刪除請求
+            // call AJAX send the delete request
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "patientJournal.php?journal_id=<?php echo $journal_id; ?>", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -85,7 +94,7 @@ $conn->close();
                     const response = JSON.parse(xhr.responseText);
                     if (response.status === 'success') {
                         alert(response.message);
-                        window.location.href = "viewHistoryRecord.html"; // 刪除成功後返回歷史紀錄頁面
+                        window.location.href = "viewHistoryRecord.php"; // return to record page
                     } else {
                         alert(response.message);
                     }
@@ -93,6 +102,17 @@ $conn->close();
             };
             xhr.send("delete_journal=true");
         }
+        // Check delete function
+        function showPopup() {
+        document.getElementById("popupOverlay").style.display = "block";
+        document.getElementById("popup").style.display = "block";
+        }
+
+        function hidePopup() {
+        document.getElementById("popupOverlay").style.display = "none";
+        document.getElementById("popup").style.display = "none";
+        }
+
     </script>
 
 </head>
@@ -104,13 +124,13 @@ $conn->close();
     <div class="therapistContainer">
         <div class="leftbox">
             <!-- should be selected patient journal list page -->
-            <a href="viewHistoryRecord.html">
+            <a href="viewHistoryRecord.php">
                 <button class="back-btn">Back</button>
             </a>
         </div>
         <div class="container">
             <div class="entry-header">
-                <?php echo htmlspecialchars($patient_name); ?>
+                <?= htmlspecialchars($patient_name) ?>
             </div>
             <div class="entry-date">Date: <?php echo date("d/m/Y", strtotime($journal_info['journal_date'])); ?></div>
             <div class="entry-content">
@@ -137,17 +157,17 @@ $conn->close();
                     <button disabled>No file to download</button>
                 <?php endif; ?>
             </div>
-            <button class="delete-button" onclick="showPopup()">Delete</button>
-
+            <form method="POST" action="journal.php?journal_id=<?php echo $journal_id; ?>">
+            <input type="hidden" name="delete_journal" value="true">
+            <button type="button" class="delete-button" onclick="showPopup()">Delete</button>
             <!--Popup page-->
             <div class="popup-overlay" id="popupOverlay"></div>
             <div class="popup" id="popup">
                 <p>Do you want to delete the journal?</p>
                 <div>
-                    <button id="note-cancelBtn" onclick="hidePopup()">Cancel</button>
-                    <button id="note-confirmBtn" onclick="confirmDelete()">Confirm</button>
+                    <button type="button" id="note-cancelBtn" onclick="hidePopup()">Cancel</button>
+                    <button type="submit" id="note-confirmBtn">Confirm</button>
                 </div>
-
             </div>
         </div>
     </div>
