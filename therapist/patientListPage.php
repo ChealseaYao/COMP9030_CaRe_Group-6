@@ -1,73 +1,262 @@
 <?php
-session_start(); // 启动会话
-
-// 检查用户是否已登录，并且是therapist角色
+// Start session and check if the user is logged in
+session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php"); // 未登录则重定向到登录页面
+    header("Location: ../login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id']; // 获取当前登录的用户ID
+// Database connection
+include '../inc/dbconn.inc.php'; 
 
-// 连接数据库
-include '../inc/dbconn.inc.php'; // 请确保该路径指向您的数据库连接文件
+// Get therapist's user_id from the session
+$user_id = $_SESSION['user_id'];
 
-// 查询therapist表以获取当前登录用户的therapist_id
-$query = "SELECT therapist_id FROM therapist WHERE user_id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$therapist = $result->fetch_assoc();
+$therapist_id_query = $conn->prepare("SELECT therapist_id FROM therapist WHERE user_id = ?");
+$therapist_id_query->bind_param("i", $user_id);
+$therapist_id_query->execute();
+$therapist_id_result = $therapist_id_query->get_result();
+$therapist_id_row = $therapist_id_result->fetch_assoc();
+$therapist_id = $therapist_id_row['therapist_id'];
 
-if (!$therapist) {
-    echo "Therapist not found.";
-    exit();
+
+// Handle AJAX request for different actions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    // Handle status update
+    if (isset($data['user_id']) && isset($data['status'])) {
+        $user_id = $data['user_id'];
+        $status = $data['status'];
+        
+        if (in_array($status, ['good status', 'bad status', 'danger status'])) {
+            $sql = "UPDATE patient SET badge = ? WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('si', $status, $user_id);
+            if ($stmt->execute()) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false]);
+            }
+            $stmt->close();
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Invalid status']);
+        }
+        exit;
+    }
+
+    // Handle adding a member to a group
+    if (isset($data['group_id']) && isset($data['user_id'])) {
+        $group_id = $data['group_id'];
+        $user_id = $data['user_id'];
+
+        $sql = "INSERT INTO group_patient (group_id, patient_id) 
+                VALUES (?, (SELECT patient_id FROM patient WHERE user_id = ?))";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $group_id, $user_id);
+
+        if ($stmt->execute()) {
+            $sql = "SELECT full_name FROM user WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $patient = $result->fetch_assoc();
+
+            echo json_encode(['success' => true, 'patient_name' => $patient['full_name']]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to add member']);
+        }
+
+        $stmt->close();
+        $conn->close();
+        exit;
+    }
+
+    // Handle fetching group members
+    if (isset($data['group_id'])) {
+        $group_id = $data['group_id'];
+
+        $sql = "SELECT user.full_name 
+                FROM group_patient 
+                JOIN patient ON group_patient.patient_id = patient.patient_id
+                JOIN user ON patient.user_id = user.user_id
+                WHERE group_patient.group_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $group_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $members = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $members[] = ['name' => $row['full_name']];
+            }
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        echo json_encode(['members' => $members]);
+        exit;
+    }
+
+    // Handle creating a new group
+    if (isset($data['action']) && $data['action'] === 'create_group' && isset($data['group_name'])) {
+        $group_name = $data['group_name'];
+    
+        // Insert new group into the group table with therapist_id from session
+        $sql = "INSERT INTO `group` (group_name, therapist_id) VALUES (?, ?)"; // Include therapist_id in the SQL query
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('si', $group_name, $therapist_id); // Bind the therapist_id from the session
+    
+        if ($stmt->execute()) {
+            // Get the ID of the newly created group
+            $group_id = $stmt->insert_id;
+    
+            // Return success response with the new group ID
+            echo json_encode(['success' => true, 'group_id' => $group_id]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to create group']);
+        }
+    
+        $stmt->close();
+        $conn->close();
+        exit;
+    }
+
+    // Handle search request
+    if (isset($data['action']) && $data['action'] === 'search_patient' && isset($data['search_query'])) {
+        $search_query = '%' . $data['search_query'] . '%'; // Use wildcards for partial search
+
+        // Query to search for patients by name
+        $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
+                FROM patient
+                JOIN user ON patient.user_id = user.user_id
+                WHERE user.full_name LIKE ? AND patient.therapist_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('si', $search_query, $therapist_id); // Bind therapist_id
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $patients = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $patients[] = [
+                    'full_name' => $row['full_name'],
+                    'age' => $row['age'],
+                    'badge' => $row['badge'],
+                    'user_id' => $row['user_id']
+                ];
+            }
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        // Return the matching patients as JSON
+        echo json_encode(['patients' => $patients]);
+        exit;
+    }
+
+    // Handle fetching all patients when no search query is provided
+    if (isset($data['action']) && $data['action'] === 'fetch_all_patients') {
+        // Query to get all patients for the logged-in therapist
+        $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
+                FROM patient
+                JOIN user ON patient.user_id = user.user_id
+                WHERE patient.therapist_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $therapist_id); // Bind the therapist_id
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $patients = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $patients[] = [
+                    'full_name' => $row['full_name'],
+                    'age' => $row['age'],
+                    'badge' => $row['badge'],
+                    'user_id' => $row['user_id']
+                ];
+            }
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        // Return all patients as JSON
+        echo json_encode(['patients' => $patients]);
+        exit;
+    }
 }
 
-$therapist_id = $therapist['therapist_id']; // 获取当前therapist的therapist_id
+// Handle DELETE request for deleting a member
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $data = json_decode(file_get_contents("php://input"), true);
+    $group_id = $data['group_id'];
+    $member_name = $data['member_name'];
 
-// 查询当前therapist的所有患者
-$query = "SELECT patient_id, age, user.full_name as name FROM patient 
-          INNER JOIN user ON patient.user_id = user.user_id 
-          WHERE patient.therapist_id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $therapist_id);
-$stmt->execute();
-$result = $stmt->get_result();
+    // Find the patient's user_id by their full name
+    $sql = "SELECT user_id FROM user WHERE full_name = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $member_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// 将患者数据存储到一个数组
-$patients = [];
-while ($row = $result->fetch_assoc()) {
-    $patients[] = $row;
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $user_id = $user['user_id'];
+
+        // Now delete the member from group_patient table
+        $sql = "DELETE FROM group_patient WHERE group_id = ? AND patient_id = (SELECT patient_id FROM patient WHERE user_id = ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $group_id, $user_id);
+
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to delete member']);
+        }
+
+        $stmt->close();
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Member not found']);
+    }
+
+    $conn->close();
+    exit;
 }
 
-$stmt->close();
-$conn->close();
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient List</title>
-    <link rel="stylesheet" href="../style/global.css" />
-    <link rel="stylesheet" href="../style/patientList.css" />
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/patientList.css">
 </head>
 <body class="patientList-body">
     <!-- global navigation bar -->
     <header class="navbar">
-        <a href="therapistDashboard.html">
-            <img src="../image/logo.png" alt="Logo Icon" id="logo-icon" />
-        </a>
+        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>    
     </header>
 
     <div class="therapistContainer">
         <div class="leftbox">
-            <a href="therapistDashboard.html">
+            <a href="therapistDashboard.php">
                 <button class="back-btn">Back</button>
             </a>
-
             <h3>Badge</h3>
             <div class="badge-section">
                 <div class="badge-item" draggable="true" data-status="good">
@@ -85,50 +274,99 @@ $conn->close();
         <div class="patient-list">
             <div class="nameAndButton">
                 <h2>Patient List</h2>
-                <form class="search-bar" method="GET" action="">
-                    <input type="text" placeholder="Search..." name="search" />
-                    <button type="submit">Search</button>
+                <form class="search-bar">
+                    <input type="text" placeholder="Search..." name="search">
                 </form>
             </div>
             <div class="tableContainer">
-                <!-- 动态展示患者数据 -->
-                <?php if (!empty($patients)): ?>
-                    <?php foreach ($patients as $patient): ?>
-                        <div class="patient-item" data-patient-id="<?php echo $patient['patient_id']; ?>">
-                            <div class="left-section">
-                                <div class="patient-icon">☰</div>
-                                <div>
-                                    <strong><?php echo htmlspecialchars($patient['name']); ?></strong><br />
-                                    Age: <?php echo htmlspecialchars($patient['age']); ?>
-                                </div>
-                            </div>
-                            <div class="right-section">
-                                <div class="status-container"></div>
-                                <a href="patientDetail.php?patient_id=<?php echo $patient['patient_id']; ?>">
-                                    <button class="details">Details</button>
-                                </a>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No patients found for this therapist.</p>
-                <?php endif; ?>
+                <!-- PHP Code to Fetch and Display Patients Dynamically -->
+                <?php
+                // Query to get patient data with names and status
+                $sql = "SELECT patient.patient_id, patient.age, patient.badge, user.full_name, patient.user_id
+                        FROM patient
+                        JOIN user ON patient.user_id = user.user_id
+                        WHERE patient.therapist_id = ?";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $therapist_id); // Use the $therapist_id you fetched earlier
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        // Output HTML for each patient
+                        echo '<div class="patient-item" data-user-id="' . $row['user_id'] . '">';
+                        echo '<div class="left-section">';
+                        echo '<div class="patient-icon" draggable="true">☰</div>'; // Icon now draggable
+                        echo '<div>';
+                        echo '<strong>' . htmlspecialchars($row['full_name']) . '</strong><br>';
+                        echo 'Age: ' . htmlspecialchars($row['age']);
+                        echo '</div>';
+                        echo '</div>';
+                        echo '<div class="right-section">';
+                        echo '<div class="status-container">';
+                
+                        // Add a span with the correct status color
+                        if ($row['badge'] === 'good status') {
+                            echo '<span class="status good"></span>';
+                        } elseif ($row['badge'] === 'bad status') {
+                            echo '<span class="status bad"></span>';
+                        } elseif ($row['badge'] === 'danger status') {
+                            echo '<span class="status danger"></span>';
+                        }
+                
+                        echo '</div>';
+                        // Update the URL to include patient_id as a query parameter
+                        echo '<a href="patientDetail.php?patient_id=' . $row['patient_id'] . '"><button class="details">Details</button></a>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "<p>No patients found.</p>";
+                }
+                
+                ?>
             </div>
         </div>
 
-        <!-- 剩余部分保持不变 -->
         <div class="groups">
             <div class="nameAndButton">
                 <h2>Groups</h2>
                 <button class="create-new">Create New</button>
             </div>
             <div id="groupContainer" class="tableContainer">
-                <div class="group-item">Tuesday 3pm Session</div>
-                <div class="group-item">Friday Special</div>
-                <div class="group-item">Anxiety Group</div>
-                <div class="group-item">Avengers</div>
-                <div class="group-item">Revengers</div>
-                <div class="group-item">Justice League</div>
+                <!-- PHP to display group names dynamically -->
+                <?php
+                // Prepare the SQL query to fetch groups where therapist_id matches the logged-in therapist
+                $sql = "SELECT group_id, group_name FROM `group` WHERE therapist_id = ?";
+
+                // Prepare the statement
+                $stmt = $conn->prepare($sql);
+
+                // Bind the therapist_id dynamically
+                $stmt->bind_param("i", $therapist_id);
+
+                // Execute the query
+                $stmt->execute();
+
+                // Get the result
+                $group_result = $stmt->get_result();
+
+                // Check if any groups were returned
+                if ($group_result->num_rows > 0) {
+                    while ($group_row = $group_result->fetch_assoc()) {
+                        // Output HTML for each group
+                        echo '<div class="group-item" data-group-id="' . $group_row['group_id'] . '">';
+                        echo htmlspecialchars($group_row['group_name']);
+                        echo '</div>';
+                    }
+                } else {
+                    echo "<p>No groups found.</p>";
+                }
+
+                // Close the statement
+                $stmt->close();
+                ?>
             </div>
             <h3>Members</h3>
             <div class="members">
@@ -137,10 +375,10 @@ $conn->close();
                     <!-- Dynamic members list -->
                 </div>
             </div>
-        </div>
 
-        <div class="modal" id="createGroupModal">
-            <div class="modal-content">
+            <!-- create new group modal -->
+            <div class="modal" id="createGroupModal">
+                <div class="modal-content">
                 <h3>Create a New Group</h3>
                 <div class="group">
                     <label for="groupName">Group </label>
@@ -150,24 +388,29 @@ $conn->close();
                     <button id="cancelButton">Cancel</button>
                     <button id="confirmButton">Confirm</button>
                 </div>
+                </div>
             </div>
-        </div>
 
-        <div class="modal" id="confirmDeleteModal">
-            <div class="modal-content">
+            <!--  delete member modal -->
+            <div class="modal" id="confirmDeleteModal">
+                <div class="modal-content">
                 <p>Do you want to remove this member?</p>
                 <div class="modal-buttons">
                     <button id="cancelDeleteButton">Cancel</button>
                     <button id="confirmDeleteButton">Confirm</button>
                 </div>
             </div>
+      </div>
         </div>
     </div>
 
-    <script src="../scripts/createNewModal.js"></script>
-    <script src="../scripts/groupSelection.js"></script>
-    <script src="../scripts/memberDeletion.js"></script>
-    <script src="../scripts/drag&drop.js"></script>
+    <script src="../scripts//createNewModal.js"></script>
+    <script src="../scripts//groupSelection.js"></script>
+    <script src="../scripts//memberDeletion.js"></script>
+    <script src="../scripts//drag&dropBadge.js"></script> 
+    <script src="../scripts//drag&dropMember.js"></script> 
+    <script src="../scripts//searchPatient.js"></script> 
+
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>

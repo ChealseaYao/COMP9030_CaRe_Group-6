@@ -25,6 +25,16 @@ document.addEventListener("DOMContentLoaded", function() {
         const tableBody = document.querySelector(".note-history-note tbody");
         tableBody.innerHTML = '';
 
+        if (Object.keys(notesData).length === 0) {
+            // No notes available, display message
+            const noNotesRow = `
+                <tr>
+                    <td colspan="3" style="text-align: center;">No notes available</td>
+                </tr>`;
+            tableBody.insertAdjacentHTML('beforeend', noNotesRow);
+        }else{
+
+        
         // Get the latest three records sorted by date
         const latestNotes = Object.keys(notesData)
             .sort((a, b) => new Date(b) - new Date(a)) 
@@ -41,6 +51,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 tableBody.insertAdjacentHTML('beforeend', newRowHTML);
             });
         });
+
+    }
 
         bindDeleteButtons();
     }
