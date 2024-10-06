@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 // Check if user is logged in and is a therapist
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php"); // Redirect to login page if not authenticated
+    header("Location: ../login.php"); // Redirect to login page if not authenticated
     exit();
 }
 

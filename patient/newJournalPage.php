@@ -2,7 +2,7 @@
 // Start session and check if the user is logged in
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
