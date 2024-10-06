@@ -1,7 +1,10 @@
 <?php
 include '../inc/dbconn.inc.php';
-// $patient_id = $_GET['patient_id'];
-$patient_id = 4;
+$patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
+if ($patient_id == 0) {
+    echo "Invalid Patient ID";
+    exit();
+}
 
 $sql_name = "SELECT full_name FROM user 
              INNER JOIN patient ON user.user_id = patient.user_id 
@@ -67,7 +70,7 @@ $journalDataJSON = json_encode($journals);
     </header>
     <div class="therapistContainer">
         <div class="leftbox">
-            <a href="patientDetail.php">
+            <a href="patientDetail.php?patient_id=<?php echo $patient_id; ?>">
                 <button class="back-btn">Back</button>
             </a>
         </div>

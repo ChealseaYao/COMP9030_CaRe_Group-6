@@ -3,7 +3,7 @@ session_start();
 
 // Ensure the patient is logged in
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
                     </tbody>
                 </table>
                 
-                <a href="viewHistoryRecord.php">
+                <a href="viewHistoryRecord.php?patient_id=<?= $patient_id ?>">
                     <button class="patientDashboardViewMore-Button">View More</button>
                 </a>
             </div>

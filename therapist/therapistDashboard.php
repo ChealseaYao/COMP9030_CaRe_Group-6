@@ -61,7 +61,7 @@ $journals_result = $journals_query->get_result();
 <body class="therapistBody">
     <!-- global navigation bar -->
     <header class="navbar">
-        <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
     </header>
 
     <div class="therapistContainer">
