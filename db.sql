@@ -110,6 +110,21 @@ CREATE TABLE note (
     FOREIGN KEY (therapist_id) REFERENCES therapist(therapist_id)
 ) AUTO_INCREMENT = 1;
 
+CREATE VIEW professional_patient_view AS
+SELECT 
+    p.patient_id, 
+    p.age, 
+    p.gender, 
+    p.height, 
+    p.weight, 
+    t.therapist_title,
+    u.full_name AS therapist_name
+FROM patient p
+JOIN therapist t ON p.therapist_id = t.therapist_id
+JOIN `user` u ON t.user_id = u.user_id;
+
+GRANT SELECT ON professional_patient_view TO 'professional_staff_user'@'localhost';
+
 
 CREATE USER IF NOT EXISTS dbadmin@localhost;
 GRANT ALL PRIVILEGES ON CaReDB.* TO dbadmin@localhost;
