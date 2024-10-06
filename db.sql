@@ -110,6 +110,20 @@ CREATE TABLE note (
     FOREIGN KEY (therapist_id) REFERENCES therapist(therapist_id)
 ) AUTO_INCREMENT = 1;
 
+CREATE USER IF NOT EXISTS dbadmin@localhost;
+GRANT ALL PRIVILEGES ON CaReDB.* TO dbadmin@localhost;
+
+
+INSERT INTO `user` (username, password_hash, role, full_name) VALUES
+('johndoe', 'hashed_password1', 'patient', 'John Doe'), -- password: hashed_password1
+('jane', 'hashed_password2', 'patient', 'Jane Roe'), -- password: hashed_password2
+('jimS', 'hashed_password3', 'patient', 'Jim Smith'), -- password: hashed_password3
+('alicebrn', 'hashed_password4', 'therapist', 'Dr. Alice Brown'), -- password: hashed_password4
+('bob', 'hashed_password5', 'therapist', 'Dr. Bob White'), -- password: hashed_password5
+('green', 'hashed_password6', 'therapist', 'Dr. Charlie Green'), -- password: hashed_password6
+('joycelynn', 'hashed_password7', 'auditor', 'randon Jones'), -- password: hashed_password7
+('stanleyrivera', 'hashed_password8', 'professional_staff', 'Jeffrey Ruiz'); -- password: hashed_password8
+
 CREATE VIEW professional_patient_view AS
 SELECT 
     p.patient_id, 
@@ -124,24 +138,6 @@ JOIN therapist t ON p.therapist_id = t.therapist_id
 JOIN `user` u ON t.user_id = u.user_id;
 
 GRANT SELECT ON professional_patient_view TO 'professional_staff_user'@'localhost';
-
-
-CREATE USER IF NOT EXISTS dbadmin@localhost;
-GRANT ALL PRIVILEGES ON CaReDB.* TO dbadmin@localhost;
-
-
-
-INSERT INTO `user` (username, password_hash, role, full_name) VALUES
-('johndoe', 'hashed_password1', 'patient', 'John Doe'), -- password: hashed_password1
-('jane', 'hashed_password2', 'patient', 'Jane Roe'), -- password: hashed_password2
-('jimS', 'hashed_password3', 'patient', 'Jim Smith'), -- password: hashed_password3
-('alicebrn', 'hashed_password4', 'therapist', 'Dr. Alice Brown'), -- password: hashed_password4
-('bob', 'hashed_password5', 'therapist', 'Dr. Bob White'), -- password: hashed_password5
-('green', 'hashed_password6', 'therapist', 'Dr. Charlie Green'), -- password: hashed_password6
-('joycelynn', 'hashed_password7', 'auditor', 'randon Jones'), -- password: hashed_password7
-('stanleyrivera', 'hashed_password8', 'professional_staff', 'Jeffrey Ruiz'); -- password: hashed_password8
-
-
 
 INSERT INTO therapist (user_id, therapist_title, therapist_image) VALUES
 (4, 'Clinical Psychologist', 'images/dr_alice_brown.jpg'),
