@@ -1,26 +1,23 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-session_start(); // 启动会话
+session_start();
 
-// 检查是否已登录，并且用户角色是therapist
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
     header("Location: ../login.php");
     exit();
 }
 
-// 获取患者ID
+
 $patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
 if ($patient_id == 0) {
     echo "Invalid Patient ID";
     exit();
 }
 
-// 连接数据库
-include '../inc/dbconn.inc.php'; // 请确保该路径正确
 
-// 查询患者的详细信息
+include '../inc/dbconn.inc.php'; 
+
+
 $query = "SELECT u.full_name, p.age, p.gender, p.email 
           FROM patient p 
           INNER JOIN user u ON p.user_id = u.user_id 
@@ -37,7 +34,7 @@ if (!$patient_info) {
     exit();
 }
 
-// 查询患者的 Journals
+
 $query = "SELECT journal_content, journal_date FROM journal WHERE patient_id = ? ORDER BY journal_date DESC LIMIT 5";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $patient_id);
@@ -122,7 +119,7 @@ $conn->close();
         </div>
         
         <div class="rightbox">
-            <!-- 如果您有其他内容可以放在这里 -->
+            
         </div>
     </div>
 

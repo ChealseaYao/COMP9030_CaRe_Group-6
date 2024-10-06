@@ -1,18 +1,16 @@
 <?php
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb"; 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+include '../inc/dbconn.inc.php'; 
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// $patient_id = $_GET['patient_id'];
-$patient_id = 4;
+$patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
+if ($patient_id == 0) {
+    echo "Invalid Patient ID";
+    exit();
+}
 
 $sql_name = "SELECT full_name FROM user 
              INNER JOIN patient ON user.user_id = patient.user_id 
@@ -74,7 +72,7 @@ $conn->close();
 <body class="therapistBody">
     <!-- global navigation bar TBD -->
     <header class="navbar">
-        <a href="patientDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="patientDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
         <!-- <span>></span>
         <a href="browsePatientList.html">View Patients</a>
         <span>></span>
@@ -82,7 +80,7 @@ $conn->close();
     </header>
     <div class="therapistContainer">
         <div class="historyleft">
-            <a href="patientDashboard.html">
+            <a href="patientDashboard.php">
                 <button class="back-btn">Back</button>
             </a>
         </div>

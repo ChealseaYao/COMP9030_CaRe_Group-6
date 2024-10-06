@@ -2,7 +2,7 @@
 // Start session and check if the user is logged in
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $exercise = $_POST['exercise'] ?? '';
     $sleep_time = $_POST['sleep_time'] ?? '';
     $wake_time = $_POST['wake_time'] ?? '';
-    $highlight = 1; // Set highlight to 1
+    $highlight = 0; // Set highlight to 0
 
 
     // Get the current date for journal_date
