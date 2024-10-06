@@ -40,7 +40,7 @@ echo "File path from database: " . $file_path . "<br>";
 echo "Document root: " . $_SERVER['DOCUMENT_ROOT'] . "<br>";
 // Construct the absolute file path using the server's document root
 $project_root = $_SERVER['DOCUMENT_ROOT'] . '/COMP9030_CaRe_Groups-6/patient/';
-$absolute_file_path = realpath($project_root . $file_path);
+$absolute_file_path = $project_root . $file_path;
 // Debug output for absolute file path
 echo "Absolute file path: " . $absolute_file_path . "<br>";
 
