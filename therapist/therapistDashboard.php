@@ -61,11 +61,13 @@ $journals_result = $journals_query->get_result();
 <body class="therapistBody">
     <!-- global navigation bar -->
     <header class="navbar">
-        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <div>
+            <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        </div>
         <!-- logou button -->
         <div class="logout-container">
-            <a href="../logout.php" class="logout-link">Logout</a>
-         </div>
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
 
     <div class="therapistContainer">
