@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient List</title>
+    <link rel="stylesheet" href="../style/global.css" />
+    <link rel="stylesheet" href="../style/patientList.css" />
+  </head>
+
+  <body class="patientList-body">
+    <!-- global navigation bar -->
+    <header class="navbar">
+      <a href="therapistDashboard.html"
+        ><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"
+      /></a>
+    </header>
+
+    <div class="therapistContainer">
+      <div class="leftbox">
+        <a href="therapistDashboard.html">
+          <button class="back-btn">Back</button>
+        </a>
+
+        <h3>Badge</h3>
+        <div class="badge-section">
+          <div class="badge-item" draggable="true" data-status="good">
+            <span class="status good"></span> Good Status
+          </div>
+          <div class="badge-item" draggable="true" data-status="bad">
+            <span class="status bad"></span> Bad Status
+          </div>
+          <div class="badge-item" draggable="true" data-status="danger">
+            <span class="status danger"></span> Danger Status
+          </div>
+        </div>
+      </div>
+
+      <div class="patient-list">
+        <div class="nameAndButton">
+          <h2>Patient List</h2>
+          <form class="search-bar">
+            <input type="text" placeholder="Search..." name="search" />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+        <div class="tableContainer">
+          <!-- <input type="text" class="search-bar" placeholder="🔍 search" /> -->
+          <div class="patient-item" data-patient="John Smith">
+            <div class="left-section">
+              <div class="patient-icon">☰</div>
+              <div>
+                <strong>John Smith</strong><br />
+                Age: 34
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="status-container"></div>
+              <a href="patientDetail.html">
+                <button class="details">Details</button>
+              </a>
+            </div>
+          </div>
+          <!-- patient item style updated by max -->
+
+          <div class="patient-item" data-patient="Tony Smith">
+            <div class="left-section">
+              <div class="patient-icon">☰</div>
+              <div>
+                <strong>Tony Smith</strong><br />
+                Age: 36
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="status-container"></div>
+              <a href="">
+                <button class="details">Details</button>
+              </a>
+            </div>
+          </div>
+
+          <div class="patient-item" data-patient="Bob Smith">
+            <div class="left-section">
+              <div class="patient-icon">☰</div>
+              <div>
+                <strong>Bob Smith</strong><br />
+                Age: 35
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="status-container"></div>
+              <a href="">
+                <button class="details">Details</button>
+              </a>
+            </div>
+          </div>
+
+          <div class="patient-item" data-patient="Bob Smith">
+            <div class="left-section">
+              <div class="patient-icon">☰</div>
+              <div>
+                <strong>Adam Smith</strong><br />
+                Age: 35
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="status-container"></div>
+              <a href="">
+                <button class="details">Details</button>
+              </a>
+            </div>
+          </div>
+
+          <div class="patient-item" data-patient="Bob Smith">
+            <div class="left-section">
+              <div class="patient-icon">☰</div>
+              <div>
+                <strong>Eden Smith</strong><br />
+                Age: 35
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="status-container"></div>
+              <a href="">
+                <button class="details">Details</button>
+              </a>
+            </div>
+          </div>
+
+          <div class="patient-item" data-patient="Bob Smith">
+            <div class="left-section">
+              <div class="patient-icon">☰</div>
+              <div>
+                <strong>Curry Smith</strong><br />
+                Age: 35
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="status-container"></div>
+              <a href="">
+                <button class="details">Details</button>
+              </a>
+            </div>
+          </div>
+
+          <div class="patient-item" data-patient="Bob Smith">
+            <div class="left-section">
+              <div class="patient-icon">☰</div>
+              <div>
+                <strong>Josh Smith</strong><br />
+                Age: 35
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="status-container"></div>
+              <a href="">
+                <button class="details">Details</button>
+              </a>
+            </div>
+          </div>
+
+          <div class="patient-item" data-patient="Bob Smith">
+            <div class="left-section">
+              <div class="patient-icon">☰</div>
+              <div>
+                <strong>Lita Smith</strong><br />
+                Age: 35
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="status-container"></div>
+              <a href="">
+                <button class="details">Details</button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- other patients -->
+      </div>
+
+      <div class="groups">
+        <div class="nameAndButton">
+          <h2>Groups</h2>
+          <button class="create-new">Create New</button>
+        </div>
+        <div id="groupContainer" class="tableContainer">
+          <div class="group-item">Tuesday 3pm Session</div>
+          <div class="group-item">Friday Special</div>
+          <div class="group-item">Anxiety Group</div>
+          <div class="group-item">Avengers</div>
+          <div class="group-item">Revengers</div>
+          <div class="group-item">Justice League</div>
+        </div>
+        <h3>Members</h3>
+        <div class="members">
+          <p id="currentGroupName">Group Name</p>
+          <div id="membersContainer" class="tableContainer">
+            <!-- Dynamic members list -->
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="createGroupModal">
+        <div class="modal-content">
+          <h3>Create a New Group</h3>
+          <div class="group">
+            <label for="groupName">Group </label>
+            <input type="text" id="groupName" name="groupName" />
+          </div>
+          <div class="modal-buttons">
+            <button id="cancelButton">Cancel</button>
+            <button id="confirmButton">Confirm</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content">
+          <p>Do you want to remove this member?</p>
+          <div class="modal-buttons">
+            <button id="cancelDeleteButton">Cancel</button>
+            <button id="confirmDeleteButton">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../scripts/createNewModal.js"></script>
+    <script src="../scripts/groupSelection.js"></script>
+    <script src="../scripts/memberDeletion.js"></script>
+    <script src="../scripts/drag&drop.js"></script>
+    <footer class="site-footer">
+      <p>&copy; 2024 CaRe | All Rights Reserved</p>
+    </footer>
+  </body>
+</html>

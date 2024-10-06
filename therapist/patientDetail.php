@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 <!--這是直接複製Max的資料-->
+=======
+>>>>>>> 2780eca495c6110d2d49dc77ac30f276c6a4aa21
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

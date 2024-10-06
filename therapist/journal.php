@@ -1,5 +1,6 @@
 <!--Created by Hsin Hui Chu-->
 <?php
+<<<<<<< HEAD
 // Database connection
 $servername = "localhost";
 $username = "root";
@@ -11,6 +12,9 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+=======
+
+>>>>>>> 2780eca495c6110d2d49dc77ac30f276c6a4aa21
 // Database connection
 include '../inc/dbconn.inc.php'; // Ensure the path is correct
 

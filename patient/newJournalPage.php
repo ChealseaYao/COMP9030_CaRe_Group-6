@@ -1,15 +1,22 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Start session and check if the user is logged in
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
+    header("Location: login.php");
+    exit();
 }
+
+include '../inc/dbconn.inc.php';
+
+// Get therapist's user_id from the session
+$user_id = $_SESSION['user_id'];
+
+$patient_id_query = $conn->prepare("SELECT patient_id FROM patient WHERE user_id = ?");
+$patient_id_query->bind_param("i", $user_id);
+$patient_id_query->execute();
+$patient_id_result = $patient_id_query->get_result();
+$patient_id_row = $patient_id_result->fetch_assoc();
+$patient_id = $patient_id_row['patient_id'];
 
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sleep_time = $_POST['sleep_time'] ?? '';
     $wake_time = $_POST['wake_time'] ?? '';
     $highlight = 1; // Set highlight to 1
-    $patient_id = 5; // Set patient_id to 5 (hardcoded)
+
 
     // Get the current date for journal_date
     $journal_date = date('Y-m-d');
@@ -90,7 +97,7 @@ $conn->close();
     <div class="therapistContainer">
       <div class="leftbox">
         <!-- should be selected patient journal list page -->
-        <a href="patientDashboard.html">
+        <a href="patientDashboard.php">
           <button class="back-btn">Back</button>
         </a>
       </div>
@@ -145,23 +152,12 @@ $conn->close();
 
         <button type="submit" class="submit-button">Submit</button>
       </form>
-
-        <!-- submit confirmation modal -->
-        <!-- <div class="modal" id="submitJournalModal">
-          <div class="modal-content">
-            <p>Do you want to submit the journal?</p>
-            <div class="modal-buttons">
-              <button id="cancelSubmitButton">Cancel</button>
-              <button id="confirmSubmitButton">Confirm</button>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
     <div class="rightbox"></div>
-    <script src="../scripts//submitModal.js"></script>
-    <script src="../scripts//generationOptions.js"></script>
-    <script src="../scripts//uploadFile.js"></script>
+    <script src="../scripts/submitModal.js"></script>
+    <script src="../scripts/generationOptions.js"></script>
+    <script src="../scripts/uploadFile.js"></script>
 
     <footer class="site-footer">
       <p>&copy; 2024 CaRe | All Rights Reserved</p>

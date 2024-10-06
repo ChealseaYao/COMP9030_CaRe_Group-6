@@ -1,5 +1,12 @@
 <!--這是直接merge Jiaqi的資料-->
 <?php
+// Start session and check if the user is logged in
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
+    header("Location: login.php");
+    exit();
+}
+
 // Database connection
 $servername = "localhost";
 $username = "root";
@@ -11,6 +18,17 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Get therapist's user_id from the session
+$user_id = $_SESSION['user_id'];
+
+$therapist_id_query = $conn->prepare("SELECT therapist_id FROM therapist WHERE user_id = ?");
+$therapist_id_query->bind_param("i", $user_id);
+$therapist_id_query->execute();
+$therapist_id_result = $therapist_id_query->get_result();
+$therapist_id_row = $therapist_id_result->fetch_assoc();
+$therapist_id = $therapist_id_row['therapist_id'];
+
 
 // Handle AJAX request for different actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -96,22 +114,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle creating a new group
     if (isset($data['action']) && $data['action'] === 'create_group' && isset($data['group_name'])) {
         $group_name = $data['group_name'];
-
-        // Insert new group into the group table
-        $sql = "INSERT INTO `group` (group_name) VALUES (?)";
+    
+        // Insert new group into the group table with therapist_id from session
+        $sql = "INSERT INTO `group` (group_name, therapist_id) VALUES (?, ?)"; // Include therapist_id in the SQL query
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('s', $group_name);
-
+        $stmt->bind_param('si', $group_name, $therapist_id); // Bind the therapist_id from the session
+    
         if ($stmt->execute()) {
             // Get the ID of the newly created group
             $group_id = $stmt->insert_id;
-
+    
             // Return success response with the new group ID
             echo json_encode(['success' => true, 'group_id' => $group_id]);
         } else {
             echo json_encode(['success' => false, 'error' => 'Failed to create group']);
         }
-
+    
         $stmt->close();
         $conn->close();
         exit;
@@ -125,9 +143,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
                 FROM patient
                 JOIN user ON patient.user_id = user.user_id
-                WHERE user.full_name LIKE ?";
+                WHERE user.full_name LIKE ? AND patient.therapist_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('s', $search_query);
+        $stmt->bind_param('si', $search_query, $therapist_id); // Bind therapist_id
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -153,11 +171,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle fetching all patients when no search query is provided
     if (isset($data['action']) && $data['action'] === 'fetch_all_patients') {
-        // Query to get all patients
+        // Query to get all patients for the logged-in therapist
         $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
                 FROM patient
-                JOIN user ON patient.user_id = user.user_id";
-        $result = $conn->query($sql);
+                JOIN user ON patient.user_id = user.user_id
+                WHERE patient.therapist_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $therapist_id); // Bind the therapist_id
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $patients = [];
         if ($result->num_rows > 0) {
@@ -171,6 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        $stmt->close();
         $conn->close();
 
         // Return all patients as JSON
@@ -215,6 +238,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $conn->close();
     exit;
 }
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -229,12 +255,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 <body class="patientList-body">
     <!-- global navigation bar -->
     <header class="navbar">
-        <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
     </header>
 
     <div class="therapistContainer">
         <div class="leftbox">
-            <a href="therapistDashboard.html">
+            <a href="therapistDashboard.php">
                 <button class="back-btn">Back</button>
             </a>
             <h3>Badge</h3>
@@ -262,10 +288,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 <!-- PHP Code to Fetch and Display Patients Dynamically -->
                 <?php
                 // Query to get patient data with names and status
-                $sql = "SELECT patient.age, patient.badge, user.full_name, patient.user_id
+                $sql = "SELECT patient.patient_id, patient.age, patient.badge, user.full_name, patient.user_id
                         FROM patient
-                        JOIN user ON patient.user_id = user.user_id";
-                $result = $conn->query($sql);
+                        JOIN user ON patient.user_id = user.user_id
+                        WHERE patient.therapist_id = ?";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $therapist_id); // Use the $therapist_id you fetched earlier
+                $stmt->execute();
+                $result = $stmt->get_result();
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
@@ -280,7 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                         echo '</div>';
                         echo '<div class="right-section">';
                         echo '<div class="status-container">';
-
+                
                         // Add a span with the correct status color
                         if ($row['badge'] === 'good status') {
                             echo '<span class="status good"></span>';
@@ -289,15 +320,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                         } elseif ($row['badge'] === 'danger status') {
                             echo '<span class="status danger"></span>';
                         }
-
+                
                         echo '</div>';
-                        echo '<a href="patientDetail.html"><button class="details">Details</button></a>';
+                        // Update the URL to include patient_id as a query parameter
+                        echo '<a href="patientDetail.php?patient_id=' . $row['patient_id'] . '"><button class="details">Details</button></a>';
                         echo '</div>';
                         echo '</div>';
                     }
                 } else {
                     echo "<p>No patients found.</p>";
                 }
+                
                 ?>
             </div>
         </div>
@@ -310,11 +343,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
             <div id="groupContainer" class="tableContainer">
                 <!-- PHP to display group names dynamically -->
                 <?php
-                $sql = "SELECT group_id, group_name FROM `group`"; // Assuming your table is named `group`
-                $group_result = $conn->query($sql);
+                // Prepare the SQL query to fetch groups where therapist_id matches the logged-in therapist
+                $sql = "SELECT group_id, group_name FROM `group` WHERE therapist_id = ?";
 
+                // Prepare the statement
+                $stmt = $conn->prepare($sql);
+
+                // Bind the therapist_id dynamically
+                $stmt->bind_param("i", $therapist_id);
+
+                // Execute the query
+                $stmt->execute();
+
+                // Get the result
+                $group_result = $stmt->get_result();
+
+                // Check if any groups were returned
                 if ($group_result->num_rows > 0) {
                     while ($group_row = $group_result->fetch_assoc()) {
+                        // Output HTML for each group
                         echo '<div class="group-item" data-group-id="' . $group_row['group_id'] . '">';
                         echo htmlspecialchars($group_row['group_name']);
                         echo '</div>';
@@ -322,6 +369,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 } else {
                     echo "<p>No groups found.</p>";
                 }
+
+                // Close the statement
+                $stmt->close();
                 ?>
             </div>
             <h3>Members</h3>

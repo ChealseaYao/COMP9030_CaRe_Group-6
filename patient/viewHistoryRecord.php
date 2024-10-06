@@ -1,4 +1,44 @@
+<?php
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "caredb"; 
 
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// $patient_id = $_GET['patient_id'];
+$patient_id = 4;
+
+$sql_name = "SELECT full_name FROM user 
+             INNER JOIN patient ON user.user_id = patient.user_id 
+             WHERE patient.patient_id = ?";
+$stmt_name = $conn->prepare($sql_name);
+$stmt_name->bind_param("i", $patient_id);
+$stmt_name->execute();
+$result_name = $stmt_name->get_result();
+
+$patient_name = "";
+if ($result_name->num_rows > 0) {
+    $row = $result_name->fetch_assoc();
+    $patient_name = $row['full_name'];
+} else {
+    $patient_name = "Unknown Patient";
+}
+
+$sql = "SELECT journal_id, journal_date, journal_content
+        FROM journal 
+        WHERE patient_id = ? 
+        ORDER BY journal_date DESC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $patient_id);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +50,6 @@
     <meta name="description" content="therapist of COMP9030_CaRe_Groups6">
     <title>Patient - History Journal List</title>
     <script src="../scripts/datepicker.js"></script>
-    <script src="../scripts/viewHistoryRecord.js"></script>
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/historyJournal.css">
 </head>
@@ -33,7 +72,7 @@
         <div class="centre">
             <h1>
                 <!-- John Smith should be user's Full name -->
-                History Journals of Kage Wong
+                History Journals of <?php echo htmlspecialchars($patient_name); ?>
             </h1>
             <div id="historyJournal">
                 <div class="searchPannel">
@@ -70,7 +109,30 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <?php
+                            // Fetch and display journal data
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $journal_id = $row['journal_id'];
+                                    $journal_content = $row['journal_content'];
+                                    $journal_date = $row['journal_date'];
+                                    
+                                    // Convert journal_date to a more readable format
+                                    $formattedDate = date("d/m/Y", strtotime($journal_date));
+                                    
+                                    echo "<tr>";
+                                    echo "<td><a href='journal.php?journal_id=$journal_id'>$journal_content</a></td>";
+                                    echo "<td>$formattedDate</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='3'>No journals found.</td></tr>";
+                            }
 
+                            // Close the statement and connection
+                            $stmt->close();
+                            $conn->close();
+                            ?>
                         </tbody>
                           
                     </table>

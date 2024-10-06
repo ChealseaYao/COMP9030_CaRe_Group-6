@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!--這是直接複製Max的資料-->
 <?php
 // Database connection
@@ -12,6 +13,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+=======
+<?php
+include '../inc/dbconn.inc.php';
+>>>>>>> 2780eca495c6110d2d49dc77ac30f276c6a4aa21
 // $patient_id = $_GET['patient_id'];
 $patient_id = 4;
 
@@ -63,7 +68,11 @@ $result = $stmt->get_result();
     </header>
     <div class="therapistContainer">
         <div class="leftbox">
+<<<<<<< HEAD
             <a href="patientDetail.html">
+=======
+            <a href="patientDetail.php">
+>>>>>>> 2780eca495c6110d2d49dc77ac30f276c6a4aa21
                 <button class="back-btn">Back</button>
             </a>
         </div>

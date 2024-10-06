@@ -1,4 +1,4 @@
-
+USE CaReDB;
 -- Add Vivian Harper (Main Therapist) as a new user
 INSERT INTO `user` (username, password_hash, role, full_name) 
 VALUES ('vivianharper', '123', 'therapist', 'Dr. Vivian Harper');
