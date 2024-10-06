@@ -1,19 +1,19 @@
 <!--Created by Hsin Hui Chu-->
 <?php
 // Start session to access patient information
-// session_start();
+session_start();
 
 // Check if the patient is logged in
-// if (!isset($_SESSION['patient_id'])) {
-//     echo "Please log in to view your journal.";
-//     exit();
-// }
+if (!isset($_SESSION['patient_id'])) {
+    echo "Please log in to view your journal.";
+    exit();
+}
 // Database connection
 include '../inc/dbconn.inc.php'; // Ensure the path is correct
 
 // Get patient ID and patient name from session
-// $patient_id = $_SESSION['patient_id'];
-// $patient_name = $_SESSION['patient_name'];
+$patient_id = $_SESSION['patient_id'];
+$patient_name = $_SESSION['patient_name'];
 
 
 // Get journal_id and patient_id from the URL
