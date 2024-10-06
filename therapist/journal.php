@@ -114,13 +114,45 @@ $conn->close();
                     <button disabled>No file to download</button>
                 <?php endif; ?>
             </div>
-            <span class="star" id="starIcon"><?php echo $journal_info['highlight'] == 1 ? '★' : '☆'; ?></span>
+           <!-- 显示 highlight 星形图标，并绑定点击事件 -->
+            <span class="star" id="starIcon" data-journal-id="<?php echo $journal_id; ?>">
+               <?php echo $journal_info['highlight'] == 1 ? '★' : '☆'; ?>
+            </span>
         </div>
         <div class="rightbox"></div>
     </div>
     <script>
         // Initialize PHP variables into JavaScript
         var journalId = <?php echo json_encode($journal_id); ?>;
+
+        document.getElementById('starIcon').addEventListener('click', function() {
+    // 获取当前的 journal_id 和 highlight 状态
+    const journalId = this.getAttribute('data-journal-id');
+    const currentHighlight = this.textContent === '★' ? 1 : 0;
+    const newHighlight = currentHighlight === 1 ? 0 : 1;
+
+    // 使用 AJAX 请求更新 highlight 状态
+    fetch('../therapist/updateHighlight.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ journal_id: journalId, highlight: newHighlight })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // 成功后更新前端显示
+            this.textContent = newHighlight === 1 ? '★' : '☆';
+        } else {
+            alert('Failed to update highlight.');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating highlight:', error);
+    });
+});
+</script>
+
+        
     </script>
     <script src="../scripts/journal.js"></script>
     <footer class="site-footer">
