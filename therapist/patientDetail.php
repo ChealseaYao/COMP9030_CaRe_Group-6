@@ -66,6 +66,10 @@ $conn->close();
     <!-- global navigation bar -->
     <header class="navbar">
         <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
     
     <div class="therapistContainer">

@@ -87,10 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
 <body>
     <header class="navbar">
         <a href="patientDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
-         <!-- log out button -->
-         <div class="logout-container">
-            <a href="../logout.php" class="logout-link">Logout</a>
-         </div>
+         <!-- logout button -->
+        <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
     
     <div class="patientDashboard">

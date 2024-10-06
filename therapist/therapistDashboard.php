@@ -61,10 +61,8 @@ $journals_result = $journals_query->get_result();
 <body class="therapistBody">
     <!-- global navigation bar -->
     <header class="navbar">
-        <div>
-            <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
-        </div>
-        <!-- logou button -->
+        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <!-- logout button -->
         <div class="logout-container">
             <a href="../logout.php" class="logout-link">Log-out</a>
         </div>
@@ -112,13 +110,13 @@ $journals_result = $journals_query->get_result();
                             </tr>
                         </thead>
                         <tbody>
-                        <?php while ($journal = $journals_result->fetch_assoc()) : ?>
+                            <?php while ($journal = $journals_result->fetch_assoc()) : ?>
                                 <tr>
                                     <td class="star"><?= $journal['highlight'] ? '★' : '' ?></td>
                                     <td><?= htmlspecialchars($journal['patient_name']) ?></td>
                                     <td><a href="journalDetail.php?date=<?= urlencode($journal['journal_date']) ?>&patient_name=<?= urlencode($journal['patient_name']) ?>">
-                                        <?= htmlspecialchars(strlen($journal['journal_content']) > 50 ? substr($journal['journal_content'], 0, 50) . '...' : $journal['journal_content']) ?>
-                                    </a></td>
+                                            <?= htmlspecialchars(strlen($journal['journal_content']) > 50 ? substr($journal['journal_content'], 0, 50) . '...' : $journal['journal_content']) ?>
+                                        </a></td>
                                     <td><?= date("d/m/Y", strtotime($journal['journal_date'])) ?></td>
                                 </tr>
                             <?php endwhile; ?>
