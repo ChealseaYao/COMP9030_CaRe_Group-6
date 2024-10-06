@@ -120,6 +120,10 @@ die("No journal selected.");
 <body>
     <header class="navbar">
         <a href="patientDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+         <!-- logout button -->
+         <div class="logout-container">
+            <a href="../logout.php" class="logout-link">Log-out</a>
+        </div>
     </header>
     <div class="therapistContainer">
         <div class="leftbox">
