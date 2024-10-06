@@ -1,12 +1,12 @@
 <?php
-// 启动会话并检查用户是否登录以及角色是否为 therapist
+
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
-// 获取患者ID和日记ID
+
 $patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
 $journal_id = isset($_GET['journal_id']) ? intval($_GET['journal_id']) : 0;
 
@@ -16,11 +16,11 @@ if ($journal_id == 0 || $patient_id == 0) {
 }
 
 // Database connection
-include '../inc/dbconn.inc.php'; // 确保路径正确
+include '../inc/dbconn.inc.php'; 
 
-// 接收 AJAX 请求并进行 highlight 状态变更
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // 解析传入的 JSON 数据
+    
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (isset($data['journal_id']) && isset($data['highlight'])) {
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// 联表查询，获取 journal 以及 patient 对应的 full_name
+
 $query = "SELECT j.journal_content, j.journal_date, j.sleep_time, j.wake_time, j.food, 
                  j.exercise, j.file_path, j.original_name, j.file_type, j.file_size, j.highlight, 
                  u.full_name
@@ -64,7 +64,7 @@ if (!$journal_info) {
     exit();
 }
 
-$patient_name = $journal_info['full_name']; // 获取患者的全名
+$patient_name = $journal_info['full_name']; 
 
 $stmt->close();
 $conn->close();
@@ -86,11 +86,15 @@ $conn->close();
         <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
     </header>
     <div class="therapistContainer">
+       
         <div class="leftbox">
-            <a href="historyJournalList.php"><button class="back-btn">Back</button></a>
+            <a href="historyJournalList.php?patient_id=<?php echo $patient_id; ?>">
+              <button class="back-btn">Back</button>
+            </a>
         </div>
+
         <div class="container">
-            <div class="entry-header"><?php echo htmlspecialchars($patient_name); ?></div> <!-- 显示患者的全名 -->
+            <div class="entry-header"><?php echo htmlspecialchars($patient_name); ?></div> 
             <div class="entry-date">Date: <?php echo date("d/m/Y", strtotime($journal_info['journal_date'])); ?></div>
             <div class="entry-content">
                 <?php echo htmlspecialchars($journal_info['journal_content']); ?>
@@ -114,7 +118,7 @@ $conn->close();
                     <button disabled>No file to download</button>
                 <?php endif; ?>
             </div>
-           <!-- 显示 highlight 星形图标，并绑定点击事件 -->
+         
             <span class="star" id="starIcon" data-journal-id="<?php echo $journal_id; ?>">
                <?php echo $journal_info['highlight'] == 1 ? '★' : '☆'; ?>
             </span>
@@ -126,12 +130,12 @@ $conn->close();
         var journalId = <?php echo json_encode($journal_id); ?>;
 
         document.getElementById('starIcon').addEventListener('click', function() {
-    // 获取当前的 journal_id 和 highlight 状态
+    
     const journalId = this.getAttribute('data-journal-id');
     const currentHighlight = this.textContent === '★' ? 1 : 0;
     const newHighlight = currentHighlight === 1 ? 0 : 1;
 
-    // 使用 AJAX 请求更新 highlight 状态
+    
     fetch('../therapist/updateHighlight.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -140,7 +144,7 @@ $conn->close();
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // 成功后更新前端显示
+     
             this.textContent = newHighlight === 1 ? '★' : '☆';
         } else {
             alert('Failed to update highlight.');

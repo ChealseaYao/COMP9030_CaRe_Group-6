@@ -1,7 +1,10 @@
 <?php
 include '../inc/dbconn.inc.php';
-// $patient_id = $_GET['patient_id'];
-$patient_id = 4;
+$patient_id = isset($_GET['patient_id']) ? intval($_GET['patient_id']) : 0;
+if ($patient_id == 0) {
+    echo "Invalid Patient ID";
+    exit();
+}
 
 $sql_name = "SELECT full_name FROM user 
              INNER JOIN patient ON user.user_id = patient.user_id 
@@ -27,6 +30,22 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $patient_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$journals = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $journals[] = [
+            'journal_id' => $row['journal_id'],
+            'date' => $row['journal_date'],
+            'content' => $row['journal_content'],
+            'highlight' => $row['highlight']
+        ];
+    }
+}
+
+// Convert journal data to JSON
+$journalDataJSON = json_encode($journals);
+
 ?>
 
 
@@ -51,7 +70,7 @@ $result = $stmt->get_result();
     </header>
     <div class="therapistContainer">
         <div class="leftbox">
-            <a href="patientDetail.php">
+            <a href="patientDetail.php?patient_id=<?php echo $patient_id; ?>">
                 <button class="back-btn">Back</button>
             </a>
         </div>
@@ -135,6 +154,12 @@ $result = $stmt->get_result();
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
+    <script>
+    const patient_id = <?php echo $patient_id; ?>;
+    const journalData = <?php echo $journalDataJSON; ?>;
+    console.log(journalData);
+</script>
+    <script src="../scripts/historyJournalList.js"></script>
 </body>
 
 </html>

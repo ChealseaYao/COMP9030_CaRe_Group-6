@@ -2,7 +2,7 @@
 // Start session and check if the user is logged in
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -61,7 +61,7 @@ $journals_result = $journals_query->get_result();
 <body class="therapistBody">
     <!-- global navigation bar -->
     <header class="navbar">
-        <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
     </header>
 
     <div class="therapistContainer">
