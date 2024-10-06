@@ -54,9 +54,9 @@ $journal_id = $_GET['journal_id'] ?? null; //check journal_id
 // Fetch the patient's journals using the correct patient_id
 if ($journal_id) {
 $query = "SELECT journal_content, journal_date, sleep_time, wake_time, food, 
-exercise, file_path, original_name, file_type, file_size FROM journal WHERE patient_id = ? ORDER BY journal_date DESC LIMIT 5";
+exercise, file_path, original_name, file_type, file_size FROM journal WHERE journal_id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $patient_id); 
+$stmt->bind_param("i", $journal_id); 
 $stmt->execute();
 $journal_result = $stmt->get_result();
 if ($journal_result->num_rows > 0) {
