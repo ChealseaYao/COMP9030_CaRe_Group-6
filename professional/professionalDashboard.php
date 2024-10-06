@@ -10,6 +10,21 @@ include '../inc/dbconn.inc.php';
 
 $user_id = $_SESSION['user_id'];
 
+// Query to fetch the logged-in user's full name
+$userSql = "
+    SELECT full_name 
+    FROM `user` 
+    WHERE user_id = ?
+";
+
+$stmt = $conn->prepare($userSql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$user = $result->fetch_assoc();
+$full_name = isset($user['full_name']) ? $user['full_name'] : 'Professional Staff';
+
 // Query to fetch patient details from the view
 $sql = "
     SELECT 
@@ -59,7 +74,7 @@ $conn->close();
 
   <div class="professionalDashboard">
     <div class="left-panel">
-      <h1>G'Day Jeffrey Ruiz!</h1>
+      <h1>G'Day  <?php echo htmlspecialchars($full_name); ?>!</h1>
 
       <div id="therapistStatistics">
         <h3>Patient Schedule</h3>
