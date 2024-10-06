@@ -51,7 +51,7 @@ $result = $stmt->get_result();
     </header>
     <div class="therapistContainer">
         <div class="leftbox">
-            <a href="patientDetail.html">
+            <a href="patientDetail.php">
                 <button class="back-btn">Back</button>
             </a>
         </div>
