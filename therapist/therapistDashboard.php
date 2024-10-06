@@ -6,16 +6,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
     exit();
 }
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb"; 
+include '../inc/dbconn.inc.php'; // 请确保该路径指向您的数据库连接文件
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Get therapist's user_id from the session
 $user_id = $_SESSION['user_id'];

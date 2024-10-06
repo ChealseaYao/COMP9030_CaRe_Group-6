@@ -6,7 +6,7 @@ session_start(); // 启动会话
 
 // 检查是否已登录，并且用户角色是therapist
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 

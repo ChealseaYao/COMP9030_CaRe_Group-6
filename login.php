@@ -57,7 +57,7 @@ $role = $_POST['role'];
 
 // Validate user input
 if (empty($username) || empty($password) || empty($role)) {
-    echo "All fields are required.";
+    // echo "All fields are required.";
     exit();
 }
 

@@ -1,22 +1,12 @@
 <?php
 // Start session and check if the user is logged in
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
     header("Location: login.php");
     exit();
 }
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "caredb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../inc/dbconn.inc.php';
 
 // Get therapist's user_id from the session
 $user_id = $_SESSION['user_id'];
@@ -37,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sleep_time = $_POST['sleep_time'] ?? '';
     $wake_time = $_POST['wake_time'] ?? '';
     $highlight = 1; // Set highlight to 1
+
 
     // Get the current date for journal_date
     $journal_date = date('Y-m-d');
@@ -106,7 +97,7 @@ $conn->close();
     <div class="therapistContainer">
       <div class="leftbox">
         <!-- should be selected patient journal list page -->
-        <a href="patientDashboard.html">
+        <a href="patientDashboard.php">
           <button class="back-btn">Back</button>
         </a>
       </div>
@@ -164,9 +155,9 @@ $conn->close();
       </div>
     </div>
     <div class="rightbox"></div>
-    <script src="../scripts//submitModal.js"></script>
-    <script src="../scripts//generationOptions.js"></script>
-    <script src="../scripts//uploadFile.js"></script>
+    <script src="../scripts/submitModal.js"></script>
+    <script src="../scripts/generationOptions.js"></script>
+    <script src="../scripts/uploadFile.js"></script>
 
     <footer class="site-footer">
       
