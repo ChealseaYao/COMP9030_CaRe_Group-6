@@ -3,18 +3,18 @@
 
 session_start();
 
-// 确保用户已登录
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
     header("Location: ../login.php");
     exit();
 }
 
-require_once '../inc/dbconn.inc.php';  // 包含数据库连接设置
+require_once '../inc/dbconn.inc.php'; 
 
-// 获取用户的 user_id
+
 $user_id = $_SESSION['user_id'];
 
-// 获取患者详情
+
 $patient_query = $conn->prepare("SELECT u.full_name, p.patient_id FROM user u JOIN patient p ON u.user_id = p.user_id WHERE u.user_id = ?");
 $patient_query->bind_param("i", $user_id);
 $patient_query->execute();
@@ -26,9 +26,9 @@ if (!$patient_result) {
 
 $patient = $patient_result->fetch_assoc();
 $patient_name = $patient['full_name'] ?? 'Unknown Patient';
-$patient_id = $patient['patient_id'];  // 获取 patient_id 
+$patient_id = $patient['patient_id'];  
 
-// 获取患者的日记
+
 $query = "SELECT journal_content, journal_date FROM journal WHERE patient_id = ? ORDER BY journal_date DESC LIMIT 5";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $patient_id); 
@@ -39,7 +39,7 @@ while ($row = $journal_result->fetch_assoc()) {
     $journals[] = $row;
 }
 
-// 计算上周的活动统计
+
 $week_stats_query = $conn->prepare("SELECT 
 COUNT(journal_id) AS journal_entries,
 AVG(
@@ -61,7 +61,7 @@ $week_stats = $week_stats_result->fetch_assoc();
 
 $average_sleep_hours = number_format($week_stats['average_sleep_hours'], 1);
 
-// 查询患者当天是否已经选择了肯定句
+
 $selected_affirmation_query = $conn->prepare("
     SELECT a.affirmation
     FROM patient_affirmation pa
@@ -72,7 +72,7 @@ $selected_affirmation_query->execute();
 $selected_affirmation_result = $selected_affirmation_query->get_result();
 $selected_affirmation = $selected_affirmation_result->fetch_assoc()['affirmation'] ?? null;
 
-// 输出调试信息，查看是否正确读取了肯定句
+
 if ($selected_affirmation) {
     error_log("Selected Affirmation: " . $selected_affirmation);
 } else {
@@ -81,7 +81,7 @@ if ($selected_affirmation) {
 
 
 
-// 随机生成肯定句
+
 $affirmations_query = $conn->prepare("SELECT affirmation FROM affirmation ORDER BY RAND() LIMIT 3");
 $affirmations_query->execute();
 $affirmations_result = $affirmations_query->get_result();
@@ -97,10 +97,10 @@ $affirmations_result = $affirmations_query->get_result();
   <title>Patient Dashboard</title>
   <link rel="stylesheet" href="../style/global.css">
   <link rel="stylesheet" href="../style/patientDashboard.css">
-  <script src="../scripts/selectAffirmation.js" defer></script> <!-- 外部JS文件 -->
+  <script src="../scripts/selectAffirmation.js" defer></script> 
 </head>
 
-<body data-patient-id="<?= htmlspecialchars($patient_id) ?>"> <!-- 确保 patient_id 正确传递 -->
+<body data-patient-id="<?= htmlspecialchars($patient_id) ?>"> 
 
     <header class="navbar">
         <a href="patientDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
@@ -170,12 +170,12 @@ $affirmations_result = $affirmations_query->get_result();
                 <h3>Pick Your Daily Affirmation ✔</h3>
                 <form id="affirmationForm">
                     <?php if ($selected_affirmation): ?>
-                        <!-- 显示用户已选择的肯定句 -->
+                       
                         <p style="margin: 0; padding: 40px; color: #102e5d; font-size: 1.8rem; font-family: Comic Sans MS, cursive;">
                             <?= htmlspecialchars($selected_affirmation) ?>
                         </p>
                     <?php else: ?>
-                        <!-- 用户尚未选择，显示随机肯定句 -->
+                       
                         <?php while ($affirmation = $affirmations_result->fetch_assoc()): ?>
                         <label>
                             <input type="radio" name="affirmation" value="<?= htmlspecialchars($affirmation['affirmation']) ?>"> 
