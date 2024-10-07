@@ -1,18 +1,20 @@
 <?php
+
+
 session_start();
 
-// Ensure the patient is logged in
+// 确保用户已登录
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'patient') {
     header("Location: ../login.php");
     exit();
 }
 
-require_once '../inc/dbconn.inc.php';  // Include your database connection settings
+require_once '../inc/dbconn.inc.php';  // 包含数据库连接设置
 
-// Get patient's user_id from the session
+// 获取用户的 user_id
 $user_id = $_SESSION['user_id'];
 
-// Fetch patient details (full_name from user table and patient_id from patient table)
+// 获取患者详情
 $patient_query = $conn->prepare("SELECT u.full_name, p.patient_id FROM user u JOIN patient p ON u.user_id = p.user_id WHERE u.user_id = ?");
 $patient_query->bind_param("i", $user_id);
 $patient_query->execute();
@@ -24,9 +26,9 @@ if (!$patient_result) {
 
 $patient = $patient_result->fetch_assoc();
 $patient_name = $patient['full_name'] ?? 'Unknown Patient';
-$patient_id = $patient['patient_id'];  // get patient_id 
+$patient_id = $patient['patient_id'];  // 获取 patient_id 
 
-// Fetch the patient's journals using the correct patient_id
+// 获取患者的日记
 $query = "SELECT journal_content, journal_date FROM journal WHERE patient_id = ? ORDER BY journal_date DESC LIMIT 5";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $patient_id); 
@@ -37,7 +39,7 @@ while ($row = $journal_result->fetch_assoc()) {
     $journals[] = $row;
 }
 
-// Calculate stats for the last week's activity using patient_id
+// 计算上周的活动统计
 $week_stats_query = $conn->prepare("SELECT 
 COUNT(journal_id) AS journal_entries,
 AVG(
@@ -59,17 +61,30 @@ $week_stats = $week_stats_result->fetch_assoc();
 
 $average_sleep_hours = number_format($week_stats['average_sleep_hours'], 1);
 
-// Fetch three random affirmations
+// 查询患者当天是否已经选择了肯定句
+$selected_affirmation_query = $conn->prepare("
+    SELECT a.affirmation
+    FROM patient_affirmation pa
+    JOIN affirmation a ON pa.affirmation_id = a.affirmation_id
+    WHERE pa.patient_id = ? AND pa.selection_date = CURDATE()");
+$selected_affirmation_query->bind_param("i", $patient_id);
+$selected_affirmation_query->execute();
+$selected_affirmation_result = $selected_affirmation_query->get_result();
+$selected_affirmation = $selected_affirmation_result->fetch_assoc()['affirmation'] ?? null;
+
+// 输出调试信息，查看是否正确读取了肯定句
+if ($selected_affirmation) {
+    error_log("Selected Affirmation: " . $selected_affirmation);
+} else {
+    error_log("No affirmation selected for today.");
+}
+
+
+
+// 随机生成肯定句
 $affirmations_query = $conn->prepare("SELECT affirmation FROM affirmation ORDER BY RAND() LIMIT 3");
 $affirmations_query->execute();
 $affirmations_result = $affirmations_query->get_result();
-
-// Handle affirmation selection
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
-    $selected_affirmation = $_POST['affirmation'];
-    // Save or update the affirmation selection in the database
-    // Placeholder for saving logic
-}
 ?>
 
 <!DOCTYPE html>
@@ -82,9 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
   <title>Patient Dashboard</title>
   <link rel="stylesheet" href="../style/global.css">
   <link rel="stylesheet" href="../style/patientDashboard.css">
-  <script src="../scripts/selectAffirmation.js"></script>
+  <script src="../scripts/selectAffirmation.js" defer></script> <!-- 外部JS文件 -->
 </head>
-<body>
+
+<body data-patient-id="<?= htmlspecialchars($patient_id) ?>"> <!-- 确保 patient_id 正确传递 -->
+
     <header class="navbar">
         <a href="patientDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
          <!-- logout button -->
@@ -151,14 +168,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
             </div>
             <div class="affirmation">
                 <h3>Pick Your Daily Affirmation ✔</h3>
-                <form id="affirmationForm" method="post">
-                    <?php while ($affirmation = $affirmations_result->fetch_assoc()): ?>
-                    <label>
-                        <input type="radio" name="affirmation" value="<?= htmlspecialchars($affirmation['affirmation']) ?>"> 
-                        <?= htmlspecialchars($affirmation['affirmation']) ?>
-                    </label><br>
-                    <?php endwhile; ?>
-                
+                <form id="affirmationForm">
+                    <?php if ($selected_affirmation): ?>
+                        <!-- 显示用户已选择的肯定句 -->
+                        <p style="margin: 0; padding: 40px; color: #102e5d; font-size: 1.8rem; font-family: Comic Sans MS, cursive;">
+                            <?= htmlspecialchars($selected_affirmation) ?>
+                        </p>
+                    <?php else: ?>
+                        <!-- 用户尚未选择，显示随机肯定句 -->
+                        <?php while ($affirmation = $affirmations_result->fetch_assoc()): ?>
+                        <label>
+                            <input type="radio" name="affirmation" value="<?= htmlspecialchars($affirmation['affirmation']) ?>"> 
+                            <?= htmlspecialchars($affirmation['affirmation']) ?>
+                        </label><br>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
                 </form>
             </div>
         </div>
@@ -171,9 +195,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['affirmation'])) {
 
 <?php
 $patient_query->close();
-$journal_query->close();
-$affirmations_query->close();
-$week_stats_query->close();
 $stmt->close();
+$affirmations_query->close();
+$selected_affirmation_query->close();
 $conn->close();
 ?>
