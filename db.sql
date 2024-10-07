@@ -123,7 +123,7 @@ INSERT INTO `user` (username, password_hash, role, full_name) VALUES
 ('alicebrn', 'hashed_password4', 'therapist', 'Dr. Alice Brown'), -- password: hashed_password4
 ('bob', 'hashed_password5', 'therapist', 'Dr. Bob White'), -- password: hashed_password5
 ('green', 'hashed_password6', 'therapist', 'Dr. Charlie Green'), -- password: hashed_password6
-('joycelynn', 'hashed_password7', 'auditor', 'randon Jones'), -- password: hashed_password7
+('joycelynn', 'hashed_password7', 'auditor', 'Brandon Jones'), -- password: hashed_password7
 ('stanleyrivera', 'hashed_password8', 'professional_staff', 'Jeffrey Ruiz'); -- password: hashed_password8
 
 
