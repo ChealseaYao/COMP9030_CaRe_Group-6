@@ -163,6 +163,7 @@ $conn->close();
     <script src="../scripts/uploadFile.js"></script>
 
     <footer class="site-footer">
+      
       <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
   </body>
