@@ -1,0 +1,131 @@
+/* ============= auditor dashboard page Start - By Zhen Liu ========== */
+
+.auditorDashboard {
+  margin: 0 auto; 
+  padding: 30px; 
+  display: flex;
+  justify-content: space-between;
+  overflow-y: auto;
+  min-height: 800px;
+  min-width: fit-content;
+}
+.left-panel h1 {
+  text-align: left;
+  padding-bottom: 30px;
+  color: #f8c41a;
+}
+
+
+.left-panel {
+  width: 55%;
+  text-align: left;
+  min-width: 300px;
+  padding: 10px;
+  min-width: fit-content;
+}
+
+.right-panel {
+  width: 40%;
+  min-width: 200px;
+  padding: 10px;
+  text-align: left;
+}
+
+
+
+.consultationOverview-table {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 5px;
+  
+
+}
+
+.consultationOverview-table th, td {
+  border: none;
+  padding-left: 12px;
+  padding-right: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: left;
+
+}
+.consultationOverview-table tr:hover {
+  cursor: pointer; /* Show hand cursor on hover */
+}
+
+.consultationOverview-table th {
+  background-color: #386a9b;
+  color: white;
+}
+
+.consultationOverview-table td {
+  background-color: rgb(236, 236, 236);
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  }
+
+
+  .consultationDetail-table {
+    width: 100%;
+    border-collapse: collapse;
+    padding: 5px;
+   
+  }
+  
+  
+  
+  .consultationDetail-table th, td {
+    border: none;
+    padding-left: 12px;
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: left;
+  }
+  
+  .consultationDetail-table th {
+    background-color: #386a9b;
+    color: white;
+  }
+  
+  .consultationDetail-table td {
+    background-color: rgb(236, 236, 236);
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    }
+
+
+    .therapist-consultation-overview {
+      align-items: center;
+      width: 100%;
+      padding: 5px;
+      padding-bottom: 18px;
+      min-width: fit-content;
+      height: 600px;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .therapist-consultation-detail {
+      align-items: center;
+      width: 100%;
+      padding: 5px;
+      padding-bottom: 18px;
+      min-width: fit-content;
+      height: 670px;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+  
+
+
+
+
+
+/* ============= auditor dashboard page End - By Zhen Liu ========== */
