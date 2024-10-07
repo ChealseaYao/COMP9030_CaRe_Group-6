@@ -33,6 +33,8 @@ $therapist_results = $stmt_therapist->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Zhen Liu">
+    <meta name="description" content="Auditor Dashboard for CaRe Groups6">
     <title>Auditor Dashboard</title>
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/auditorDashboard.css">
