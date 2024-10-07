@@ -81,6 +81,9 @@
   border-collapse: collapse;
   padding: 5px;
 }
+.tableContainer {
+  max-height: 560px;
+}
 
 th.sortable {
   cursor: pointer;

@@ -137,8 +137,6 @@ FROM patient p
 JOIN therapist t ON p.therapist_id = t.therapist_id
 JOIN `user` u ON t.user_id = u.user_id;
 
-GRANT SELECT ON professional_patient_view TO 'professional_staff_user'@'localhost';
-
 INSERT INTO therapist (user_id, therapist_title, therapist_image) VALUES
 (4, 'Clinical Psychologist', 'images/dr_alice_brown.jpg'),
 (5, 'Counseling Psychologist', 'images/dr_bob_white.jpg'),
