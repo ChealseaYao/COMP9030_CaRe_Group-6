@@ -110,6 +110,19 @@ CREATE TABLE note (
     FOREIGN KEY (therapist_id) REFERENCES therapist(therapist_id)
 ) AUTO_INCREMENT = 1;
 
+CREATE VIEW professional_patient_view AS
+SELECT 
+    p.patient_id, 
+    p.age, 
+    p.gender, 
+    p.height, 
+    p.weight, 
+    t.therapist_title,
+    u.full_name AS therapist_name
+FROM patient p
+JOIN therapist t ON p.therapist_id = t.therapist_id
+JOIN `user` u ON t.user_id = u.user_id;
+
 CREATE USER IF NOT EXISTS dbadmin@localhost;
 GRANT ALL PRIVILEGES ON CaReDB.* TO dbadmin@localhost;
 
@@ -124,18 +137,6 @@ INSERT INTO `user` (username, password_hash, role, full_name) VALUES
 ('joycelynn', 'hashed_password7', 'auditor', 'Brandon Jones'), -- password: hashed_password7
 ('stanleyrivera', 'hashed_password8', 'professional_staff', 'Jeffrey Ruiz'); -- password: hashed_password8
 
-CREATE VIEW professional_patient_view AS
-SELECT 
-    p.patient_id, 
-    p.age, 
-    p.gender, 
-    p.height, 
-    p.weight, 
-    t.therapist_title,
-    u.full_name AS therapist_name
-FROM patient p
-JOIN therapist t ON p.therapist_id = t.therapist_id
-JOIN `user` u ON t.user_id = u.user_id;
 
 
 INSERT INTO therapist (user_id, therapist_title, therapist_image) VALUES
