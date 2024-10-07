@@ -66,7 +66,7 @@ $journalDataJSON = json_encode($journals);
 <body class="therapistBody">
     <!-- global navigation bar TBD -->
     <header class="navbar">
-        <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
         <!-- logout button -->
         <div class="logout-container">
             <a href="../logout.php" class="logout-link">Log-out</a>
@@ -97,13 +97,13 @@ $journalDataJSON = json_encode($journals);
                         <div class="calendar-popup">
                             <label for="year">Year:</label>
                             <select id="year"></select>
-        
+
                             <label for="month">Month:</label>
                             <select id="month"></select>
-        
+
                             <label for="day">Day:</label>
                             <select id="day"></select>
-        
+
                             <button id="confirm-btn">Confirm</button>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ $journalDataJSON = json_encode($journals);
                             </tr>
                         </thead>
                         <tbody>
-                        <?php
+                            <?php
                             // Fetch and display journal data
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
@@ -128,13 +128,13 @@ $journalDataJSON = json_encode($journals);
                                     $journal_content = $row['journal_content'];
                                     $journal_date = $row['journal_date'];
                                     $highlight = $row['highlight'];
-                                    
+
                                     // Convert journal_date to a more readable format
                                     $formattedDate = date("d/m/Y", strtotime($journal_date));
-                                    
+
                                     echo "<tr>";
                                     echo "<td class='star'>" . ($highlight ? "★" : "") . "</td>";
-                                    echo "<td><a href='journal.php?journal_id=$journal_id&patient_id=$patient_id'>$journal_content</a></td>";
+                                    echo "<td><a href='journal.php?journal_id=$journal_id&patient_id=$patient_id&origin=history'>$journal_content</a></td>";
                                     echo "<td>$formattedDate</td>";
                                     echo "</tr>";
                                 }
@@ -159,10 +159,10 @@ $journalDataJSON = json_encode($journals);
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
     <script>
-    const patient_id = <?php echo $patient_id; ?>;
-    const journalData = <?php echo $journalDataJSON; ?>;
-    console.log(journalData);
-</script>
+        const patient_id = <?php echo $patient_id; ?>;
+        const journalData = <?php echo $journalDataJSON; ?>;
+        console.log(journalData);
+    </script>
     <script src="../scripts/historyJournalList.js"></script>
 </body>
 

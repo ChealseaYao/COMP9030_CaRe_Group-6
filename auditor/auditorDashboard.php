@@ -30,6 +30,7 @@ $therapist_results = $stmt_therapist->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,6 +40,7 @@ $therapist_results = $stmt_therapist->get_result();
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/auditorDashboard.css">
 </head>
+
 <body>
     <header class="navbar">
         <a href="auditorDashboard.php"><img src="../image/logo.png" alt="Logo Icon"></a>
@@ -52,47 +54,54 @@ $therapist_results = $stmt_therapist->get_result();
             <h1>G'Day <?php echo htmlspecialchars($auditor_name); ?>!</h1>
             <div class="therapist-consultation-overview">
                 <h3>Therapist Consultation Overview</h3>
-                <table class="consultationOverview-table">
-                    <thead>
-                        <tr>
-                            <th>Therapist Name</th>
-                            <th>Patient Count</th>
-                            <th>Case Type</th>
-                        </tr>
-                    </thead>
-                    <tbody id="therapist-list">
-                        <?php while ($row = $therapist_results->fetch_assoc()): ?>
-                        <tr data-therapist-id="<?php echo $row['therapist_id']; ?>">
-                            <td><?php echo htmlspecialchars($row['therapist_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['patient_count']); ?></td>
-                            <td><?php echo htmlspecialchars($row['case_types']); ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+                <div class="tableContainer">
+                    <table class="consultationOverview-table">
+                        <thead>
+                            <tr>
+                                <th>Therapist Name</th>
+                                <th>Patient Count</th>
+                                <th>Case Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="therapist-list">
+                            <?php while ($row = $therapist_results->fetch_assoc()): ?>
+                                <tr data-therapist-id="<?php echo $row['therapist_id']; ?>">
+                                    <td><?php echo htmlspecialchars($row['therapist_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['patient_count']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['case_types']); ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="right-panel">
-            <h3 id="therapist-detail-header">Therapist Consultation Detail</h3>
-            <table class="consultationDetail-table" id="therapist-detail">
-                <thead>
-                    <tr>
-                        <th>Patient</th>
-                        <th>Case Type</th>
-                        <th>Total Consultation Minutes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Consultation details will be dynamically loaded here -->
-                </tbody>
-            </table>
+            <div class="therapist-consultation-detail">
+                <h3 id="therapist-detail-header">Therapist Consultation Detail</h3>
+                <div class="tableContainer">
+                    <table class="consultationDetail-table" id="therapist-detail">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Case Type</th>
+                                <th>Total Consultation Minutes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Consultation details will be dynamically loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
-    
+
     <script src="../scripts/auditorDashboard.js"></script>
 </body>
+
 </html>
