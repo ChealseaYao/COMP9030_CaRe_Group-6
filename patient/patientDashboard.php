@@ -1,6 +1,4 @@
 <?php
-
-
 session_start();
 
 // 确保用户已登录
@@ -72,19 +70,14 @@ $selected_affirmation_query->execute();
 $selected_affirmation_result = $selected_affirmation_query->get_result();
 $selected_affirmation = $selected_affirmation_result->fetch_assoc()['affirmation'] ?? null;
 
-// 输出调试信息，查看是否正确读取了肯定句
-if ($selected_affirmation) {
-    error_log("Selected Affirmation: " . $selected_affirmation);
-} else {
-    error_log("No affirmation selected for today.");
+// 如果当天已经选择了肯定句，则显示选择的肯定句
+// 否则，随机生成三个肯定句供选择
+if (!$selected_affirmation) {
+    $affirmations_query = $conn->prepare("SELECT affirmation FROM affirmation ORDER BY RAND() LIMIT 3");
+    $affirmations_query->execute();
+    $affirmations_result = $affirmations_query->get_result();
 }
 
-
-
-// 随机生成肯定句
-$affirmations_query = $conn->prepare("SELECT affirmation FROM affirmation ORDER BY RAND() LIMIT 3");
-$affirmations_query->execute();
-$affirmations_result = $affirmations_query->get_result();
 ?>
 
 <!DOCTYPE html>
