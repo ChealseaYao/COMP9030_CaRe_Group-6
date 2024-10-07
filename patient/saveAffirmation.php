@@ -1,13 +1,13 @@
 <?php
 session_start();
-require_once '../inc/dbconn.inc.php';  // 包含数据库连接
+require_once '../inc/dbconn.inc.php';  
 
-// 获取传入的数据
+
 $affirmation = $_POST['affirmation'] ?? null;
 $patient_id = $_POST['patient_id'] ?? null;
 
 if ($affirmation && $patient_id) {
-    // 查找肯定句的 ID
+   
     $affirmation_query = $conn->prepare("SELECT affirmation_id FROM affirmation WHERE affirmation = ?");
     $affirmation_query->bind_param("s", $affirmation);
     $affirmation_query->execute();
@@ -17,10 +17,10 @@ if ($affirmation && $patient_id) {
     if ($affirmation_data) {
         $affirmation_id = $affirmation_data['affirmation_id'];
 
-        // 输出调试信息，确认获取到了正确的 affirmation_id
+     
         error_log("Affirmation ID: " . $affirmation_id);
 
-        // 插入或更新肯定句选择
+     
         $insert_query = $conn->prepare("INSERT INTO patient_affirmation (patient_id, affirmation_id, selection_date) 
                                         VALUES (?, ?, CURDATE()) 
                                         ON DUPLICATE KEY UPDATE affirmation_id = VALUES(affirmation_id)");
