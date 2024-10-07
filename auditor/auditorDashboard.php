@@ -79,7 +79,7 @@ $therapist_results = $stmt_therapist->get_result();
                     <tr>
                         <th>Patient</th>
                         <th>Case Type</th>
-                        <th>Total Consultation Length</th>
+                        <th>Total Consultation Minutes</th>
                     </tr>
                 </thead>
                 <tbody>
