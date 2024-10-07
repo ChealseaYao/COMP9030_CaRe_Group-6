@@ -43,7 +43,7 @@ $therapist_results = $stmt_therapist->get_result();
 
 <body>
     <header class="navbar">
-        <a href="auditorDashboard.php"><img src="../image/logo.png" alt="Logo Icon"></a>
+        <a href="auditorDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
         <div class="logout-container">
             <a href="../logout.php" class="logout-link">Log-out</a>
         </div>
