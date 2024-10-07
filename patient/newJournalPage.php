@@ -89,7 +89,7 @@ $conn->close();
   <body class="newJournal-body">
     <!-- Header of page -->
     <header class="navbar">
-      <a href="patientDashboard.html"
+      <a href="patientDashboard.php"
         ><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"/></a>
         <!-- logout button -->
         <div class="logout-container">

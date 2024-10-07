@@ -66,7 +66,7 @@ $journalDataJSON = json_encode($journals);
 <body class="therapistBody">
     <!-- global navigation bar TBD -->
     <header class="navbar">
-        <a href="therapistDashboard.html"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
+        <a href="therapistDashboard.php"><img src="../image/logo.png" alt="Logo Icon" id="logo-icon"></a>
         <!-- logout button -->
         <div class="logout-container">
             <a href="../logout.php" class="logout-link">Log-out</a>
