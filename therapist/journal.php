@@ -16,11 +16,11 @@ if ($journal_id == 0 || $patient_id == 0) {
 }
 
 // Database connection
-include '../inc/dbconn.inc.php'; 
+include '../inc/dbconn.inc.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
+
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (isset($data['journal_id']) && isset($data['highlight'])) {
@@ -64,7 +64,7 @@ if (!$journal_info) {
     exit();
 }
 
-$patient_name = $journal_info['full_name']; 
+$patient_name = $journal_info['full_name'];
 
 $stmt->close();
 $conn->close();
@@ -72,6 +72,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,6 +81,7 @@ $conn->close();
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/therapistJournal.css">
 </head>
+
 <body>
     <!-- global navigation bar -->
     <header class="navbar">
@@ -90,15 +92,19 @@ $conn->close();
         </div>
     </header>
     <div class="therapistContainer">
-       
+
+        <?php
+        $origin = isset($_GET['origin']) ? $_GET['origin'] : 'history'; // Default to 'history' if not provided
+        $back_url = ($origin === 'dashboard') ? 'therapistDashboard.php' : 'historyJournalList.php?patient_id=' . $patient_id;
+        ?>
         <div class="leftbox">
-            <a href="historyJournalList.php?patient_id=<?php echo $patient_id; ?>">
-              <button class="back-btn">Back</button>
+            <a href="<?php echo $back_url; ?>">
+                <button class="back-btn">Back</button>
             </a>
         </div>
 
         <div class="container">
-            <div class="entry-header"><?php echo htmlspecialchars($patient_name); ?></div> 
+            <div class="entry-header"><?php echo htmlspecialchars($patient_name); ?></div>
             <div class="entry-date">Date: <?php echo date("d/m/Y", strtotime($journal_info['journal_date'])); ?></div>
             <div class="entry-content">
                 <?php echo htmlspecialchars($journal_info['journal_content']); ?>
@@ -122,9 +128,9 @@ $conn->close();
                     <button disabled>No file to download</button>
                 <?php endif; ?>
             </div>
-         
+
             <span class="star" id="starIcon" data-journal-id="<?php echo $journal_id; ?>">
-               <?php echo $journal_info['highlight'] == 1 ? '★' : '☆'; ?>
+                <?php echo $journal_info['highlight'] == 1 ? '★' : '☆'; ?>
             </span>
         </div>
         <div class="rightbox"></div>
@@ -134,37 +140,43 @@ $conn->close();
         var journalId = <?php echo json_encode($journal_id); ?>;
 
         document.getElementById('starIcon').addEventListener('click', function() {
-    
-    const journalId = this.getAttribute('data-journal-id');
-    const currentHighlight = this.textContent === '★' ? 1 : 0;
-    const newHighlight = currentHighlight === 1 ? 0 : 1;
 
-    
-    fetch('../therapist/updateHighlight.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ journal_id: journalId, highlight: newHighlight })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-     
-            this.textContent = newHighlight === 1 ? '★' : '☆';
-        } else {
-            alert('Failed to update highlight.');
-        }
-    })
-    .catch(error => {
-        console.error('Error updating highlight:', error);
-    });
-});
-</script>
+            const journalId = this.getAttribute('data-journal-id');
+            const currentHighlight = this.textContent === '★' ? 1 : 0;
+            const newHighlight = currentHighlight === 1 ? 0 : 1;
 
-        
+
+            fetch('../therapist/updateHighlight.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        journal_id: journalId,
+                        highlight: newHighlight
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+
+                        this.textContent = newHighlight === 1 ? '★' : '☆';
+                    } else {
+                        alert('Failed to update highlight.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating highlight:', error);
+                });
+        });
+    </script>
+
+
     </script>
     <script src="../scripts/journal.js"></script>
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
 </body>
+
 </html>

@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
     exit();
 }
 
-include '../inc/dbconn.inc.php'; 
+include '../inc/dbconn.inc.php';
 
 
 // Get therapist's user_id from the session
@@ -27,7 +27,7 @@ $therapist_name = $therapist['full_name'] ?? 'Unknown Therapist';
 $therapist_title = $therapist['therapist_title'] ?? 'Title Not Available';
 
 // Fetch journals of patients assigned to the therapist
-$journals_query = $conn->prepare("SELECT user.full_name AS patient_name, journal.journal_content, journal.journal_date, journal.highlight 
+$journals_query = $conn->prepare("SELECT user.full_name AS patient_name, journal.journal_content, journal.journal_date, journal.highlight, journal.journal_id, patient.patient_id
                                   FROM journal 
                                   JOIN patient ON journal.patient_id = patient.patient_id 
                                   JOIN user ON patient.user_id = user.user_id
@@ -114,7 +114,7 @@ $journals_result = $journals_query->get_result();
                                 <tr>
                                     <td class="star"><?= $journal['highlight'] ? '★' : '' ?></td>
                                     <td><?= htmlspecialchars($journal['patient_name']) ?></td>
-                                    <td><a href="journalDetail.php?date=<?= urlencode($journal['journal_date']) ?>&patient_name=<?= urlencode($journal['patient_name']) ?>">
+                                    <td><a href="journal.php?journal_id=<?= urlencode($journal['journal_id']) ?>&patient_id=<?= urlencode($journal['patient_id']) ?>&origin=dashboard">
                                             <?= htmlspecialchars(strlen($journal['journal_content']) > 50 ? substr($journal['journal_content'], 0, 50) . '...' : $journal['journal_content']) ?>
                                         </a></td>
                                     <td><?= date("d/m/Y", strtotime($journal['journal_date'])) ?></td>
