@@ -24,6 +24,30 @@
   text-align: center;
 }
 
+.instruction {
+  background-color: #e7e7e7;
+  padding: 10px 3px;
+  font-size: 15px;
+  border-style: dashed;
+  border-width: 2px;
+  border-color: rgb(124, 124, 124);
+  width: 120px;
+  margin-top: 10px;
+  align-self: flex-end;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tips {
+  justify-content: space-between;
+  display: flex;
+  align-items:end;
+}
+
+.tip {
+  margin-bottom: 5px;
+}
+
 .patientList-body .badge-item {
   display: flex;
   align-items: center;
@@ -73,13 +97,16 @@
   margin-right: 20px;
   min-height: 511px;
 }
+
 .patientList-body .tableContainer {
   background-color: white;
   max-height: 475px;
 }
+
 .groups .tableContainer {
   max-height: 200px;
 }
+
 .members .tableContainer {
   background-color: #e7e7e7;
   height: 180px;
@@ -146,6 +173,7 @@
   display: flex;
   align-items: center;
 }
+
 .details {
   border: none;
   color: white;
@@ -153,6 +181,7 @@
   border-radius: 5px;
   padding: 5px 8px;
 }
+
 .details:hover {
   background-color: green;
 }
@@ -179,6 +208,10 @@
   font-size: 25px;
 }
 
+.patient-icon:hover {
+  cursor: pointer;
+}
+
 .patientList-body .status {
   width: 20px;
   height: 20px;
@@ -190,7 +223,8 @@
 .patientList-body .status-container {
   width: 20px;
   height: 20px;
-  margin-right: 10px; /* Adds space between the status and the button */
+  margin-right: 10px;
+  /* Adds space between the status and the button */
 }
 
 .patientList-body .members {
@@ -277,7 +311,8 @@ button {
   background-color: #1565c0;
   color: white;
 }
-.modal-buttons #cancelButton:hover, 
+
+.modal-buttons #cancelButton:hover,
 #cancelDeleteButton:hover {
   background-color: #ddd;
 }
@@ -286,6 +321,3 @@ button {
 .modal-buttons #confirmDeleteButton:hover {
   background-color: #004a99;
 }
-
-
-

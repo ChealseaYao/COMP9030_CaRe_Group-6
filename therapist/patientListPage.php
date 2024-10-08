@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
 }
 
 // Database connection
-include '../inc/dbconn.inc.php'; 
+include '../inc/dbconn.inc.php';
 
 // Get therapist's user_id from the session
 $user_id = $_SESSION['user_id'];
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($data['user_id']) && isset($data['status'])) {
         $user_id = $data['user_id'];
         $status = $data['status'];
-        
+
         if (in_array($status, ['good status', 'bad status', 'danger status'])) {
             $sql = "UPDATE patient SET badge = ? WHERE user_id = ?";
             $stmt = $conn->prepare($sql);
@@ -104,22 +104,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle creating a new group
     if (isset($data['action']) && $data['action'] === 'create_group' && isset($data['group_name'])) {
         $group_name = $data['group_name'];
-    
+
         // Insert new group into the group table with therapist_id from session
         $sql = "INSERT INTO `group` (group_name, therapist_id) VALUES (?, ?)"; // Include therapist_id in the SQL query
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('si', $group_name, $therapist_id); // Bind the therapist_id from the session
-    
+
         if ($stmt->execute()) {
             // Get the ID of the newly created group
             $group_id = $stmt->insert_id;
-    
+
             // Return success response with the new group ID
             echo json_encode(['success' => true, 'group_id' => $group_id]);
         } else {
             echo json_encode(['success' => false, 'error' => 'Failed to create group']);
         }
-    
+
         $stmt->close();
         $conn->close();
         exit;
@@ -235,6 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -242,6 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/patientList.css">
 </head>
+
 <body class="patientList-body">
     <!-- global navigation bar -->
     <header class="navbar">
@@ -249,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         <!-- logout button -->
         <div class="logout-container">
             <a href="../logout.php" class="logout-link">Log-out</a>
-        </div>    
+        </div>
     </header>
 
     <div class="therapistContainer">
@@ -268,6 +270,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 <div class="badge-item" draggable="true" data-status="danger">
                     <span class="status danger"></span> Danger Status
                 </div>
+            </div>
+            <div class="instruction">
+                <p>Drag badge to patient pannel</p>
             </div>
         </div>
 
@@ -305,7 +310,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                         echo '</div>';
                         echo '<div class="right-section">';
                         echo '<div class="status-container">';
-                
+
                         // Add a span with the correct status color
                         if ($row['badge'] === 'good status') {
                             echo '<span class="status good"></span>';
@@ -314,7 +319,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                         } elseif ($row['badge'] === 'danger status') {
                             echo '<span class="status danger"></span>';
                         }
-                
+
                         echo '</div>';
                         // Update the URL to include patient_id as a query parameter
                         echo '<a href="patientDetail.php?patient_id=' . $row['patient_id'] . '"><button class="details">Details</button></a>';
@@ -324,7 +329,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 } else {
                     echo "<p>No patients found.</p>";
                 }
-                
+
                 ?>
             </div>
         </div>
@@ -368,7 +373,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 $stmt->close();
                 ?>
             </div>
-            <h3>Members</h3>
+            <div class="tips">
+                <h3>Members</h3>
+                <p class="tip">↓ Drag patient pannel here</p>
+            </div>
             <div class="members">
                 <p id="currentGroupName">Group Name</p>
                 <div id="membersContainer" class="tableContainer">
@@ -379,40 +387,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
             <!-- create new group modal -->
             <div class="modal" id="createGroupModal">
                 <div class="modal-content">
-                <h3>Create a New Group</h3>
-                <div class="group">
-                    <label for="groupName">Group </label>
-                    <input type="text" id="groupName" name="groupName" />
-                </div>
-                <div class="modal-buttons">
-                    <button id="cancelButton">Cancel</button>
-                    <button id="confirmButton">Confirm</button>
-                </div>
+                    <h3>Create a New Group</h3>
+                    <div class="group">
+                        <label for="groupName">Group </label>
+                        <input type="text" id="groupName" name="groupName" />
+                    </div>
+                    <div class="modal-buttons">
+                        <button id="cancelButton">Cancel</button>
+                        <button id="confirmButton">Confirm</button>
+                    </div>
                 </div>
             </div>
 
             <!--  delete member modal -->
             <div class="modal" id="confirmDeleteModal">
                 <div class="modal-content">
-                <p>Do you want to remove this member?</p>
-                <div class="modal-buttons">
-                    <button id="cancelDeleteButton">Cancel</button>
-                    <button id="confirmDeleteButton">Confirm</button>
+                    <p>Do you want to remove this member?</p>
+                    <div class="modal-buttons">
+                        <button id="cancelDeleteButton">Cancel</button>
+                        <button id="confirmDeleteButton">Confirm</button>
+                    </div>
                 </div>
             </div>
-      </div>
         </div>
     </div>
 
     <script src="../scripts//createNewModal.js"></script>
     <script src="../scripts//groupSelection.js"></script>
     <script src="../scripts//memberDeletion.js"></script>
-    <script src="../scripts//drag&dropBadge.js"></script> 
-    <script src="../scripts//drag&dropMember.js"></script> 
-    <script src="../scripts//searchPatient.js"></script> 
+    <script src="../scripts//drag&dropBadge.js"></script>
+    <script src="../scripts//drag&dropMember.js"></script>
+    <script src="../scripts//searchPatient.js"></script>
 
     <footer class="site-footer">
         <p>&copy; 2024 CaRe | All Rights Reserved</p>
     </footer>
 </body>
+
 </html>
