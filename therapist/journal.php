@@ -123,7 +123,7 @@ $conn->close();
                 <label>Attached File:</label>
                 <div><?php echo !empty($journal_info['original_name']) ? htmlspecialchars($journal_info['original_name']) : 'No file attached'; ?></div>
                 <?php if (!empty($journal_info['file_path']) && !empty($journal_info['original_name'])): ?>
-                    <a href="download.php?journal_id=<?php echo $journal_id; ?>"><button>Download</button></a>
+                    <a href="../patient/download.php?journal_id=<?php echo $journal_id; ?>"><button>Download</button></a>
                 <?php else: ?>
                     <button disabled>No file to download</button>
                 <?php endif; ?>

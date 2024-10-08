@@ -44,6 +44,10 @@ $absolute_file_path = $project_root . $file_path;
 // Debug output for absolute file path
 echo "Absolute file path: " . $absolute_file_path . "<br>";
 
+// Construct the absolute file path using the server's document root
+$project_root = $_SERVER['DOCUMENT_ROOT'] . '/COMP9030_CaRe_Groups-6/patient/';
+$absolute_file_path = realpath($project_root . $file_path);
+
 // Check if file exists on the server using absolute path
 if (!$absolute_file_path || !file_exists($absolute_file_path)) {
     echo "File not found at path: " . $absolute_file_path;
