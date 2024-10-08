@@ -53,7 +53,10 @@ $therapist_results = $stmt_therapist->get_result();
         <div class="left-panel">
             <h1>G'Day <?php echo htmlspecialchars($auditor_name); ?>!</h1>
             <div class="therapist-consultation-overview">
-                <h3>Therapist Consultation Overview</h3>
+                <div class="tips">
+                    <h3>Therapist Consultation Overview</h3>
+                    <p class="tip">Click therapist name to see details</p>
+                </div>
                 <div class="tableContainer">
                     <table class="consultationOverview-table">
                         <thead>

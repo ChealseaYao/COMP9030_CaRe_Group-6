@@ -32,7 +32,16 @@
   text-align: left;
 }
 
+.tips {
+  justify-content: space-between;
+  display: flex;
+  align-items:end;
+}
 
+.tip {
+  font-size: 13px;
+  margin-right: 15px;
+}
 
 .consultationOverview-table {
   width: 100%;
