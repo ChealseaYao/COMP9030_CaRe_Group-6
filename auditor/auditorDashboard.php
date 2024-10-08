@@ -55,7 +55,7 @@ $therapist_results = $stmt_therapist->get_result();
             <div class="therapist-consultation-overview">
                 <div class="tips">
                     <h3>Therapist Consultation Overview</h3>
-                    <p class="tip">Click therapist name to see details</p>
+                    <p class="tip">Click any therapist name to see details</p>
                 </div>
                 <div class="tableContainer">
                     <table class="consultationOverview-table">
