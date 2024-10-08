@@ -81,7 +81,7 @@
   color: white;
 }
 .contentList-table td {
-  background-color: rgb(236, 236, 236); /* 单元格背景色 */
+  background-color: rgb(236, 236, 236); 
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis;
