@@ -98,8 +98,8 @@ $conn->close();
                 <th class="sortable" onclick="sortTable('patient_id')">Patient ID</th>
                 <th class="sortable" onclick="sortTable('age')">Age</th>
                 <th class="sortable" onclick="filterByGender()">Gender</th>
-                <th class="sortable" onclick="sortTable('height')">Height</th>
-                <th class="sortable" onclick="sortTable('weight')">Weight</th>
+                <th class="sortable" onclick="sortTable('height')">Height (cm)</th>
+                <th class="sortable" onclick="sortTable('weight')">Weight (kg)</th>
                 <th>Therapist</th>
               </tr>
             </thead>
